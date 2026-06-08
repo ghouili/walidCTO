@@ -23,10 +23,11 @@ export function Hero() {
           Senior engineering, <span className="text-gradient">on demand.</span>
         </h1>
 
-        <p className="text-dim mx-auto mb-10 max-w-[640px] animate-[fade-up_0.7s_0.35s_both] text-xl leading-[1.5] tracking-[-0.01em]">
-          I help early-stage teams ship the right product — and audit the ones
-          that already shipped the wrong one. Six years building production
-          systems for European and Tunisian companies.
+        <p className="text-dim mx-auto mb-10 max-w-[660px] animate-[fade-up_0.7s_0.35s_both] text-xl leading-[1.5] tracking-[-0.01em]">
+          European-grade engineering from Tunis, at nearshore cost. I help
+          early-stage teams across the EU and MENA ship the right product — and
+          audit the ones that shipped the wrong one. GDPR-fluent, in French,
+          English, or Arabic.
         </p>
 
         <div className="flex animate-[fade-up_0.7s_0.5s_both] flex-wrap justify-center gap-3">

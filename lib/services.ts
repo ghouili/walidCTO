@@ -53,14 +53,20 @@ export const services: Service[] = [
   },
 ];
 
-/** Headline figures rendered in the dark stats card. */
+/**
+ * Headline figures rendered in the dark stats card.
+ * These are value/credibility framed — confirm each is accurate.
+ * TODO: the strongest converters are real client outcomes (e.g. "€X saved
+ * in an audit", "deploy time cut from 40min → 4min"). Swap one or two in
+ * once you have numbers you can stand behind.
+ */
 export type Stat = { value: string; label: string };
 
 export const stats: Stat[] = [
-  { value: "6+", label: "Years shipping production code" },
-  { value: "20+", label: "Projects delivered" },
-  { value: "3", label: "Languages — FR / EN / AR" },
-  { value: "100%", label: "EU-resident hosting available" },
+  { value: "4 wks", label: "From idea to a shippable MVP" },
+  { value: "20+", label: "Products shipped to production" },
+  { value: "3", label: "Languages I deliver in — FR · EN · AR" },
+  { value: "48h", label: "Reply time on new enquiries" },
 ];
 
 /** Industries strip under the hero. */
