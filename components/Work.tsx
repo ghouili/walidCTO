@@ -88,7 +88,7 @@ export function Work() {
               aria-haspopup="dialog"
               className="work-row group border-border grid w-full cursor-pointer grid-cols-[80px_280px_1fr_180px_24px] items-center gap-8 border-b py-7 text-left transition-all duration-200 max-[900px]:grid-cols-1 max-[900px]:gap-2 max-[900px]:py-5"
             >
-              <div className="text-faint font-mono text-xs font-medium tracking-[0.02em] max-[900px]:hidden">
+              <div className="text-faint font-mono text-xs font-medium tracking-[0.02em]">
                 {entry.year}
               </div>
 
@@ -109,7 +109,7 @@ export function Work() {
                 {entry.desc}
               </div>
 
-              <div className="bg-section text-dim w-fit rounded-full px-3 py-[5px] text-xs font-medium tracking-[-0.005em] max-[900px]:hidden">
+              <div className="bg-section text-dim w-fit rounded-full px-3 py-[5px] text-xs font-medium tracking-[-0.005em]">
                 {entry.tag}
               </div>
 
