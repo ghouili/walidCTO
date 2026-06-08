@@ -12,8 +12,8 @@ export type Service = {
   detail: string;
   /** "feature" = large (half-width, double-height); "standard" = small. */
   size: "feature" | "standard";
-  /** Render the decorative gradient blobs (used on the lead feature card). */
-  visual?: boolean;
+  /** Decorative gradient lights: "orbit" = circular motion, "drift" = floating. */
+  visual?: "orbit" | "drift";
 };
 
 export const services: Service[] = [
@@ -24,7 +24,7 @@ export const services: Service[] = [
     desc: "I lead small teams — or work solo — to take your idea from Figma to production. Web apps, SaaS platforms, internal tools. Built on a stack that won't paint you into a corner six months in.",
     detail: "4-WEEK SPRINTS · FIXED SCOPE",
     size: "feature",
-    visual: true,
+    visual: "orbit",
   },
   {
     num: "02",
@@ -33,7 +33,7 @@ export const services: Service[] = [
     desc: "1–2 days a week as the senior in the room — architecture, reviews, hiring. The senior technical voice your team doesn't have yet.",
     detail: "3-MONTH MIN.",
     size: "feature",
-    visual: true,
+    visual: "drift",
   },
   {
     num: "03",

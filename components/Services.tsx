@@ -31,7 +31,7 @@ function BentoCard({ service }: { service: Service }) {
 
       {service.visual && (
         <div
-          className="relative my-3 flex min-h-[80px] flex-1 items-center justify-center"
+          className={`bento-visual--${service.visual} relative my-3 flex min-h-[80px] flex-1 items-center justify-center`}
           aria-hidden="true"
         >
           <div className="bento-blob bento-blob-1" />
