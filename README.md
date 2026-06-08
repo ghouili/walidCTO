@@ -63,7 +63,7 @@ All copy is externalized into typed data files — no JSX edits required:
 | Content                             | File                                 |
 | ----------------------------------- | ------------------------------------ |
 | Site name, URL, email, social links | [`lib/site.ts`](lib/site.ts)         |
-| Services (bento cards) + pricing    | [`lib/services.ts`](lib/services.ts) |
+| Services (bento cards)              | [`lib/services.ts`](lib/services.ts) |
 | Stats + industries strip            | [`lib/services.ts`](lib/services.ts) |
 | Selected work entries (NDA toggle)  | [`lib/work.ts`](lib/work.ts)         |
 | Credentials (About section)         | [`lib/work.ts`](lib/work.ts)         |

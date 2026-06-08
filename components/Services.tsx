@@ -39,10 +39,7 @@ function BentoCard({ service }: { service: Service }) {
         </div>
       )}
 
-      <div className="border-border flex items-center justify-between border-t pt-[18px] text-[13px]">
-        <div className="text-ink font-semibold tracking-[-0.01em]">
-          {service.price}
-        </div>
+      <div className="border-border flex items-center border-t pt-[18px] text-[13px]">
         <div className="text-faint font-mono text-[11px] tracking-[0.02em]">
           {service.detail}
         </div>
