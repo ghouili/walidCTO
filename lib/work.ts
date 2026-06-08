@@ -77,7 +77,7 @@ export const credentials: Credential[] = [
   },
   {
     period: "2025",
-    role: "Partnership Trainer",
+    role: "Training Partner",
     org: "Smart Tunisian Technoparks — تونس للأقطاب التكنولوجية",
   },
   {
