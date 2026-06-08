@@ -11,7 +11,10 @@ export type Service = {
   desc: string;
   price: string;
   detail: string;
-  size: "large" | "small";
+  /** "feature" = large (half-width, double-height); "standard" = small. */
+  size: "feature" | "standard";
+  /** Render the decorative gradient blobs (used on the lead feature card). */
+  visual?: boolean;
 };
 
 export const services: Service[] = [
@@ -22,25 +25,26 @@ export const services: Service[] = [
     desc: "I lead small teams — or work solo — to take your idea from Figma to production. Web apps, SaaS platforms, internal tools. Built on a stack that won't paint you into a corner six months in.",
     price: "From €8K",
     detail: "4-WEEK SPRINTS · FIXED SCOPE",
-    size: "large",
+    size: "feature",
+    visual: true,
   },
   {
     num: "02",
+    label: "LEAD",
+    title: "Fractional CTO.",
+    desc: "1–2 days a week as the senior in the room — architecture, reviews, hiring. The senior technical voice your team doesn't have yet.",
+    price: "From €2.5K/mo",
+    detail: "3-MONTH MIN.",
+    size: "feature",
+  },
+  {
+    num: "03",
     label: "AUDIT",
     title: "Find what's broken.",
     desc: "Two-week deep-read of your codebase, infra, and team practices.",
     price: "From €4K",
     detail: "2 WEEKS",
-    size: "small",
-  },
-  {
-    num: "03",
-    label: "LEAD",
-    title: "Fractional CTO.",
-    desc: "1–2 days a week as the senior in the room — architecture, reviews, hiring.",
-    price: "From €2.5K/mo",
-    detail: "3-MONTH MIN.",
-    size: "small",
+    size: "standard",
   },
   {
     num: "04",
@@ -49,7 +53,7 @@ export const services: Service[] = [
     desc: "Modern web stacks for engineering teams. In French & English.",
     price: "Custom",
     detail: "ON-SITE / REMOTE",
-    size: "small",
+    size: "standard",
   },
 ];
 

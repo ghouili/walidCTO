@@ -6,10 +6,10 @@ const cardBase =
   "bento-card relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-transparent bg-section p-9 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card";
 
 function BentoCard({ service }: { service: Service }) {
-  const isLarge = service.size === "large";
-  const span = isLarge
-    ? "col-span-4 row-span-2 max-[900px]:col-span-1 max-[900px]:row-auto"
-    : "col-span-2 max-[900px]:col-span-1";
+  const isFeature = service.size === "feature";
+  const span = isFeature
+    ? "col-span-3 row-span-2 max-[900px]:col-span-1 max-[900px]:row-auto"
+    : "col-span-3 max-[900px]:col-span-1";
 
   return (
     <article className={`${cardBase} ${span}`}>
@@ -19,7 +19,7 @@ function BentoCard({ service }: { service: Service }) {
         </div>
         <h3
           className={`text-ink mb-3.5 leading-[1.1] font-semibold tracking-[-0.03em] ${
-            isLarge ? "text-[36px]" : "text-[28px]"
+            isFeature ? "text-[36px]" : "text-[28px]"
           }`}
         >
           {service.title}
@@ -29,7 +29,7 @@ function BentoCard({ service }: { service: Service }) {
         </p>
       </div>
 
-      {isLarge && (
+      {service.visual && (
         <div
           className="relative my-3 flex min-h-[80px] flex-1 items-center justify-center"
           aria-hidden="true"
