@@ -60,7 +60,7 @@ export function Services() {
           What I do
         </span>
         <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(36px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
-          Three ways to work together.
+          Four ways to work together.
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">
           Pick the engagement that matches where you are. Most clients start
