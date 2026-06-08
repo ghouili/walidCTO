@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { site } from "@/lib/site";
 
@@ -13,7 +14,10 @@ export function Footer() {
           <div className="text-faint text-[13px] tracking-[-0.005em]">
             © 2026 {site.name} · {site.location.city}, {site.location.country}
           </div>
-          <div className="flex gap-6 text-[13px] tracking-[-0.005em]">
+          <div className="flex flex-wrap gap-6 text-[13px] tracking-[-0.005em]">
+            <Link href="/privacy" className={linkClass}>
+              Privacy
+            </Link>
             <a
               href={site.social.linkedin}
               target="_blank"
