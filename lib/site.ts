@@ -20,16 +20,16 @@ export const site = {
   portrait: "/walidGH.png",
   portraitAlt:
     "Walid Ghouili — Fractional CTO and Engineering Consultant based in Tunis, Tunisia",
-  email: "walid@innoviaburst.com",
+  email: "walid.ghouili@innoviaburst.com",
   company: { name: "InnoviaBurst", url: "https://innoviaburst.com" },
-  /** TODO: replace the GitHub + booking placeholders with the real URLs. */
+  /** TODO: replace the GitHub placeholder with the real profile URL. */
   social: {
     linkedin: "https://www.linkedin.com/in/walid-ghouili-b485b01b5/",
     github: "https://github.com/walidghouili",
     company: "https://innoviaburst.com",
   },
   /** External scheduling link for "Book a call" / "Book a 30-min call". */
-  bookingUrl: "https://cal.com/walidghouili",
+  bookingUrl: "https://calendly.com/walid-ghouili",
   languages: ["French", "English", "Arabic"],
 } as const;
 
