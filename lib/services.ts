@@ -33,6 +33,7 @@ export const services: Service[] = [
     desc: "1–2 days a week as the senior in the room — architecture, reviews, hiring. The senior technical voice your team doesn't have yet.",
     detail: "3-MONTH MIN.",
     size: "feature",
+    visual: true,
   },
   {
     num: "03",

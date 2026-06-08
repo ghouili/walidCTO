@@ -36,6 +36,8 @@
   --animate-float1: float1 20s ease-in-out infinite;
   --animate-float2: float2 24s ease-in-out infinite;
   --animate-float3: float3 28s ease-in-out infinite;
+  --animate-blob1: blob1 14s ease-in-out infinite;
+  --animate-blob2: blob2 18s ease-in-out infinite;
 
   @keyframes float1 {
     0%,
@@ -62,6 +64,27 @@
     }
     50% {
       transform: translate(-50%, -40px);
+    }
+  }
+  @keyframes blob1 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(22px, -18px) scale(1.08);
+    }
+  }
+  @keyframes blob2 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(-16px, 14px) scale(0.94);
+    }
+    66% {
+      transform: translate(12px, 20px) scale(1.05);
     }
   }
   @keyframes fade-up {
@@ -207,6 +230,7 @@ body {
   background: radial-gradient(circle, #a5b4fc 0%, #c7d2fe 100%);
   top: 20%;
   left: 20%;
+  animation: var(--animate-blob1);
 }
 .bento-blob-2 {
   width: 100px;
@@ -214,6 +238,7 @@ body {
   background: radial-gradient(circle, #bae6fd 0%, #e0f2fe 100%);
   bottom: 10%;
   right: 15%;
+  animation: var(--animate-blob2);
 }
 
 /* ============================================================
