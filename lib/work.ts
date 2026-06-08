@@ -72,13 +72,17 @@ export const credentials: Credential[] = [
   { period: "2022 — Now", role: "Founder & CTO", org: "InnoviaBurst, Tunis" },
   {
     period: "2023 — Now",
-    role: "Adjunct Lecturer",
+    role: "Teacher",
     org: "IMSET (Honoris United)",
   },
-  { period: "2023", role: "Trainer", org: "CyberParc Jendouba" },
   {
-    period: "Stack",
-    role: "Next · Nest · Django",
-    org: "Postgres · Docker · EU hosting",
+    period: "2025",
+    role: "Partnership Trainer",
+    org: "Smart Tunisian Technoparks — تونس للأقطاب التكنولوجية",
+  },
+  {
+    period: "Focus",
+    role: "Software Architecture",
+    org: "End-to-end product delivery",
   },
 ];

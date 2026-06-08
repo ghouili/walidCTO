@@ -31,8 +31,18 @@ export function About() {
             <div>
               <p className="text-dim mb-[18px] text-[17px] leading-[1.6] tracking-[-0.005em]">
                 I&apos;m Walid Ghouili. I founded InnoviaBurst in Tunis to do
-                nearshore product work for European startups, and I teach
-                computer science at IMSET (part of Honoris United Universities).
+                nearshore product work for European startups, and I&apos;m the
+                founder of{" "}
+                <a
+                  href="https://simplify-kids.tn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-accent underline decoration-1 underline-offset-2 transition-colors"
+                >
+                  Simplify for Kids
+                </a>
+                , a story-based AI learning platform. I also teach computer
+                science at IMSET (part of Honoris United Universities).
               </p>
               <p className="text-dim mb-[18px] text-[17px] leading-[1.6] tracking-[-0.005em]">
                 I split my week between writing production code, reviewing other
