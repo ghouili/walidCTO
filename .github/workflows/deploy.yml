@@ -70,8 +70,10 @@ jobs:
             echo "▶ Syncing $APP_DIR to origin/$DEPLOY_BRANCH"
             cd "$APP_DIR"
             git fetch --all --prune
-            git checkout -B "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
+            # -f discards any local drift on the server (e.g. file-mode changes)
+            # so the checkout can never be blocked by a dirty work tree.
+            git checkout -f -B "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
             git reset --hard "origin/$DEPLOY_BRANCH"
 
-            chmod +x deploy.sh
-            ./deploy.sh
+            # Run via bash (no executable-bit requirement, no chmod churn).
+            bash deploy.sh
