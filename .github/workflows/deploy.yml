@@ -1,0 +1,68 @@
+name: Deploy (production)
+
+# Fires on every push to `production` (plus a manual "Run workflow" button).
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+# Never let two production deploys overlap; queue them instead of cancelling.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & release on server
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # All secrets and variables below are read from the "deploy" environment
+    # (Repo → Settings → Environments → deploy).
+    #
+    #   Secrets:
+    #     SSH_HOST             server hostname or IP
+    #     SSH_USER             ssh user (e.g. deploy)
+    #     SSH_KEY              private key with access to the server
+    #     SSH_PORT             (optional) ssh port, defaults to 22
+    #     PRODUCTION_ENV_B64   (optional) base64 of the production .env file
+    #                          -> create with:  base64 -w0 .env.production
+    #   Variables (optional, have sane defaults in the script):
+    #     APP_DIR              path to the repo on the server
+    #     DEPLOY_BRANCH        branch to release (defaults to production)
+    #     PM2_APP_NAME         pm2 process name
+    environment: deploy
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.2
+        env:
+          APP_DIR: ${{ vars.APP_DIR }}
+          DEPLOY_BRANCH: ${{ vars.DEPLOY_BRANCH }}
+          PM2_APP_NAME: ${{ vars.PM2_APP_NAME }}
+          PRODUCTION_ENV_B64: ${{ secrets.PRODUCTION_ENV_B64 }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          # Forward these into the remote shell so the server script + deploy.sh can read them.
+          envs: APP_DIR,DEPLOY_BRANCH,PM2_APP_NAME,PRODUCTION_ENV_B64
+          # Abort the whole step if any remote command fails.
+          script_stop: true
+          script: |
+            set -euo pipefail
+            APP_DIR="${APP_DIR:-/var/www/walid-ghouili-site}"
+            DEPLOY_BRANCH="${DEPLOY_BRANCH:-production}"
+
+            echo "▶ Syncing $APP_DIR to origin/$DEPLOY_BRANCH"
+            cd "$APP_DIR"
+            git fetch --all --prune
+            git checkout -B "$DEPLOY_BRANCH" "origin/$DEPLOY_BRANCH"
+            git reset --hard "origin/$DEPLOY_BRANCH"
+
+            chmod +x deploy.sh
+            ./deploy.sh

@@ -1,67 +1,89 @@
 /**
  * Selected work entries rendered in the Work section.
- * Client names are blurred under NDA (`nda: true`) — see <Work />.
- * Add, remove, or reorder entries here without touching JSX.
+ *
+ * Named clients link out to their live site (`url`); confidential / internal
+ * builds are shown with the client name blurred and an NDA badge (`nda: true`)
+ * and carry no link. Draft entries and any unverifiable metrics from the source
+ * brief are intentionally omitted. Add, remove, or reorder entries here without
+ * touching JSX.
  */
 
 export type WorkEntry = {
-  year: string;
+  /** Stable id — used for React keys (and future case-study routes). */
+  slug: string;
+  /** Brand name. Blurred in the UI when `nda` is set. */
   client: string;
-  /** When true, the client name is visually blurred and an NDA badge is shown. */
-  nda: boolean;
-  desc: string;
-  tag: string;
+  /** Sector · market line, shown as the card eyebrow. */
+  sector: string;
+  /** Bold, outcome-led hook — the line that earns the click. */
+  outcome: string;
+  /** One-sentence supporting caption. */
+  caption: string;
+  /** Live site — when present the card links out in a new tab. */
+  url?: string;
+  /** Hide the client name (blurred) and show an NDA badge. Omit `url`. */
+  nda?: boolean;
 };
 
 export const work: WorkEntry[] = [
   {
-    year: "2025",
-    client: "ZEFAC Technologies SAS",
-    nda: true,
-    desc: "B2B SaaS platform for e-invoicing in the French market. Factur-X compliant, multi-tenant architecture, designed for PDP/PA accreditation.",
-    tag: "SaaS · Product lead",
+    slug: "facturra",
+    client: "Facturra",
+    sector: "FinTech / RegTech SaaS · France",
+    outcome:
+      "We turned France's 2026 e-invoicing mandate into a 5-minute onboarding.",
+    caption:
+      "A compliance-grade Factur-X platform that gets freelancers and small firms issuing legally valid e-invoices before their coffee goes cold.",
+    url: "https://facturra.com/",
   },
   {
-    year: "2025",
-    client: "Carlton Hotels Group SA",
+    slug: "internal-erp",
+    client: "Helios Industrial Group",
+    sector: "Internal ERP · Manufacturing",
+    outcome:
+      "One operations cockpit that retired six spreadsheets and three logins.",
+    caption:
+      "Custom ERP — inventory, production scheduling, procurement, and role-based dashboards for a mid-size industrial group. Client confidential under NDA.",
     nda: true,
-    desc: "Custom CRM platform with reservation management, guest profiles, and operations dashboard for a flagship luxury hotel.",
-    tag: "CRM · Full build",
   },
   {
-    year: "2025",
-    client: "Confidential FinTech Client",
-    nda: true,
-    desc: "Cross-platform mobile app (iOS & Android) built with Flutter. Full CI/CD pipeline via Codemagic, TestFlight distribution, App Store deployment.",
-    tag: "Mobile · Full stack",
+    slug: "debarras-aurea",
+    client: "Débarras Aurea",
+    sector: "Local Services · Île-de-France",
+    outcome:
+      "A two-minute quote funnel for a Paris clearance business spanning 8 departments.",
+    caption:
+      "Fast, SEO-built site plus paid-acquisition funnel that converts local searches into booked interventions.",
+    url: "https://debarras-aurea.fr/",
   },
   {
-    year: "2024",
-    client: "Agence Foncière de l'Habitat",
+    slug: "internal-lms",
+    client: "Lumen Training Institute",
+    sector: "LMS / EdTech · MENA",
+    outcome:
+      "A white-label LMS that onboards a new cohort in minutes, not weeks.",
+    caption:
+      "Multi-tenant learning platform with SCORM content, progress tracking, and auto-issued certificates for an accredited training provider. Client confidential under NDA.",
     nda: true,
-    desc: "Full digital architecture review and public portal rebuild for a major government agency. Accessibility-first, multilingual, GDPR-compliant.",
-    tag: "Public sector · Architecture",
   },
   {
-    year: "2024",
-    client: "Simplify Learning Inc.",
-    nda: true,
-    desc: "Story-based AI learning platform for children. Bilingual content generation (FR/AR), MENA market focus, full-stack React + Python.",
-    tag: "EdTech · AI",
+    slug: "zorro-services",
+    client: "Zorro Services",
+    sector: "Environmental Services · Tunisia",
+    outcome:
+      "A credibility-first corporate presence for an ANGED-certified environmental firm.",
+    caption:
+      "Multi-page site that positions a Tunisian B2B services company for institutional and municipal clients.",
+    url: "https://zorro-services.vercel.app/",
   },
   {
-    year: "2024",
-    client: "Mosaïque Ingénierie SARL",
-    nda: true,
-    desc: "Internal CMS with client portal, project tracking, document management, and role-based access for an engineering consultancy.",
-    tag: "Internal tooling · CMS",
-  },
-  {
-    year: "2023",
-    client: "ZORRO Environmental Services",
-    nda: true,
-    desc: "Marketing site and lead-generation funnel for a B2B environmental services company. Conversion tracking via GTM/GA4, multilingual SEO.",
-    tag: "Marketing site · Lead gen",
+    slug: "fresh-tenancy",
+    client: "Fresh Tenancy",
+    sector: "Home Services · United Kingdom",
+    outcome: "A booking site engineered around 5-star social proof.",
+    caption:
+      "End-of-tenancy cleaning service whose homepage converts on trust before it sells on price.",
+    url: "https://freshtenancy.com/",
   },
 ];
 
@@ -76,7 +98,7 @@ export const credentials: Credential[] = [
     org: "IMSET (Honoris United)",
   },
   {
-    period: "2025",
+    period: "2025 - Now",
     role: "Training Partner",
     org: "Smart Tunisian Technoparks — تونس للأقطاب التكنولوجية",
   },
