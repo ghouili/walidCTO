@@ -34,6 +34,8 @@ jobs:
     #     APP_DIR              path to the repo on the server
     #     DEPLOY_BRANCH        branch to release (defaults to production)
     #     PM2_APP_NAME         pm2 process name
+    #     REPO_SSH             git URL used for the first-run clone
+    #                          (defaults to the deploy-key alias below)
     environment: deploy
 
     steps:
@@ -43,6 +45,7 @@ jobs:
           APP_DIR: ${{ vars.APP_DIR }}
           DEPLOY_BRANCH: ${{ vars.DEPLOY_BRANCH }}
           PM2_APP_NAME: ${{ vars.PM2_APP_NAME }}
+          REPO_SSH: ${{ vars.REPO_SSH }}
           PRODUCTION_ENV_B64: ${{ secrets.PRODUCTION_ENV_B64 }}
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -50,13 +53,19 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
           # Forward these into the remote shell so the server script + deploy.sh can read them.
-          envs: APP_DIR,DEPLOY_BRANCH,PM2_APP_NAME,PRODUCTION_ENV_B64
-          # Abort the whole step if any remote command fails.
-          script_stop: true
+          envs: APP_DIR,DEPLOY_BRANCH,PM2_APP_NAME,REPO_SSH,PRODUCTION_ENV_B64
           script: |
             set -euo pipefail
             APP_DIR="${APP_DIR:-/var/www/walid-ghouili-site}"
             DEPLOY_BRANCH="${DEPLOY_BRANCH:-production}"
+            REPO_SSH="${REPO_SSH:-git@github-walid:ghouili/walidCTO.git}"
+
+            # First run on a fresh server: clone the repo (uses the VPS deploy key).
+            if [ ! -d "$APP_DIR/.git" ]; then
+              echo "▶ First run — cloning $REPO_SSH into $APP_DIR"
+              mkdir -p "$(dirname "$APP_DIR")"
+              git clone "$REPO_SSH" "$APP_DIR"
+            fi
 
             echo "▶ Syncing $APP_DIR to origin/$DEPLOY_BRANCH"
             cd "$APP_DIR"
