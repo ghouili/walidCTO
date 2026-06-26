@@ -20,6 +20,9 @@ export const site = {
   portrait: "/walidGH.png",
   portraitAlt:
     "Walid Ghouili — Fractional CTO and Engineering Consultant based in Tunis, Tunisia",
+  /** Brand logo on a solid background — the canonical logo for search engines
+   *  (Organization JSON-LD / Google) and anywhere a logo is needed. */
+  logo: "/logo_bg_walid.png",
   email: "walid.ghouili@innoviaburst.com",
   company: { name: "InnoviaBurst", url: "https://innoviaburst.com" },
   /** TODO: replace the GitHub placeholder with the real profile URL. */

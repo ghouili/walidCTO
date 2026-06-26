@@ -3,7 +3,7 @@ import { Stats } from "@/components/Stats";
 import { services, type Service } from "@/lib/services";
 
 const cardBase =
-  "bento-card relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-transparent bg-section p-9 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card";
+  "bento-card relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-transparent bg-section p-9 max-[400px]:p-6 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card";
 
 function BentoCard({ service }: { service: Service }) {
   const isFeature = service.size === "feature";
@@ -19,7 +19,9 @@ function BentoCard({ service }: { service: Service }) {
         </div>
         <h3
           className={`text-ink mb-3.5 leading-[1.1] font-semibold tracking-[-0.03em] ${
-            isFeature ? "text-[36px]" : "text-[28px]"
+            isFeature
+              ? "text-[36px] max-[400px]:text-[28px]"
+              : "text-[28px] max-[400px]:text-[24px]"
           }`}
         >
           {service.title}
@@ -56,7 +58,7 @@ export function Services() {
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
           What I do
         </span>
-        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(36px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
+        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
           Four ways to work together.
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">

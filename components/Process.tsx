@@ -9,7 +9,7 @@ export function Process() {
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
           How it works
         </span>
-        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(36px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
+        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
           How we&apos;d work together.
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">

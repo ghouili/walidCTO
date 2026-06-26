@@ -40,6 +40,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/logo_walid.png",
+    shortcut: "/logo_walid.png",
+    apple: "/logo_walid.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -116,6 +121,18 @@ const personJsonLd = {
   knowsLanguage: site.languages,
 };
 
+// Organization node — this is what Google reads for the brand logo shown in
+// Search results / the knowledge panel. Uses the solid-background logo.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}${site.logo}`,
+  image: `${site.url}${site.logo}`,
+  sameAs: [site.social.linkedin],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -131,6 +148,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </body>
     </html>

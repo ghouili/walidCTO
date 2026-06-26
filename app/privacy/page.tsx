@@ -128,7 +128,7 @@ function Block({
       <h2 className="text-ink mb-2 text-[19px] font-semibold tracking-[-0.02em]">
         {title}
       </h2>
-      <p className="text-dim text-[16px] leading-[1.65] tracking-[-0.005em]">
+      <p className="text-dim text-[16px] leading-[1.65] tracking-[-0.005em] break-words">
         {children}
       </p>
     </div>

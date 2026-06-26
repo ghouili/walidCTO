@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { site } from "@/lib/site";
 
 const linkClass =
-  "text-faint no-underline transition-colors duration-150 hover:text-ink";
+  "text-faint inline-block py-1 no-underline transition-colors duration-150 hover:text-ink";
 
 /** Site footer with copyright and social links. */
 export function Footer() {
@@ -14,7 +14,7 @@ export function Footer() {
           <div className="text-faint text-[13px] tracking-[-0.005em]">
             © 2026 {site.name} · {site.location.city}, {site.location.country}
           </div>
-          <div className="flex flex-wrap gap-6 text-[13px] tracking-[-0.005em]">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] tracking-[-0.005em]">
             <Link href="/privacy" className={linkClass}>
               Privacy
             </Link>

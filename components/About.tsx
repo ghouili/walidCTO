@@ -11,7 +11,7 @@ export function About() {
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
           About
         </span>
-        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(36px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
+        <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
           The senior technical hire you can&apos;t yet afford full-time.
         </h2>
 
@@ -60,7 +60,7 @@ export function About() {
                     <div className="text-ink text-sm font-medium tracking-[-0.01em]">
                       {cred.role}
                     </div>
-                    <div className="text-dim text-sm tracking-[-0.005em]">
+                    <div className="text-dim text-sm tracking-[-0.005em] [overflow-wrap:anywhere]">
                       {cred.org}
                     </div>
                   </div>
