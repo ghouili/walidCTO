@@ -3,7 +3,7 @@ import { NDABadge } from "@/components/ui/NDABadge";
 import { work, type WorkEntry } from "@/lib/work";
 
 const cardBase =
-  "group bg-section flex flex-col rounded-[20px] border border-transparent p-8 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card max-[900px]:p-6";
+  " group bg-section flex flex-col rounded-[20px] border border-transparent p-8 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card max-[900px]:p-6";
 
 function CardBody({ entry }: { entry: WorkEntry }) {
   return (
