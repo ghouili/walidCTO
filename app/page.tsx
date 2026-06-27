@@ -5,6 +5,7 @@ import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
 import { Work } from "@/components/Work";
 import { About } from "@/components/About";
+import { FractionalCTOExplainer } from "@/components/FractionalCTOExplainer";
 import { FAQ } from "@/components/FAQ";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
@@ -20,6 +21,7 @@ export default function Home() {
         <Process />
         <Work />
         <About />
+        <FractionalCTOExplainer />
         <FAQ />
         <CTA />
       </main>

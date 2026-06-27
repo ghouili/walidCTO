@@ -30,9 +30,11 @@ export function About() {
 
             <div>
               <p className="text-dim mb-[18px] text-[17px] leading-[1.6] tracking-[-0.005em]">
-                I&apos;m Walid Ghouili. I founded InnoviaBurst in Tunis to do
-                nearshore product work for European startups, and I&apos;m the
-                founder of{" "}
+                I&apos;m Walid Ghouili — a fractional CTO and technical-audit
+                consultant in Tunis, providing nearshore senior engineering to
+                early-stage European and Tunisian startups in French, English,
+                and Arabic. I founded InnoviaBurst to do that nearshore product
+                work, and I&apos;m the founder of{" "}
                 <a
                   href="https://simplify-kids.tn/"
                   target="_blank"

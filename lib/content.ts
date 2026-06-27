@@ -32,31 +32,43 @@ export type Faq = { q: string; a: string };
 
 export const faqs: Faq[] = [
   {
+    q: "What is a fractional CTO?",
+    a: "A fractional CTO is a senior engineering leader who works part-time — typically 1–2 days a week — with a company that isn't ready for a full-time CTO. They own architecture, code review, technical hiring, and the roadmap, giving startups senior judgment without a full-time salary.",
+  },
+  {
+    q: "How much does a fractional CTO cost?",
+    a: "Builds and technical audits are quoted as fixed-scope projects; the fractional-CTO role is a monthly retainer. The figure depends on scope and days per week, so you get a concrete number on the intro call — no guesswork up front and no surprises later.",
+  },
+  {
+    q: "Fractional CTO vs full-time CTO vs agency — which do I need?",
+    a: "A fractional CTO is embedded and part-time, for pre- and early-product teams that need senior judgment now. A full-time CTO is a permanent hire for funded teams scaling fast. An agency delivers a discrete, well-specified build and then leaves. Most early startups need the first.",
+  },
+  {
+    q: "When do you need a fractional CTO?",
+    a: "When you're about to build and don't want to build it wrong; when you've shipped something that's breaking; when there's no senior engineer in the room; when you're raising and need technical credibility; or when you're scaling faster than your stack and team can handle.",
+  },
+  {
+    q: "What is a technical audit, and what's in the report?",
+    a: "A technical audit is a two-week, fixed-scope deep-read of your codebase, infrastructure, and team practices. The deliverable is a prioritised risk register — architecture, security, GDPR, infra, and test gaps — each finding ranked by impact and effort with a concrete recommended fix.",
+  },
+  {
+    q: "Is it GDPR-safe to nearshore development to Tunisia?",
+    a: "Yes. I design with GDPR in mind from the start, can host on EU-resident infrastructure when data residency matters, and work under NDA. Tunis (UTC+1) gives full overlap with EU hours, so nearshoring adds capacity without the compliance or time-zone gaps of far-offshore teams.",
+  },
+  {
     q: "How do engagements start — and stop?",
     a: "Every engagement opens with a short call and a written, fixed scope. Work happens in weekly cycles, and you can pause or end at any agreed checkpoint. You own all code, infrastructure, and documentation throughout, so there's never any lock-in.",
   },
   {
     q: "Where are you based, and which time zones do you cover?",
-    a: "Tunis, Tunisia (UTC+1). That's full overlap with European working hours and a natural bridge to the wider MENA region — so you get same-day collaboration without the gaps that come with far-offshore teams.",
+    a: "Tunis, Tunisia (UTC+1) — full overlap with European working hours and a natural bridge to the wider MENA region, so you get same-day collaboration without the gaps that come with far-offshore teams.",
   },
   {
     q: "Which languages do you work in?",
     a: "French, English, and Arabic — meetings, code reviews, and documentation in whichever suits your team.",
   },
   {
-    q: "Remote or on-site?",
-    a: "Primarily remote. For kickoffs, workshops, or training I travel on-site across Tunisia and the EU by arrangement.",
-  },
-  {
     q: "How do you handle confidentiality and IP?",
-    a: "I'm happy to work under NDA. Everything I produce — code, infrastructure, and docs — belongs to you. Most of my recent client work is covered by NDAs, which is why client names are blurred on this site.",
-  },
-  {
-    q: "Do you cover EU / GDPR requirements?",
-    a: "Yes. I design with GDPR in mind from the start and can host on EU-resident infrastructure when data residency matters.",
-  },
-  {
-    q: "What does it cost?",
-    a: "It depends on the engagement. Builds and audits are fixed-scope; the fractional-CTO retainer is monthly. You'll get a concrete number on the intro call — no surprises later.",
+    a: "I'm happy to work under NDA, and everything I produce — code, infrastructure, and docs — belongs to you. Most of my recent client work is covered by NDAs, which is why some client names are blurred on this site.",
   },
 ];
