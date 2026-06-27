@@ -12,8 +12,9 @@ export const site = {
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? fallbackUrl).replace(/\/$/, ""),
   title: "Walid Ghouili — Fractional CTO, Tech Audits & Engineering Leadership",
   titleTemplate: "%s | Walid Ghouili",
+  // ~150 chars, front-loaded for the meta description (SEO T0.3).
   description:
-    "Senior engineering on demand. I help early-stage European and Tunisian teams ship the right product — and audit the ones that already shipped the wrong one. Six years of production experience across SaaS, fintech, public sector and EdTech.",
+    "Fractional CTO & technical audits for European and Tunisian startups. Nearshore senior engineering from Tunis — MVP builds, codebase audits, GDPR-aware.",
   jobTitle: "Fractional CTO & Engineering Consultant",
   location: { city: "Tunis", country: "Tunisia", countryCode: "TN" },
   /** Primary portrait — also used for OG/Twitter image and JSON-LD. */

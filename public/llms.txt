@@ -1,0 +1,24 @@
+# Walid Ghouili — Fractional CTO, Technical Audits & Engineering Leadership
+
+> Walid Ghouili is a fractional CTO and engineering consultant based in Tunis, Tunisia,
+> with six years of production experience across SaaS, fintech, public sector, and EdTech.
+> He provides nearshore senior engineering to early-stage European and Tunisian startups:
+> MVP builds, fractional-CTO retainers, two-week technical audits, and engineering training.
+> Works in French, English, and Arabic. Founder of InnoviaBurst; founder of Simplify for Kids;
+> teaches computer science at IMSET (Honoris United Universities).
+
+## Services
+- [Build — Idea to shippable MVP](https://walid.innoviaburst.com/#services): 4-week fixed-scope sprints, idea to production.
+- [Lead — Fractional CTO](https://walid.innoviaburst.com/#services): 1–2 days/week — architecture, reviews, hiring. 3-month minimum.
+- [Audit — Technical audit](https://walid.innoviaburst.com/#services): two-week deep-read of codebase, infrastructure, and team practices.
+- [Teach — Workshops & training](https://walid.innoviaburst.com/#services): modern web stacks, in French & English.
+
+## Facts
+- Location: Tunis, Tunisia (UTC+1) — full overlap with EU hours; bridge to MENA.
+- Track record: 20+ products shipped to production; replies within 48 hours.
+- Stack: Next.js, NestJS, Django, FastAPI, PostgreSQL. GDPR-aware; EU-resident hosting available.
+- Roles: Founder & CTO, InnoviaBurst (2022–); Teacher, IMSET / Honoris United (2023–); Training Partner, Smart Tunisian Technoparks (2025–).
+
+## Contact
+- [Book a 30-min call](https://calendly.com/walid-ghouili)
+- [LinkedIn](https://www.linkedin.com/in/walid-ghouili-b485b01b5/) · [GitHub](https://github.com/walidghouili)
