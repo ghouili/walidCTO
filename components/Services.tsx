@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Stats } from "@/components/Stats";
 import { services, type Service } from "@/lib/services";
@@ -12,7 +13,10 @@ function BentoCard({ service }: { service: Service }) {
     : "col-span-3 max-[900px]:col-span-1";
 
   return (
-    <article className={`${cardBase} ${span}`}>
+    <Link
+      href={`/services/${service.slug}`}
+      className={`group ${cardBase} ${span} no-underline`}
+    >
       <div>
         <div className="text-accent mb-3.5 font-mono text-xs font-medium tracking-[0.02em]">
           {service.num} — {service.label}
@@ -41,12 +45,18 @@ function BentoCard({ service }: { service: Service }) {
         </div>
       )}
 
-      <div className="border-border flex items-center border-t pt-[18px] text-[13px]">
+      <div className="border-border flex items-center justify-between border-t pt-[18px] text-[13px]">
         <div className="text-faint font-mono text-[11px] tracking-[0.02em]">
           {service.detail}
         </div>
+        <span
+          className="text-faint group-hover:text-accent text-[16px] transition-all duration-200 group-hover:translate-x-1"
+          aria-hidden="true"
+        >
+          →
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }
 

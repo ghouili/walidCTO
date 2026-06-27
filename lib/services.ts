@@ -6,6 +6,8 @@
 
 export type Service = {
   num: string;
+  /** Maps to the dedicated /services/[slug] page. */
+  slug: string;
   label: string;
   title: string;
   desc: string;
@@ -19,6 +21,7 @@ export type Service = {
 export const services: Service[] = [
   {
     num: "01",
+    slug: "mvp-development",
     label: "BUILD",
     title: "Ship the MVP, properly.",
     desc: "I lead small teams — or work solo — to take your idea from Figma to production. Web apps, SaaS platforms, internal tools. Built on a stack that won't paint you into a corner six months in.",
@@ -28,6 +31,7 @@ export const services: Service[] = [
   },
   {
     num: "02",
+    slug: "fractional-cto",
     label: "LEAD",
     title: "Fractional CTO.",
     desc: "1–2 days a week as the senior in the room — architecture, reviews, hiring. The senior technical voice your team doesn't have yet.",
@@ -37,6 +41,7 @@ export const services: Service[] = [
   },
   {
     num: "03",
+    slug: "technical-audit",
     label: "AUDIT",
     title: "Find what's broken.",
     desc: "Two-week deep-read of your codebase, infra, and team practices.",
@@ -45,6 +50,7 @@ export const services: Service[] = [
   },
   {
     num: "04",
+    slug: "workshops",
     label: "TEACH",
     title: "Workshops & training.",
     desc: "Modern web stacks for engineering teams. In French & English.",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { NDABadge } from "@/components/ui/NDABadge";
 import { work, type WorkEntry } from "@/lib/work";
@@ -31,14 +32,14 @@ function CardBody({ entry }: { entry: WorkEntry }) {
       </p>
 
       <div className="mt-auto pt-6">
-        {entry.url ? (
+        {entry.caseStudy ? (
           <span className="text-accent inline-flex items-center gap-1.5 text-[13px] font-medium tracking-[-0.01em]">
-            Visit site
+            Read case study
             <span
               aria-hidden="true"
               className="transition-transform duration-200 group-hover:translate-x-0.5"
             >
-              ↗
+              →
             </span>
           </span>
         ) : entry.nda ? (
@@ -51,7 +52,7 @@ function CardBody({ entry }: { entry: WorkEntry }) {
   );
 }
 
-/** Selected work — outcome-led cards; named clients link out, NDA work blurred (`#work`). */
+/** Selected work — outcome-led cards linking to case studies; NDA work blurred (`#work`). */
 export function Work() {
   return (
     <section id="work" className="py-[120px] max-[900px]:py-20">
@@ -69,16 +70,14 @@ export function Work() {
 
         <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
           {work.map((entry) =>
-            entry.url ? (
-              <a
+            entry.caseStudy ? (
+              <Link
                 key={entry.slug}
-                href={entry.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/work/${entry.slug}`}
                 className={`${cardBase} no-underline`}
               >
                 <CardBody entry={entry} />
-              </a>
+              </Link>
             ) : (
               <article key={entry.slug} className={cardBase}>
                 <CardBody entry={entry} />
