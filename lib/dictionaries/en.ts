@@ -11,7 +11,7 @@ export const en = {
       "Fractional CTO & technical audits for European and Tunisian startups. Nearshore senior engineering from Tunis — MVP builds, codebase audits, GDPR-aware.",
     privacyTitle: "Privacy",
     privacyDescription:
-      "How walid.ghouili.com handles your data: no tracking cookies, and the only personal data processed is what you send via a form, by email or Calendly.",
+      "How walid.ghouili.com handles your data: analytics only with your consent, and otherwise only what you send through a form, by email or via Calendly.",
     checklistTitle: "Technical due diligence checklist (free PDF)",
     checklistDescription:
       "Technical due diligence checklist: the 25 things investors check before a seed round, from architecture and security to GDPR, infra and tests. Free PDF.",
@@ -247,11 +247,15 @@ export const en = {
     blocks: [
       {
         title: "The short version",
-        body: "This is a personal portfolio site. It sets no advertising or analytics cookies and does not track you. The only personal data I process is what you deliberately send me, through a form, by email or when you book a call.",
+        body: "This is a personal portfolio site. Analytics and ads measurement only run if you accept them in the cookie banner. Otherwise, the only personal data I process is what you deliberately send me, through a form, by email or when you book a call.",
       },
       {
         title: "What this site collects",
-        body: "Nothing automatically. There are no analytics scripts, no tracking pixels, and no first-party cookies. Browsing the site leaves no profile of you with me. Your browser may remember that you dismissed the checklist banner (local storage, never sent to me).",
+        body: "Without your consent, nothing that tracks you: no analytics, no advertising cookies, no pixels. Your browser remembers your cookie choice and whether you dismissed the checklist banner (local storage, never sent to me).",
+      },
+      {
+        title: "Analytics and ads measurement (only with consent)",
+        body: 'If you click Accept, Google Tag Manager loads Google Analytics 4 and Google Ads conversion measurement. They set cookies (such as _ga) to count visits, see which pages and ads lead to a contact request, and measure my ad campaigns. Google processes this data under [its privacy policy](https://policies.google.com/privacy). The campaign parameters of the ad you came from (utm_*, gclid) are also kept for your visit and attached to a form or Calendly booking. You can withdraw consent at any time with "Cookie settings" at the bottom of every page, which also deletes these cookies.',
       },
       {
         title: "Contact and checklist forms",
@@ -278,6 +282,13 @@ export const en = {
         body: "If this site starts collecting anything new, I'll update this page and the date above before doing so.",
       },
     ],
+  },
+  consent: {
+    text: "I use Google Analytics and Google Ads measurement to see which pages and ads bring in projects. Only if you agree.",
+    accept: "Accept",
+    decline: "Decline",
+    more: "Privacy",
+    settings: "Cookie settings",
   },
   notFound: {
     title: "Page not found",

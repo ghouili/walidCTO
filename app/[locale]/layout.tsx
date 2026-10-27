@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { site } from "@/lib/site";
-import { htmlLang, isLocale, locales, ogLocale } from "@/lib/i18n";
+import { htmlLang, isLocale, localePath, locales, ogLocale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { siteGraph } from "@/lib/jsonld";
+import { consentDefaultsScript } from "@/lib/analytics";
+import { Analytics } from "@/components/analytics/Analytics";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -101,17 +103,29 @@ export const viewport: Viewport = {
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
   return (
     <html
       lang={htmlLang[locale]}
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
+      {gtmId && (
+        <head>
+          {/* Consent Mode v2 defaults: must run before any Google tag. */}
+          <script dangerouslySetInnerHTML={{ __html: consentDefaultsScript }} />
+        </head>
+      )}
       <body suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
           {locale === "fr" ? "Aller au contenu" : "Skip to content"}
         </a>
         {children}
+        <Analytics
+          gtmId={gtmId}
+          labels={getDictionary(locale).consent}
+          privacyHref={localePath(locale, "/privacy")}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

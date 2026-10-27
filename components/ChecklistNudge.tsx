@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Dictionary } from "@/lib/dictionaries";
+import { CONSENT_BANNER_EVENT } from "@/components/analytics/Analytics";
 
 const STORAGE_KEY = "wg-checklist-nudge";
 const DESKTOP = "(min-width: 901px)";
@@ -23,6 +24,16 @@ export function ChecklistNudge({
   const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(true);
+  // Stay out of the way while the cookie banner is asking.
+  const [consentOpen, setConsentOpen] = useState(false);
+
+  useEffect(() => {
+    setConsentOpen(Boolean(window.__wgConsentBannerOpen));
+    const onBanner = (e: Event) =>
+      setConsentOpen(Boolean((e as CustomEvent<boolean>).detail));
+    window.addEventListener(CONSENT_BANNER_EVENT, onBanner);
+    return () => window.removeEventListener(CONSENT_BANNER_EVENT, onBanner);
+  }, []);
 
   useEffect(() => {
     try {
@@ -57,7 +68,7 @@ export function ChecklistNudge({
     };
   }, [dismissed]);
 
-  if (dismissed || pathname.endsWith("/checklist")) return null;
+  if (dismissed || consentOpen || pathname.endsWith("/checklist")) return null;
 
   const dismiss = (value: string) => {
     try {

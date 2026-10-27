@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { Dictionary } from "@/lib/dictionaries";
 import { getAttribution } from "@/lib/attribution";
+import { track } from "@/lib/analytics";
 import {
   budgetValues,
   stuckValues,
@@ -105,6 +106,17 @@ export function ContactForm({
       });
       const body = (await res.json()) as ContactResponse;
       if (body.ok) {
+        // Ads conversions (see docs/ads-tracking.md).
+        if (isChecklist) {
+          track("checklist_download", { locale, form_source: source });
+        } else {
+          track("contact_submit", {
+            locale,
+            form_source: source,
+            budget: payload.budget,
+            stuck: payload.stuck,
+          });
+        }
         setDownload(body.download ?? null);
         setStatus("done");
         return;

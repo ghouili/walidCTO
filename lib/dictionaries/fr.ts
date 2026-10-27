@@ -9,7 +9,7 @@ export const fr: Dictionary = {
       "CTO à temps partagé et audit technique pour startups françaises et européennes. Développement nearshore depuis Tunis, MVP en 4 semaines, RGPD intégré.",
     privacyTitle: "Confidentialité",
     privacyDescription:
-      "Comment walid.ghouili.com traite vos données : aucun cookie de suivi, seules les données envoyées via un formulaire, par email ou Calendly sont traitées.",
+      "Comment walid.ghouili.com traite vos données : mesure d'audience avec votre accord uniquement, sinon seulement ce que vous envoyez par formulaire ou email.",
     checklistTitle: "Checklist due diligence technique (PDF gratuit)",
     checklistDescription:
       "Checklist due diligence technique : les 25 points que les investisseurs vérifient avant une levée seed, de l'architecture au RGPD. PDF gratuit.",
@@ -238,11 +238,16 @@ export const fr: Dictionary = {
     blocks: [
       {
         title: "En bref",
-        body: "Ce site est un portfolio personnel. Il ne dépose aucun cookie publicitaire ou de mesure d'audience et ne vous suit pas. Les seules données personnelles que je traite sont celles que vous m'envoyez volontairement, via un formulaire, par email ou en réservant un appel.",
+        body: "Ce site est un portfolio personnel. La mesure d'audience et la mesure des annonces ne fonctionnent que si vous les acceptez dans le bandeau cookies. Sinon, les seules données personnelles que je traite sont celles que vous m'envoyez volontairement, via un formulaire, par email ou en réservant un appel.",
       },
       {
         title: "Ce que le site collecte",
-        body: "Rien d'automatique. Aucun script d'analytics, aucun pixel de suivi, aucun cookie propriétaire. Naviguer sur le site ne crée aucun profil de vous chez moi. Votre navigateur peut retenir que vous avez fermé le bandeau de la checklist (stockage local, jamais transmis).",
+        body: "Sans votre consentement, rien qui vous suive : pas de mesure d'audience, pas de cookie publicitaire, pas de pixel. Votre navigateur retient votre choix sur les cookies et le fait que vous avez fermé le bandeau de la checklist (stockage local, jamais transmis).",
+      },
+      {
+        title:
+          "Mesure d'audience et des annonces (avec votre accord uniquement)",
+        body: "Si vous cliquez sur Accepter, Google Tag Manager charge Google Analytics 4 et la mesure des conversions Google Ads. Ils déposent des cookies (comme _ga) pour compter les visites, voir quelles pages et quelles annonces mènent à une prise de contact, et mesurer mes campagnes. Google traite ces données selon [sa politique de confidentialité](https://policies.google.com/privacy). Les paramètres de campagne de l'annonce d'où vous venez (utm_*, gclid) sont aussi conservés pendant votre visite et joints à un formulaire ou à une réservation Calendly. Vous pouvez retirer votre accord à tout moment via « Gérer les cookies » en bas de chaque page, ce qui supprime aussi ces cookies.",
       },
       {
         title: "Formulaires de contact et de checklist",
@@ -269,6 +274,13 @@ export const fr: Dictionary = {
         body: "Si ce site se met à collecter quoi que ce soit de nouveau, je mettrai cette page et la date ci-dessus à jour avant de le faire.",
       },
     ],
+  },
+  consent: {
+    text: "J'utilise Google Analytics et la mesure Google Ads pour savoir quelles pages et quelles annonces amènent des projets. Seulement si vous êtes d'accord.",
+    accept: "Accepter",
+    decline: "Refuser",
+    more: "Confidentialité",
+    settings: "Gérer les cookies",
   },
   notFound: {
     title: "Page introuvable",

@@ -16,6 +16,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@next/third-parties": "^15.5.19",
     "gray-matter": "^4.0.3",
     "next": "^15.5.0",
     "next-mdx-remote": "^6.0.0",

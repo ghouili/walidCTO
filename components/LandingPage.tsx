@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/ContactForm";
+import { TrackOnMount } from "@/components/analytics/Analytics";
 import { PriceAnchor } from "@/components/PriceAnchor";
 import { Testimonials } from "@/components/Testimonials";
 import { getDictionary } from "@/lib/dictionaries";
@@ -40,6 +41,10 @@ export function LandingPage({ lp }: { lp: LP }) {
         </Container>
       </header>
 
+      <TrackOnMount
+        event="lp_view"
+        params={{ lp_name: lp.slug, lp_locale: lp.locale, lp_offer: lp.kind }}
+      />
       <main id="main-content">
         {/* Pain headline + CTA #1 */}
         <section className="relative overflow-hidden pt-24 pb-20 max-[900px]:pt-16 max-[900px]:pb-14">

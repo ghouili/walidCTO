@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ChecklistNudge } from "@/components/ChecklistNudge";
+import { ConsentSettingsButton } from "@/components/analytics/Analytics";
 import { getDictionary } from "@/lib/dictionaries";
 import { htmlLang, localePath, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
@@ -47,6 +48,12 @@ export function Footer({
             <Link href={localePath(locale, "/privacy")} className={linkClass}>
               {t.footer.privacy}
             </Link>
+            {process.env.NEXT_PUBLIC_GTM_ID && (
+              <ConsentSettingsButton
+                label={t.consent.settings}
+                className={linkClass}
+              />
+            )}
             <a
               href={site.social.linkedin}
               target="_blank"
