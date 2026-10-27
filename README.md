@@ -1,124 +1,193 @@
-# Walid Ghouili — Personal Brand Site
+# walid.ghouili.com
 
-Production-ready personal brand site for **Walid Ghouili**, Fractional CTO &
-Engineering Consultant. Built as a faithful, engineered replica of the design
-mockup (`walid-ghouili-stripe.html`).
+Personal site and lead engine for **Walid Ghouili**, fractional CTO, technical
+audits and MVP builds, in English (default) and French (`/fr`).
 
 ## Stack
 
-- **Next.js 15** (App Router) + **React 19**, TypeScript (strict mode)
-- **Tailwind CSS v4** (CSS-first — design tokens live in [`app/globals.css`](app/globals.css))
-- **next/font/google** — Geist + Geist Mono, `display: swap`
-- ESLint (flat config) + Prettier (with `prettier-plugin-tailwindcss`)
-- 100% Server Components — no client-side JS shipped
-- Vercel-deployable out of the box
+- **Next.js 15** (App Router) + **React 19**, TypeScript strict
+- **Tailwind CSS v4**, design tokens in [`app/globals.css`](app/globals.css)
+- `next/font` (Geist, Geist Mono), `next/og` for Open Graph images
+- MDX blog with `next-mdx-remote` + `gray-matter` + `remark-gfm`
+- Contact emails through the Resend HTTP API (no SDK)
+- GTM / GA4 via `@next/third-parties`, behind a consent banner
+- Deployed on a VPS: GitHub Actions → `deploy.sh` → PM2 behind nginx
 
 ## Local setup
 
 ```bash
-pnpm install
-pnpm dev          # http://localhost:3000
+npm install
+cp .env.example .env.local   # then fill what you need
+npm run dev                  # http://localhost:3000
 ```
 
-Other scripts:
+| Script              | What it does                                       |
+| ------------------- | -------------------------------------------------- |
+| `npm run dev`       | Generates files (see below), then `next dev`       |
+| `npm run build`     | Generates files, then `next build`                 |
+| `npm start`         | Serves the production build                        |
+| `npm run generate`  | Checklist PDFs + `llms.txt` / `llms-full.txt` only |
+| `npm run lint`      | ESLint                                             |
+| `npm run typecheck` | `tsc --noEmit`                                     |
+| `npm run format`    | Prettier                                           |
 
-```bash
-pnpm build        # production build
-pnpm start        # serve the production build
-pnpm lint         # ESLint
-pnpm typecheck    # tsc --noEmit
-pnpm format       # Prettier --write
-pnpm format:check # Prettier --check
-```
-
-> Uses **pnpm**. `npm` / `yarn` work too — swap the command prefix.
+Before every commit: `npm run typecheck && npm run lint && npm run build`.
 
 ## Environment variables
 
-| Variable               | Required | Description                                                                                            |
-| ---------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL` | No\*     | Absolute production URL, no trailing slash. Drives canonical URL, OG/Twitter images, sitemap, JSON-LD. |
+| Variable               | Needed in prod | What it does                                                                                                                                                                                                                                 |
+| ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Recommended    | Absolute URL, no trailing slash. Canonicals, hreflang, sitemap, OG, JSON-LD, llms.txt. Falls back to `https://walid.ghouili.com` ([`lib/site.ts`](lib/site.ts)).                                                                             |
+| `RESEND_API_KEY`       | **Yes**        | Resend API key for the contact and checklist forms. Without it the API answers 503 in production (and logs the message instead of sending in dev).                                                                                           |
+| `CONTACT_TO`           | No             | Where leads are sent. Defaults to the email in `lib/site.ts`.                                                                                                                                                                                |
+| `CONTACT_FROM`         | Recommended    | Sender on a domain verified in Resend, e.g. `Walid Ghouili <site@ghouili.com>`. Without it Resend's test sender is used, which only delivers to the Resend account owner. When set, checklist requesters also receive the PDF link by email. |
+| `NEXT_PUBLIC_GTM_ID`   | For Ads        | `GTM-XXXXXXX`. Enables the consent banner and loads GTM after consent. Unset = no banner, no Google script. Baked in at build time: rebuild after changing it.                                                                               |
 
-\*Falls back to `https://walid.ghouili.com` (see [`lib/site.ts`](lib/site.ts))
-if unset. Copy `.env.example` → `.env.local` to override locally.
+In production these live in `.env.production` on the server, written by
+`deploy.sh` from the `PRODUCTION_ENV_B64` secret (base64 of the file) when
+that secret is set.
 
-```bash
-cp .env.example .env.local
-```
+## Generated files
 
-## Deploy to Vercel
+`npm run generate` (run automatically by `predev` and `prebuild`) writes, from
+the `lib/*` content files:
 
-1. Push this repo to GitHub/GitLab/Bitbucket.
-2. In Vercel: **New Project** → import the repo. The framework preset
-   (**Next.js**) is auto-detected — no build config needed.
-3. Add the environment variable **`NEXT_PUBLIC_SITE_URL`** (e.g.
-   `https://walid.ghouili.com`) under **Settings → Environment Variables**.
-4. Deploy. `robots.txt`, `sitemap.xml`, and the favicon are generated
-   automatically by the App Router.
+- `public/downloads/technical-due-diligence-checklist.pdf` and
+  `checklist-due-diligence-technique.pdf`, from
+  [`lib/checklist.ts`](lib/checklist.ts) ([`scripts/generate-checklist-pdf.ts`](scripts/generate-checklist-pdf.ts))
+- `public/llms.txt` and `public/llms-full.txt`, from the services, case
+  studies, FAQs, checklist and blog ([`scripts/generate-llms.ts`](scripts/generate-llms.ts))
 
-## Where to edit content
+All four are gitignored. The llms script also prints a `[launch]` warning
+listing any price or testimonial placeholder still unfilled.
 
-All copy is externalized into typed data files — no JSX edits required:
+## Routing and languages
 
-| Content                             | File                                 |
-| ----------------------------------- | ------------------------------------ |
-| Site name, URL, email, social links | [`lib/site.ts`](lib/site.ts)         |
-| Services (bento cards)              | [`lib/services.ts`](lib/services.ts) |
-| Stats + industries strip            | [`lib/services.ts`](lib/services.ts) |
-| Selected work entries (NDA toggle)  | [`lib/work.ts`](lib/work.ts)         |
-| Credentials (About section)         | [`lib/work.ts`](lib/work.ts)         |
-| Design tokens (colors, fonts, etc.) | [`app/globals.css`](app/globals.css) |
+- Every page lives under [`app/[locale]`](app/%5Blocale%5D). English is served
+  unprefixed (`/work/facturra`), French under `/fr` (`/fr/work/facturra`).
+  [`middleware.ts`](middleware.ts) rewrites unprefixed URLs to the `en`
+  locale internally and redirects any visible `/en/...` URL.
+- Services and case studies share their slug across languages. Blog
+  articles have translated slugs, paired by `translationKey`.
+- English data lives in `lib/<name>.ts`, French in `lib/<name>.fr.ts` (same
+  shape), read through [`lib/localized.ts`](lib/localized.ts). UI strings are
+  in [`lib/dictionaries/en.ts`](lib/dictionaries/en.ts) and `fr.ts` (the
+  French file is type-checked against the English one).
+- Metadata for every page goes through `pageMetadata()` in
+  [`lib/seo.ts`](lib/seo.ts) (canonical, hreflang, OG locale). Titles max 60
+  characters, descriptions 140 to 155.
 
-To add a work entry, append to the `work` array in `lib/work.ts`. Set
-`nda: false` to show a client name unblurred (the badge is hidden automatically).
+## Landing pages (`/lp/*`)
 
-### Placeholder links to replace
+Paid-traffic pages with no site navigation, one offer, and one CTA (to the
+form) repeated three times: pain headline → what you get → proof → price → FAQ
+→ form. They are `noindex`, disallowed in `robots.txt` and absent from the
+sitemap.
 
-`lib/site.ts` ships with placeholders you should update with real URLs:
+- Copy: [`lib/landing-pages.ts`](lib/landing-pages.ts). Template:
+  [`components/LandingPage.tsx`](components/LandingPage.tsx).
+- Current pages: `/lp/technical-audit` (EN), `/lp/audit-technique` (FR),
+  `/lp/fractional-cto` (EN), `/lp/cto-a-temps-partage` (FR).
+- **To add one:** add an entry to `landingPages`. If it's French, also add
+  its slug to `FR_LANDING_PAGES` in `middleware.ts` (French LPs keep their
+  French slug at `/lp/<slug>` without the `/fr` prefix). Keep the ad copy in
+  [`docs/google-ads-plan.md`](docs/google-ads-plan.md) in sync.
+- Each LP fires `lp_view` with `lp_name` = slug, and its form submits with
+  `form_source` = `lp:<slug>`.
 
-- `social.github` — your GitHub profile
-- `bookingUrl` — your scheduling link (Cal.com / Calendly), used by the
-  "Book a call" / "Book a 30-min call" buttons
+## Prices and testimonials
 
-## ⚠️ Add a dedicated OG card later
+- **Prices:** set `PRICE_AUDIT` (fixed audit fee) and `PRICE_CTO_FROM`
+  (monthly starting price) in [`lib/pricing.ts`](lib/pricing.ts), as numbers
+  in EUR excluding VAT. They show in the `#pricing` box on the audit and
+  fractional-CTO service pages and on the LPs, and in the Offer JSON-LD.
+  While `null`, the box says the price is confirmed in writing.
+- **Testimonials:** replace the `{{QUOTE}}`, `{{NAME}}`, `{{ROLE_COMPANY}}`,
+  `{{LINKEDIN_URL}}` placeholders in
+  [`lib/testimonials.ts`](lib/testimonials.ts). An entry stays hidden while
+  any field still contains `{{`; the section appears (home, between Work and
+  About, and on every LP) as soon as one entry is complete. Only publish
+  quotes the client approved in writing.
 
-The portrait `public/walidGH.png` is **1024×983** (near-square). It is used as
-the Open Graph / Twitter image as a stopgap, so social previews will be
-**center-cropped**. For best link-preview rendering, create a dedicated
-**1200×630** OG card and point `openGraph.images` / `twitter.images` in
-[`app/layout.tsx`](app/layout.tsx) at it (e.g. `public/og.png`).
+## Adding a blog article
 
-## Project structure
+1. Create `content/blog/en/<slug>.mdx` and, for the French version,
+   `content/blog/fr/<slug-fr>.mdx` with the same `translationKey`.
+2. Frontmatter (validated at build, the build fails on a missing field):
+
+   ```yaml
+   ---
+   title: "Full title, rendered as the H1"
+   seoTitle: "HTML title, 60 characters max"
+   description: "Meta description, 140 to 155 characters, answer first."
+   date: "2026-11-15"
+   updated: "2026-12-01" # optional
+   translationKey: "shared-key-for-both-languages"
+   tags: ["fractional-cto", "pricing"] # must exist in blogTags (lib/blog.ts)
+   relatedService: "fractional-cto" # service slug
+   relatedCaseStudy: "sabboura" # case-study slug
+   tldr: # exactly 3 bullets, each quotable on its own
+     - "..."
+     - "..."
+     - "..."
+   ---
+   ```
+
+3. Body: Markdown with GFM tables and task lists, `##` / `###` headings
+   only (the title is the H1). Answer the question in the first two
+   sentences and restate it verbatim in one `##`. Don't use raw `<`, `>`,
+   `{`, `}` in prose (MDX). Link internally with root-relative URLs
+   (`/services/technical-audit`, `/fr/checklist`).
+4. Run `npm run build`: the article gets its page, OG image, RSS entry
+   (`/feed.xml`, `/fr/feed.xml`), sitemap entry with hreflang, and its
+   llms.txt line.
+
+## Measurement
+
+Consent Mode v2 in basic mode: defaults are `denied`, GTM loads only after
+the visitor accepts. Events (`contact_submit`, `checklist_download`,
+`book_call_click`, `lp_view`, `scroll_75`, `outbound_click`) go to the
+`dataLayer`, and `utm_*` are passed through to Calendly. Setup and Google Ads
+import: [`docs/ads-tracking.md`](docs/ads-tracking.md). Campaigns:
+[`docs/google-ads-plan.md`](docs/google-ads-plan.md).
+
+## Deploy
+
+Pushing to the `production` branch runs
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which SSHes to
+the VPS, syncs the repo and runs [`deploy.sh`](deploy.sh) (`npm ci`,
+`npm run build`, `pm2 reload`). nginx config:
+[`deploy/nginx/walid.ghouili.com.conf`](deploy/nginx/walid.ghouili.com.conf)
+(security headers, caching, 301 from the old `walid.innoviaburst.com`). The
+same security headers are also set in [`next.config.ts`](next.config.ts).
+
+Launch steps (DNS, certificates, Search Console, placeholders):
+[`docs/LAUNCH-CHECKLIST.md`](docs/LAUNCH-CHECKLIST.md).
+
+## Where things live
 
 ```
 app/
-  layout.tsx        Root layout — fonts, SEO metadata, JSON-LD, skip link
-  page.tsx          Home page composition
-  globals.css       Tailwind v4 + design tokens + decorative CSS/animations
-  robots.ts         robots.txt
-  sitemap.ts        sitemap.xml
-  icon.svg          Favicon (gradient sparkle mark)
-components/
-  Nav, Hero, IndustriesStrip, Services, Stats, Work, About, CTA, Footer
-  ui/               Button, NDABadge, GradientPill, Container
+  [locale]/            every page, per locale (home, services, work, blog,
+                       faq, checklist, privacy, lp) + opengraph-image routes
+  api/contact/         contact + checklist form endpoint (Resend)
+  robots.ts, sitemap.ts
+components/            page sections, LandingPage, ContactForm, analytics/,
+                       blog/, ui/
+content/blog/{en,fr}/  articles (MDX)
 lib/
-  site.ts           Site config (URL, social, email)
-  services.ts       Services, stats, industries
-  work.ts           Work entries + credentials
+  site.ts              name, URL, email, social, booking link
+  i18n.ts              locales, localePath, hreflang helpers
+  dictionaries/        UI strings (EN, FR)
+  *.ts / *.fr.ts       content: services, service-pages, work, content (FAQ,
+                       process), faq-hub, checklist, landing-pages
+  pricing.ts           PRICE_AUDIT, PRICE_CTO_FROM
+  testimonials.ts      client quotes (placeholders until filled)
+  blog.ts              MDX loader, tags
+  seo.ts, jsonld.ts    metadata builder, JSON-LD graph
+  analytics.ts         dataLayer events, consent
+scripts/               PDF and llms.txt generators
+assets/fonts/          Geist TTFs for OG image rendering
+docs/                  ads tracking, Google Ads plan, launch checklist
+deploy/nginx/          nginx site config
 ```
-
-## Notes on the build
-
-- `create-next-app` now ships **Next.js 16** by default; this project is
-  intentionally pinned to **Next.js 15** (latest 15.x) per spec.
-- Tailwind **v4** is CSS-first, so there is no `tailwind.config.ts` — design
-  tokens are defined with `@theme` in `app/globals.css` (functionally the same
-  central token source, no magic hex in components).
-
-## Accessibility & performance
-
-- Semantic landmarks (`header`, `nav`, `main`, `section`, `article`, `footer`)
-- Skip-to-content link, visible focus rings, keyboard-accessible controls
-- `prefers-reduced-motion` disables the floating gradient animations
-- Raster image served via `next/image`; fonts preloaded via `next/font`
-- All decorative gradients are CSS — no layout-shifting JS
