@@ -36,15 +36,33 @@ export function About() {
                 and Arabic. I founded InnoviaBurst to do that nearshore product
                 work, and I&apos;m the founder of{" "}
                 <a
-                  href="https://simplify-kids.tn/"
+                  href="https://simplify-kids.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-ink hover:text-accent underline decoration-1 underline-offset-2 transition-colors"
                 >
                   Simplify for Kids
                 </a>
-                , a story-based AI learning platform. I also teach computer
-                science at IMSET (part of Honoris United Universities).
+                , a story-based AI learning platform,{" "}
+                <a
+                  href="https://sabboura.tn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-accent underline decoration-1 underline-offset-2 transition-colors"
+                >
+                  Sabboura
+                </a>
+                , an AI tutor for Tunisian bac students, and{" "}
+                <a
+                  href="https://tnajem.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-accent underline decoration-1 underline-offset-2 transition-colors"
+                >
+                  Tnajem
+                </a>
+                , a tutoring marketplace. I also teach computer science at IMSET
+                (part of Honoris United Universities).
               </p>
               <p className="text-dim mb-[18px] text-[17px] leading-[1.6] tracking-[-0.005em]">
                 I split my week between writing production code, reviewing other

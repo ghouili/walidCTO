@@ -39,7 +39,7 @@ pnpm format:check # Prettier --check
 | ---------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
 | `NEXT_PUBLIC_SITE_URL` | No\*     | Absolute production URL, no trailing slash. Drives canonical URL, OG/Twitter images, sitemap, JSON-LD. |
 
-\*Falls back to `https://walid.innoviaburst.com` (see [`lib/site.ts`](lib/site.ts))
+\*Falls back to `https://walid.ghouili.com` (see [`lib/site.ts`](lib/site.ts))
 if unset. Copy `.env.example` → `.env.local` to override locally.
 
 ```bash
@@ -52,7 +52,7 @@ cp .env.example .env.local
 2. In Vercel: **New Project** → import the repo. The framework preset
    (**Next.js**) is auto-detected — no build config needed.
 3. Add the environment variable **`NEXT_PUBLIC_SITE_URL`** (e.g.
-   `https://walid.innoviaburst.com`) under **Settings → Environment Variables**.
+   `https://walid.ghouili.com`) under **Settings → Environment Variables**.
 4. Deploy. `robots.txt`, `sitemap.xml`, and the favicon are generated
    automatically by the App Router.
 

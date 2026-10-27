@@ -64,8 +64,8 @@ export function Work() {
           A few things I&apos;ve shipped.
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">
-          Real products, real outcomes — a selection of recent builds across
-          SaaS, local services, internal tooling, and B2B.
+          Real products in production — SaaS, AI EdTech, marketplaces and mobile
+          apps on Flutter and React Native, plus local-services and B2B sites.
         </p>
 
         <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">

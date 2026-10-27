@@ -403,7 +403,7 @@ export function Hero() {
               animation: "hero-pulseDot 2.4s ease-out infinite",
             }}
           />
-          Available Q3 2026 · 2 spots open
+          Available Q4 2026 · 2 spots open
         </div>
 
         {/* eyebrow + headline */}

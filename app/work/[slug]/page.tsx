@@ -79,7 +79,13 @@ export default async function CaseStudyPage({ params }: Params) {
     about: w.sector,
     author: { "@id": `${site.url}/#person` },
     creator: { "@id": `${site.url}/#person` },
-    ...(w.url ? { sameAs: [w.url] } : {}),
+    ...(w.url || w.stores
+      ? {
+          sameAs: [w.url, ...(w.stores?.map((s) => s.url) ?? [])].filter(
+            Boolean,
+          ),
+        }
+      : {}),
   };
 
   return (
@@ -103,16 +109,32 @@ export default async function CaseStudyPage({ params }: Params) {
               {c.h1}
             </h1>
 
-            {w.url && (
-              <a
-                href={w.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent mb-10 inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] no-underline"
-              >
-                Visit the live site
-                <span aria-hidden="true">↗</span>
-              </a>
+            {(w.url || w.stores) && (
+              <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2">
+                {w.url && (
+                  <a
+                    href={w.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] no-underline"
+                  >
+                    Visit the live site
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+                {w.stores?.map((s) => (
+                  <a
+                    key={s.url}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] no-underline"
+                  >
+                    Get it on {s.label}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
             )}
 
             <section className="mb-10">

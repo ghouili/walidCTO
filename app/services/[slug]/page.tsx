@@ -24,7 +24,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!s) return {};
   const url = `${site.url}/services/${s.slug}`;
   return {
-    title: s.seoTitle,
+    // seoTitle already carries the "| Walid Ghouili" suffix — bypass the layout template.
+    title: { absolute: s.seoTitle },
     description: s.metaDescription,
     alternates: { canonical: `/services/${s.slug}` },
     openGraph: {

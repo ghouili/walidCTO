@@ -84,7 +84,7 @@ export const servicePages: ServicePage[] = [
         a: "The fractional-CTO role is a monthly retainer; builds and audits are quoted as fixed-scope projects. Pricing depends on days per week and scope, so you get a concrete number on the intro call rather than a guessed figure here — no surprises later.",
       },
     ],
-    relatedCaseStudies: ["facturra", "zorro-services"],
+    relatedCaseStudies: ["sabboura", "facturra", "simplify-kids"],
   },
   {
     slug: "technical-audit",
@@ -130,7 +130,7 @@ export const servicePages: ServicePage[] = [
         a: "Yes. Data-protection and GDPR gaps are part of every audit, and recommendations include EU-resident hosting and architecture changes where data residency matters.",
       },
     ],
-    relatedCaseStudies: ["facturra", "fresh-tenancy"],
+    relatedCaseStudies: ["facturra", "tnajem", "fresh-tenancy"],
   },
   {
     slug: "mvp-development",
@@ -177,7 +177,7 @@ export const servicePages: ServicePage[] = [
         a: "You do, from day one — repositories, infrastructure, and documentation. You can take it in-house, keep me on a retainer to grow it, or hand it to your own team. No lock-in.",
       },
     ],
-    relatedCaseStudies: ["facturra", "debarras-aurea"],
+    relatedCaseStudies: ["sabboura", "guidup", "styly"],
   },
   {
     slug: "workshops",
