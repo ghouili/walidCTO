@@ -22,7 +22,7 @@ export function ChecklistPage({ locale }: { locale: Locale }) {
         <Breadcrumb
           items={[
             {
-              name: locale === "fr" ? "Accueil" : "Home",
+              name: t.nav.home,
               href: localePath(locale, "/"),
             },
             { name: c.title, href: localePath(locale, "/checklist") },

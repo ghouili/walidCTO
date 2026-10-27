@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { NDABadge } from "@/components/ui/NDABadge";
-import { work, type WorkEntry } from "@/lib/work";
+import type { WorkEntry } from "@/lib/work";
+import type { Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { localePath } from "@/lib/i18n";
+import type { Dictionary } from "@/lib/dictionaries";
+import { getWork } from "@/lib/localized";
 
 const cardBase =
   "group bg-section flex flex-col rounded-[20px] border border-transparent p-8 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card max-[900px]:p-6 max-[400px]:p-5";
 
-function CardBody({ entry }: { entry: WorkEntry }) {
+function CardBody({ entry, t }: { entry: WorkEntry; t: Dictionary["work"] }) {
   return (
     <>
       <div className="mb-3 flex items-center gap-2.5">
@@ -22,7 +27,7 @@ function CardBody({ entry }: { entry: WorkEntry }) {
         }`}
       >
         {/* NDA names never reach the HTML: the blur is cosmetic only. */}
-        {entry.nda ? "Confidential client" : entry.client}
+        {entry.nda ? t.ndaClient : entry.client}
       </h3>
 
       <p className="text-ink mb-2.5 text-[17px] leading-[1.35] font-semibold tracking-[-0.02em]">
@@ -35,7 +40,7 @@ function CardBody({ entry }: { entry: WorkEntry }) {
       <div className="mt-auto pt-6">
         {entry.caseStudy ? (
           <span className="text-accent inline-flex items-center gap-1.5 text-[13px] font-medium tracking-[-0.01em]">
-            Read case study
+            {t.readCaseStudy}
             <span
               aria-hidden="true"
               className="transition-transform duration-200 group-hover:translate-x-0.5"
@@ -45,7 +50,7 @@ function CardBody({ entry }: { entry: WorkEntry }) {
           </span>
         ) : entry.nda ? (
           <span className="text-faint font-mono text-[11px] tracking-[0.02em]">
-            Confidential — under NDA
+            {t.ndaNote}
           </span>
         ) : null}
       </div>
@@ -54,34 +59,34 @@ function CardBody({ entry }: { entry: WorkEntry }) {
 }
 
 /** Selected work — outcome-led cards linking to case studies; NDA work blurred (`#work`). */
-export function Work() {
+export function Work({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).work;
   return (
     <section id="work" className="py-[120px] max-[900px]:py-20">
       <Container>
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
-          Selected work
+          {t.eyebrow}
         </span>
         <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
-          A few things I&apos;ve shipped.
+          {t.title}
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">
-          Real products in production — SaaS, AI EdTech, marketplaces and mobile
-          apps on Flutter and React Native, plus local-services and B2B sites.
+          {t.sub}
         </p>
 
         <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
-          {work.map((entry) =>
+          {getWork(locale).map((entry) =>
             entry.caseStudy ? (
               <Link
                 key={entry.slug}
-                href={`/work/${entry.slug}`}
+                href={localePath(locale, `/work/${entry.slug}`)}
                 className={`${cardBase} no-underline`}
               >
-                <CardBody entry={entry} />
+                <CardBody entry={entry} t={t} />
               </Link>
             ) : (
               <article key={entry.slug} className={cardBase}>
-                <CardBody entry={entry} />
+                <CardBody entry={entry} t={t} />
               </article>
             ),
           )}

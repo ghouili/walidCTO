@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Stats } from "@/components/Stats";
-import { services, type Service } from "@/lib/services";
+import type { Service } from "@/lib/services";
+import type { Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { localePath } from "@/lib/i18n";
+import { getServices, getStats } from "@/lib/localized";
 
 const cardBase =
   "bento-card relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-transparent bg-section p-9 max-[400px]:p-6 transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-border hover:bg-white hover:shadow-card";
 
-function BentoCard({ service }: { service: Service }) {
+function BentoCard({ service, locale }: { service: Service; locale: Locale }) {
   const isFeature = service.size === "feature";
   const span = isFeature
     ? "col-span-3 row-span-2 max-[900px]:col-span-1 max-[900px]:row-auto"
@@ -14,7 +18,7 @@ function BentoCard({ service }: { service: Service }) {
 
   return (
     <Link
-      href={`/services/${service.slug}`}
+      href={localePath(locale, `/services/${service.slug}`)}
       className={`group ${cardBase} ${span} no-underline`}
     >
       <div>
@@ -61,28 +65,28 @@ function BentoCard({ service }: { service: Service }) {
 }
 
 /** "Three ways to work together" bento grid + stats (`#services`). */
-export function Services() {
+export function Services({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).services;
   return (
     <section id="services" className="py-[120px] max-[900px]:py-20">
       <Container>
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
-          What I do
+          {t.eyebrow}
         </span>
         <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
-          Four ways to work together.
+          {t.title}
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">
-          Pick the engagement that matches where you are. Most clients start
-          with one and grow into another.
+          {t.sub}
         </p>
 
         <div className="grid auto-rows-[minmax(220px,auto)] grid-cols-6 gap-4 max-[900px]:grid-cols-1">
-          {services.map((service) => (
-            <BentoCard key={service.num} service={service} />
+          {getServices(locale).map((service) => (
+            <BentoCard key={service.num} service={service} locale={locale} />
           ))}
         </div>
 
-        <Stats />
+        <Stats stats={getStats(locale)} title={t.statsTitle} />
       </Container>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import type { Dictionary } from "@/lib/dictionaries";
 
 /**
  * Interactive two-path hero (faithful port of the Claude-designed mockup).
@@ -15,18 +16,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type Path = "build" | "audit";
 
-const COPY: Record<Path, { sub: string; proof: string; cta: string }> = {
-  build: {
-    sub: "For founders about to build. I turn your idea into a shippable MVP — architected to scale, not rebuilt in a year.",
-    proof: "Idea to shippable MVP in ~4 weeks",
-    cta: "Book a build call",
-  },
-  audit: {
-    sub: "For teams already shipped. A deep read of your code, infra and team — with a clear plan to unblock velocity.",
-    proof: "2-week deep-read of code, infra & team",
-    cta: "Book an audit call",
-  },
-};
+export type HeroCopy = Dictionary["hero"];
 
 /** Animated gradient text fill (used on key headline words). */
 const gradText: CSSProperties = {
@@ -37,7 +27,13 @@ const gradText: CSSProperties = {
   color: "transparent",
 };
 
-export function Hero() {
+export function Hero({
+  copy,
+  checklistHref,
+}: {
+  copy: HeroCopy;
+  checklistHref: string;
+}) {
   const [path, setPath] = useState<Path>("build");
   const [displayPath, setDisplayPath] = useState<Path>("build");
   const [fading, setFading] = useState(false);
@@ -148,7 +144,7 @@ export function Hero() {
   };
 
   const isBuild = path === "build";
-  const c = COPY[displayPath];
+  const c = copy[displayPath];
 
   // --- derived styles (ported from the mockup's renderVals) ---
   const btnBase: CSSProperties = {
@@ -403,7 +399,7 @@ export function Hero() {
               animation: "hero-pulseDot 2.4s ease-out infinite",
             }}
           />
-          Available Q4 2026 · 2 spots open
+          {copy.pill}
         </div>
 
         {/* eyebrow + headline */}
@@ -426,7 +422,7 @@ export function Hero() {
               color: "#a1a1aa",
             }}
           >
-            Fractional CTO · Technical Audits · Tunis
+            {copy.eyebrow}
           </div>
           <h1
             style={{
@@ -435,42 +431,35 @@ export function Hero() {
               fontSize: "clamp(2rem, 8vw, 4.3rem)",
               lineHeight: 1.04,
               letterSpacing: "-0.04em",
-              maxWidth: "16ch",
+              maxWidth: copy.h1MaxWidth,
             }}
           >
-            <span className="hero-word" style={{ animationDelay: ".16s" }}>
-              Build
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".22s" }}>
-              the
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".28s" }}>
-              <span className="hero-gx" style={gradText}>
-                right thing
+            {[copy.line1, copy.line2].map((line, li) => (
+              <span key={li}>
+                {li > 0 && <br />}
+                {line.map((w, wi) => {
+                  const i = li === 0 ? wi : copy.line1.length + wi;
+                  return (
+                    <span key={wi}>
+                      {wi > 0 && " "}
+                      <span
+                        className="hero-word"
+                        style={{ animationDelay: `${0.16 + i * 0.06}s` }}
+                      >
+                        {"g" in w && w.g ? (
+                          <span className="hero-gx" style={gradText}>
+                            {w.t}
+                          </span>
+                        ) : (
+                          w.t
+                        )}
+                        {"after" in w && w.after}
+                      </span>
+                    </span>
+                  );
+                })}
               </span>
-              .
-            </span>
-            <br />
-            <span className="hero-word" style={{ animationDelay: ".36s" }}>
-              Or
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".42s" }}>
-              <span className="hero-gx" style={gradText}>
-                fix
-              </span>
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".48s" }}>
-              the
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".54s" }}>
-              thing
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".6s" }}>
-              you
-            </span>{" "}
-            <span className="hero-word" style={{ animationDelay: ".66s" }}>
-              shipped.
-            </span>
+            ))}
           </h1>
         </div>
 
@@ -478,7 +467,7 @@ export function Hero() {
         <div
           className="hero-fu"
           role="tablist"
-          aria-label="What do you need?"
+          aria-label={copy.selectorLabel}
           onKeyDown={onKey}
           style={{
             animationDelay: ".5s",
@@ -502,7 +491,7 @@ export function Hero() {
             style={segBtnStyle(isBuild)}
           >
             <span style={dot(isBuild)} />
-            <span>I need to build something</span>
+            <span>{copy.build.tab}</span>
           </button>
           <button
             className="hero-seg-btn"
@@ -513,7 +502,7 @@ export function Hero() {
             style={segBtnStyle(!isBuild)}
           >
             <span style={dot(!isBuild)} />
-            <span>I already shipped — it&apos;s broken</span>
+            <span>{copy.audit.tab}</span>
           </button>
         </div>
 
@@ -651,7 +640,7 @@ export function Hero() {
           </a>
           <a
             className="hero-lnk"
-            href="/checklist"
+            href={checklistHref}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -670,7 +659,7 @@ export function Hero() {
               transition: "border-color .2s ease, background .2s ease",
             }}
           >
-            Free due-diligence checklist
+            {copy.secondaryCta}
           </a>
         </div>
 
@@ -690,27 +679,22 @@ export function Hero() {
             color: "#525252",
           }}
         >
-          <span>20+ products shipped</span>
-          <span
-            aria-hidden="true"
-            style={{
-              width: "3px",
-              height: "3px",
-              borderRadius: "50%",
-              background: "#d4d4d4",
-            }}
-          />
-          <span>Replies in 48h</span>
-          <span
-            aria-hidden="true"
-            style={{
-              width: "3px",
-              height: "3px",
-              borderRadius: "50%",
-              background: "#d4d4d4",
-            }}
-          />
-          <span>FR · EN · AR</span>
+          {copy.trust.map((item, i) => (
+            <span key={item} style={{ display: "contents" }}>
+              {i > 0 && (
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: "3px",
+                    height: "3px",
+                    borderRadius: "50%",
+                    background: "#d4d4d4",
+                  }}
+                />
+              )}
+              <span>{item}</span>
+            </span>
+          ))}
         </div>
 
         {/* quiet code → production motif (desktop) */}
@@ -807,7 +791,7 @@ export function Hero() {
               textTransform: "lowercase",
             }}
           >
-            {isBuild ? "build" : "audit"}
+            {isBuild ? copy.build.motif : copy.audit.motif}
           </div>
           <svg
             className="hero-drawLine"

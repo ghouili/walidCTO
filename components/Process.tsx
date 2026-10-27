@@ -1,21 +1,23 @@
 import { Container } from "@/components/ui/Container";
-import { processSteps } from "@/lib/content";
+import type { Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { getProcessSteps } from "@/lib/localized";
 
 /** "How we'd work together" — the engagement process (`#process`). */
-export function Process() {
+export function Process({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).process;
+  const processSteps = getProcessSteps(locale);
   return (
     <section id="process" className="py-[120px] max-[900px]:py-20">
       <Container>
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
-          How it works
+          {t.eyebrow}
         </span>
         <h2 className="text-ink mb-5 max-w-[720px] text-[clamp(30px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
-          How we&apos;d work together.
+          {t.title}
         </h2>
         <p className="text-dim mb-16 max-w-[600px] text-[19px] leading-[1.5] tracking-[-0.01em]">
-          Same shape whether it&apos;s a build, an audit, or a fractional-CTO
-          retainer — fixed scope up front, visible progress, and everything
-          yours at the end.
+          {t.sub}
         </p>
 
         <ol className="grid grid-cols-4 gap-8 max-[900px]:grid-cols-1 max-[900px]:gap-10">

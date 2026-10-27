@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LandingPage } from "@/components/LandingPage";
 import { getLandingPage, landingPages } from "@/lib/landing-pages";
-import { ogLocale } from "@/lib/i18n";
+import { ogLocale, type Locale } from "@/lib/i18n";
 
-type Params = { params: Promise<{ slug: string }> };
+type Params = { params: Promise<{ locale: Locale; slug: string }> };
 
 export const dynamicParams = false;
 
+/** Each LP exists in its own locale only (middleware routes /lp/<fr-slug> to fr). */
 export function generateStaticParams() {
-  return landingPages.map((p) => ({ slug: p.slug }));
+  return landingPages.map((p) => ({ locale: p.locale, slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
@@ -33,8 +34,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export default async function LandingRoute({ params }: Params) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const lp = getLandingPage(slug);
-  if (!lp) notFound();
+  if (!lp || lp.locale !== locale) notFound();
   return <LandingPage lp={lp} />;
 }

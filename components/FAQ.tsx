@@ -1,27 +1,31 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { faqs } from "@/lib/content";
-
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+import type { Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { getFaqs } from "@/lib/localized";
 
 /** Frequently asked questions with FAQPage JSON-LD (`#faq`). */
-export function FAQ() {
+export function FAQ({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale).faq;
+  const faqs = getFaqs(locale);
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <section id="faq" className="py-[120px] max-[900px]:py-20">
       <Container>
         <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
-          FAQ
+          {t.eyebrow}
         </span>
         <h2 className="text-ink mb-12 max-w-[720px] text-[clamp(36px,4.5vw,56px)] leading-[1.05] font-semibold tracking-[-0.035em]">
-          Questions you&apos;re probably asking.
+          {t.title}
         </h2>
 
         <div className="border-border max-w-[820px] border-t">
