@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ChecklistNudge } from "@/components/ChecklistNudge";
+import { getDictionary } from "@/lib/dictionaries";
 import { site } from "@/lib/site";
 
 const linkClass =
@@ -45,6 +47,7 @@ export function Footer() {
           </div>
         </div>
       </Container>
+      <ChecklistNudge labels={getDictionary("en").nudge} href="/checklist" />
     </footer>
   );
 }

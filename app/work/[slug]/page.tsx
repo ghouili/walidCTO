@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Container } from "@/components/ui/Container";
@@ -213,6 +214,15 @@ export default async function CaseStudyPage({ params }: Params) {
                   </Button>
                 )}
               </div>
+              <p className="text-dim mt-8 text-[14.5px] leading-[1.55]">
+                Raising soon?{" "}
+                <Link
+                  href="/checklist"
+                  className="text-accent font-medium no-underline"
+                >
+                  Get the free 25-point technical due-diligence checklist →
+                </Link>
+              </p>
             </section>
           </Container>
         </article>

@@ -7,12 +7,12 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "How walidghouili.com handles your data. This is a static personal site that sets no tracking cookies; the only data processed is what you choose to send by email or via Calendly.",
+    "How walid.ghouili.com handles your data: no tracking cookies, and the only personal data processed is what you send through a form, by email or via Calendly.",
   alternates: { canonical: "/privacy" },
   robots: { index: true, follow: true },
 };
 
-const updated = "June 2026";
+const updated = "October 2026";
 
 export default function PrivacyPage() {
   return (
@@ -35,18 +35,38 @@ export default function PrivacyPage() {
               <Block title="The short version">
                 This is a personal portfolio site. It sets no advertising or
                 analytics cookies and does not track you. The only personal data
-                I ever process is what you deliberately send me — by email or
-                when you book a call.
+                I process is what you deliberately send me, through a form, by
+                email or when you book a call.
               </Block>
 
               <Block title="What this site collects">
                 Nothing automatically. There are no analytics scripts, no
-                tracking pixels, and no first-party cookies. The site is served
-                as static pages, so simply browsing it leaves no profile of you
-                with me.
+                tracking pixels, and no first-party cookies. Browsing the site
+                leaves no profile of you with me. Your browser may remember that
+                you dismissed the checklist banner (local storage, never sent to
+                me).
               </Block>
 
-              <Block title="When you contact me">
+              <Block title="Contact and checklist forms">
+                When you submit the contact form or the checklist form, what you
+                typed (name, email, company, project details) and the campaign
+                parameters in the page address, if any, are sent to me as an
+                email through{" "}
+                <a
+                  href="https://resend.com/legal/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ink hover:text-accent underline decoration-1 underline-offset-2 transition-colors"
+                >
+                  Resend
+                </a>
+                , an email delivery service. The site itself stores nothing.
+                Resend keeps delivery logs under its own policy. I use the
+                details only to reply to you or send the checklist you asked
+                for.
+              </Block>
+
+              <Block title="When you email me">
                 If you email{" "}
                 <a
                   href={`mailto:${site.email}`}
@@ -85,10 +105,11 @@ export default function PrivacyPage() {
               </Block>
 
               <Block title="Hosting">
-                The site is hosted on Vercel, which may keep standard server
+                The site runs on a private server that keeps standard web server
                 logs (such as IP address and request time) for security and
-                operational purposes. EU-resident hosting is available for
-                client projects on request.
+                operations, for a limited time. Your IP address is also used, in
+                memory only, to rate-limit the forms against spam. EU-resident
+                hosting is available for client projects on request.
               </Block>
 
               <Block title="Your rights">

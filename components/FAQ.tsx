@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { faqs } from "@/lib/content";
 
@@ -38,6 +39,14 @@ export function FAQ() {
               <p className="text-dim mt-3 max-w-[700px] text-[15px] leading-[1.6] tracking-[-0.005em]">
                 {faq.a}
               </p>
+              {faq.link && (
+                <Link
+                  href={faq.link.href}
+                  className="text-accent mt-3 inline-flex items-center gap-1.5 text-[14px] font-medium tracking-[-0.01em] no-underline"
+                >
+                  {faq.link.label} →
+                </Link>
+              )}
             </details>
           ))}
         </div>

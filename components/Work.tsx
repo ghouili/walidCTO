@@ -21,7 +21,8 @@ function CardBody({ entry }: { entry: WorkEntry }) {
           entry.nda ? "pointer-events-none blur-[5px] select-none" : ""
         }`}
       >
-        {entry.client}
+        {/* NDA names never reach the HTML: the blur is cosmetic only. */}
+        {entry.nda ? "Confidential client" : entry.client}
       </h3>
 
       <p className="text-ink mb-2.5 text-[17px] leading-[1.35] font-semibold tracking-[-0.02em]">

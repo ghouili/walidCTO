@@ -6,6 +6,9 @@ import { Footer } from "@/components/Footer";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { PriceAnchor } from "@/components/PriceAnchor";
+import { getDictionary } from "@/lib/dictionaries";
+import type { PriceKind } from "@/lib/pricing";
 import { site } from "@/lib/site";
 import { servicePages, getServicePage } from "@/lib/service-pages";
 import { getCaseStudy, type WorkEntry } from "@/lib/work";
@@ -13,6 +16,12 @@ import { getCaseStudy, type WorkEntry } from "@/lib/work";
 type Params = { params: Promise<{ slug: string }> };
 
 const AREA_SERVED = ["Tunisia", "European Union", "France", "MENA"];
+
+/** Service pages that carry a published price anchor (`#pricing`). */
+const PRICED: Record<string, PriceKind> = {
+  "technical-audit": "audit",
+  "fractional-cto": "cto",
+};
 
 export function generateStaticParams() {
   return servicePages.map((s) => ({ slug: s.slug }));
@@ -131,6 +140,15 @@ export default async function ServicePage({ params }: Params) {
                 ))}
               </ul>
             </section>
+
+            {PRICED[s.slug] && (
+              <PriceAnchor
+                kind={PRICED[s.slug]}
+                locale="en"
+                labels={getDictionary("en").pricing}
+                ctaHref="/#contact"
+              />
+            )}
 
             {s.faqs.length > 0 && (
               <section className="my-12">

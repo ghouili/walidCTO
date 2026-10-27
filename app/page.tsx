@@ -4,7 +4,9 @@ import { IndustriesStrip } from "@/components/IndustriesStrip";
 import { Services } from "@/components/Services";
 import { Process } from "@/components/Process";
 import { Work } from "@/components/Work";
+import { Testimonials } from "@/components/Testimonials";
 import { About } from "@/components/About";
+import { getDictionary } from "@/lib/dictionaries";
 import { FractionalCTOExplainer } from "@/components/FractionalCTOExplainer";
 import { FAQ } from "@/components/FAQ";
 import { CTA } from "@/components/CTA";
@@ -20,6 +22,7 @@ export default function Home() {
         <Services />
         <Process />
         <Work />
+        <Testimonials labels={getDictionary("en").testimonials} />
         <About />
         <FractionalCTOExplainer />
         <FAQ />

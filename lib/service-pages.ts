@@ -4,7 +4,8 @@
  * lede, body sections, a service-specific FAQ (→ FAQPage JSON-LD), and links to
  * related case studies. Edit copy here without touching the route component.
  *
- * Pricing is kept qualitative by request — no exact figures are published.
+ * Published prices live in lib/pricing.ts and render in the #pricing box on
+ * the audit and fractional-CTO pages. The cost FAQs below point to that box.
  */
 
 export type ServiceSection = { heading: string; body: string };
@@ -63,7 +64,7 @@ export const servicePages: ServicePage[] = [
       "Architecture decisions and technical roadmap you can defend to investors",
       "Code review and engineering standards that raise the whole team",
       "Hands-on help hiring and onboarding senior engineers",
-      "A senior technical contact in EU working hours (UTC+1)",
+      "A senior technical contact in EU working hours, from Tunis",
       "Everything documented and owned by you — no lock-in",
     ],
     faqs: [
@@ -81,7 +82,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "How much does a fractional CTO cost?",
-        a: "The fractional-CTO role is a monthly retainer; builds and audits are quoted as fixed-scope projects. Pricing depends on days per week and scope, so you get a concrete number on the intro call rather than a guessed figure here — no surprises later.",
+        a: "The fractional-CTO retainer is a monthly fee, and the starting price is in the Pricing box on this page. The final figure depends on how many days a week you need, and it's agreed in writing before any work starts. Builds and audits are separate fixed-price projects.",
       },
     ],
     relatedCaseStudies: ["sabboura", "facturra", "simplify-kids"],
@@ -123,7 +124,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "How long does an audit take and what does it cost?",
-        a: "Two weeks for a fixed fee and fixed scope. You get the report plus a walkthrough call. If you want the findings implemented, the audit rolls into a build or a fractional-CTO retainer — you get the exact fee on the intro call.",
+        a: "Two weeks, fixed scope, fixed fee. The price is in the Pricing box on this page and it doesn't move once the scope is agreed. You get the report plus a walkthrough call, and if you want the findings implemented the audit can roll into a build or a fractional-CTO retainer.",
       },
       {
         q: "Can the audit cover GDPR and EU data residency?",

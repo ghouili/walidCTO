@@ -28,7 +28,12 @@ export const processSteps: ProcessStep[] = [
   },
 ];
 
-export type Faq = { q: string; a: string };
+export type Faq = {
+  q: string;
+  a: string;
+  /** Optional follow-up link rendered under the answer (not in JSON-LD). */
+  link?: { href: string; label: string };
+};
 
 export const faqs: Faq[] = [
   {
@@ -37,7 +42,11 @@ export const faqs: Faq[] = [
   },
   {
     q: "How much does a fractional CTO cost?",
-    a: "Builds and technical audits are quoted as fixed-scope projects; the fractional-CTO role is a monthly retainer. The figure depends on scope and days per week, so you get a concrete number on the intro call — no guesswork up front and no surprises later.",
+    a: "The fractional-CTO retainer has a monthly starting price and the technical audit is a fixed fee, both shown in the Pricing box on their service pages. The final figure depends on scope and days per week, and you get it in writing before any work starts.",
+    link: {
+      href: "/services/fractional-cto#pricing",
+      label: "See fractional CTO pricing",
+    },
   },
   {
     q: "Fractional CTO vs full-time CTO vs agency — which do I need?",
@@ -52,8 +61,13 @@ export const faqs: Faq[] = [
     a: "A technical audit is a two-week, fixed-scope deep-read of your codebase, infrastructure, and team practices. The deliverable is a prioritised risk register — architecture, security, GDPR, infra, and test gaps — each finding ranked by impact and effort with a concrete recommended fix.",
   },
   {
+    q: "What do investors check in technical due diligence?",
+    a: "Before a seed round, investors check whether the product can survive growth: architecture, security, GDPR compliance, infrastructure, test coverage and how the team ships. I put the 25 points I see checked most often into a free checklist you can run on your own codebase in an afternoon.",
+    link: { href: "/checklist", label: "Get the free due-diligence checklist" },
+  },
+  {
     q: "Is it GDPR-safe to nearshore development to Tunisia?",
-    a: "Yes. I design with GDPR in mind from the start, can host on EU-resident infrastructure when data residency matters, and work under NDA. Tunis (UTC+1) gives full overlap with EU hours, so nearshoring adds capacity without the compliance or time-zone gaps of far-offshore teams.",
+    a: "Yes. I design with GDPR in mind from the start, can host on EU-resident infrastructure when data residency matters, and work under NDA. Tunis is on the same clock as Paris in winter and one hour behind in summer, so nearshoring adds capacity without the compliance or time-zone gaps of far-offshore teams.",
   },
   {
     q: "How do engagements start — and stop?",
@@ -61,7 +75,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "Where are you based, and which time zones do you cover?",
-    a: "Tunis, Tunisia (UTC+1) — full overlap with European working hours and a natural bridge to the wider MENA region, so you get same-day collaboration without the gaps that come with far-offshore teams.",
+    a: "Tunis, Tunisia. Tunisia is UTC+1 all year, so I'm on the same clock as Paris, Berlin and Madrid in winter and one hour behind in summer. Your working day and mine overlap almost completely, with none of the gaps that come with far-offshore teams.",
   },
   {
     q: "Which languages do you work in?",

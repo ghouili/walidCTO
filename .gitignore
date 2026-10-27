@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated at build (scripts/)
+/public/downloads/
+/.playwright-mcp/

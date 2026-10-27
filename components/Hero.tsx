@@ -651,7 +651,7 @@ export function Hero() {
           </a>
           <a
             className="hero-lnk"
-            href="#process"
+            href="/checklist"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -670,7 +670,7 @@ export function Hero() {
               transition: "border-color .2s ease, background .2s ease",
             }}
           >
-            See how I work
+            Free due-diligence checklist
           </a>
         </div>
 
