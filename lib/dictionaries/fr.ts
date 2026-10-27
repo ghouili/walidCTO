@@ -9,7 +9,7 @@ export const fr: Dictionary = {
       "CTO à temps partagé et audit technique pour startups françaises et européennes. Développement nearshore depuis Tunis, MVP en 4 semaines, RGPD intégré.",
     privacyTitle: "Confidentialité",
     privacyDescription:
-      "Comment walid.ghouili.com traite vos données : aucun cookie de suivi, seules les données envoyées via un formulaire, par email ou via Calendly sont traitées.",
+      "Comment walid.ghouili.com traite vos données : aucun cookie de suivi, seules les données envoyées via un formulaire, par email ou Calendly sont traitées.",
     checklistTitle: "Checklist due diligence technique (PDF gratuit)",
     checklistDescription:
       "Checklist due diligence technique : les 25 points que les investisseurs vérifient avant une levée seed, de l'architecture au RGPD. PDF gratuit.",

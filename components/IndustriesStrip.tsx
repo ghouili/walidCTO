@@ -16,7 +16,7 @@ export function IndustriesStrip({ locale }: { locale: Locale }) {
           {industries.map((industry) => (
             <div
               key={industry}
-              className="text-dim text-center text-[17px] font-semibold tracking-[-0.02em] opacity-60 transition-opacity duration-200 hover:opacity-100"
+              className="text-dim hover:text-ink text-center text-[17px] font-semibold tracking-[-0.02em] transition-colors duration-200"
             >
               {industry}
             </div>

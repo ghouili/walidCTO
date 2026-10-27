@@ -160,7 +160,10 @@ body {
    ============================================================ */
 @keyframes hero-fadeUp {
   from {
-    opacity: 0;
+    /* 0.01, not 0: looks the same, but Chrome only records the Largest
+       Contentful Paint once opacity is above zero, so a 0 start pushed LCP
+       to the end of the stagger. */
+    opacity: 0.01;
     transform: translateY(16px);
   }
   to {

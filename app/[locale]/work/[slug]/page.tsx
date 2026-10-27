@@ -71,6 +71,8 @@ export default async function CaseStudyPage({ params }: Params) {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "@id": `${url}#work`,
+    inLanguage: locale,
+    isPartOf: { "@id": `${site.url}/#website` },
     name: c.h1,
     headline: c.h1,
     description: c.metaDescription,

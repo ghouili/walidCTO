@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { SiteShell } from "@/components/SiteShell";
 import { Container } from "@/components/ui/Container";
 import { InlineLinks } from "@/components/ui/InlineLinks";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { getDictionary } from "@/lib/dictionaries";
-import type { Locale } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -23,12 +24,19 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function PrivacyPage({ params }: Params) {
   const { locale } = await params;
-  const t = getDictionary(locale).privacy;
+  const d = getDictionary(locale);
+  const t = d.privacy;
 
   return (
     <SiteShell locale={locale} path="/privacy">
       <section className="pt-40 pb-[120px] max-[900px]:pt-32 max-[900px]:pb-20">
         <Container className="max-w-[760px]">
+          <Breadcrumb
+            items={[
+              { name: d.nav.home, href: localePath(locale, "/") },
+              { name: t.title, href: localePath(locale, "/privacy") },
+            ]}
+          />
           <span className="text-accent mb-4 inline-block text-sm font-medium tracking-[-0.01em]">
             {t.eyebrow}
           </span>

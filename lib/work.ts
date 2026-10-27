@@ -110,7 +110,7 @@ export const work: WorkEntry[] = [
     caseStudy: {
       seoTitle: "Sabboura — real-time AI tutor for bac students (case study)",
       metaDescription:
-        "How we built Sabboura: a voice-first AI tutor for Tunisian bac maths and physics with teacher-verified lessons, live explanations and a Flutter app, shipped in weeks.",
+        "How we built Sabboura: a voice-first AI tutor for Tunisian bac maths and physics, with teacher-verified lessons, live explanations and a Flutter app.",
       h1: "Sabboura: an AI tutor that teaches the bac curriculum by voice",
       intro:
         "Tunisian bac students pay for private lessons because the classroom moves too fast and the textbook doesn't answer back. Sabboura is a tutor that does: it explains a chapter out loud, illustrates as it goes, and answers follow-up questions in the language the student asks in — Arabic, French or English.",
@@ -157,10 +157,9 @@ export const work: WorkEntry[] = [
       "Story-based AI learning for 6–12 year-olds in French, Arabic and English, told by an animated narrator. Next.js platform plus Flutter app in production, children's data kept in-region.",
     url: "https://beta.simplify-kids.com/",
     caseStudy: {
-      seoTitle:
-        "Simplify for Kids — AI story-based learning platform (case study)",
+      seoTitle: "Simplify for Kids: AI story-based learning (case study)",
       metaDescription:
-        "How we built Simplify for Kids: a parent uploads a lesson, the child gets a narrated story, a before/after quiz and the parent a report — web and Flutter app in production.",
+        "How we built Simplify for Kids: a parent uploads a lesson, the child gets a narrated story and a quiz, the parent gets a report. Web and Flutter app.",
       h1: "Simplify for Kids: a school lesson in, a story the child remembers out",
       intro:
         "Parents in Tunisia spend evenings re-explaining lessons a 7-year-old tuned out of. Simplify takes the actual lesson — a photo, a PDF, a few lines — and turns it into a story told by an animated narrator, followed by a quiz that shows the parent what landed.",
@@ -205,9 +204,9 @@ export const work: WorkEntry[] = [
       "Cultural and ecological guide to northern Tunisia with offline packs, audio guides and bookings. Flutter app in production, Next.js dashboard and site, one monorepo.",
     url: "https://guidup.tn/",
     caseStudy: {
-      seoTitle: "Guid'Up Tunisia — travel guide app + back-office (case study)",
+      seoTitle: "Guid'Up: travel guide app and back-office (case study)",
       metaDescription:
-        "How we delivered Guid'Up: a Flutter travel-guide app with offline packs and audio guides, a Next.js admin dashboard and landing site, from a single monorepo.",
+        "How we delivered Guid'Up: a Flutter travel-guide app with offline packs and audio guides, plus a Next.js back-office and site, from one monorepo.",
       h1: "Guid'Up: a travel guide app, back-office and site for northern Tunisia",
       intro:
         "Guid'Up promotes six under-visited destinations in northern Tunisia — Testour, Téboursouk, Thibar and more — to travellers who want culture and nature off the usual circuit. The founder needed a mobile app, a way to manage content and bookings, and a public site, launched together.",
@@ -256,10 +255,9 @@ export const work: WorkEntry[] = [
       },
     ],
     caseStudy: {
-      seoTitle:
-        "Styly — React Native marketplace app on Google Play (case study)",
+      seoTitle: "Styly: React Native marketplace on Google Play (case study)",
       metaDescription:
-        "How we shipped Styly: a React Native marketplace app connecting brands with their clients, in production on Google Play with a MERN back-end and App Store release underway.",
+        "How we shipped Styly: a React Native marketplace app connecting brands with their own clients, live on Google Play, built on a MERN back-end.",
       h1: "Styly: a brand-to-client marketplace, from first build to the Play Store",
       intro:
         "Styly lets brands reach their own clients directly in a mobile marketplace instead of renting attention from social networks. The product is mobile-first and had to clear the store review process on a personal developer account, with worldwide availability including the EU.",
@@ -301,7 +299,7 @@ export const work: WorkEntry[] = [
     caseStudy: {
       seoTitle: "Tnajem — tutoring marketplace platform (case study)",
       metaDescription:
-        "How we built Tnajem: a Next.js marketplace where verified tutors publish live video classes and students book seats, with in-app-only contact and tiered tutor plans.",
+        "How we built Tnajem: a Next.js marketplace where verified tutors publish live video classes, students book seats, and all contact stays in-app.",
       h1: "Tnajem: a live-class marketplace for tutors and students",
       intro:
         "Private tutoring in Tunisia runs on WhatsApp groups and cash. Tnajem gives tutors a storefront — publish a live class, share one link — and gives students and parents a safe place to book and pay, with no direct contact between the two sides.",
@@ -354,7 +352,7 @@ export const work: WorkEntry[] = [
       "Fast, SEO-built site plus paid-acquisition funnel that converts local searches into booked interventions.",
     url: "https://debarras-aurea.fr/",
     caseStudy: {
-      seoTitle: "Débarras Aurea — quote funnel + paid acquisition (case study)",
+      seoTitle: "Débarras Aurea: quote funnel and Google Ads (case study)",
       metaDescription:
         "A two-minute quote funnel and SEO + paid-acquisition site turning local searches into booked clearance interventions across 8 Île-de-France départements.",
       h1: "Débarras Aurea: a two-minute quote funnel across 8 départements",
@@ -408,8 +406,7 @@ export const work: WorkEntry[] = [
       "Multi-page site that positions a Tunisian B2B services company for institutional and municipal clients.",
     url: "https://zorro-services.vercel.app/",
     caseStudy: {
-      seoTitle:
-        "Zorro Services — corporate presence for an ANGED-certified firm (case study)",
+      seoTitle: "Zorro Services: credible B2B corporate site (case study)",
       metaDescription:
         "A credibility-first, multi-page corporate site positioning an ANGED-certified Tunisian environmental-services firm for institutional and municipal clients.",
       h1: "Zorro Services: a credibility-first presence for a regulated B2B firm",

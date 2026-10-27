@@ -6,13 +6,12 @@
 
 export const en = {
   meta: {
-    title:
-      "Walid Ghouili — Fractional CTO, Tech Audits & Engineering Leadership",
+    title: "Fractional CTO & Technical Audits | Walid Ghouili",
     description:
       "Fractional CTO & technical audits for European and Tunisian startups. Nearshore senior engineering from Tunis — MVP builds, codebase audits, GDPR-aware.",
     privacyTitle: "Privacy",
     privacyDescription:
-      "How walid.ghouili.com handles your data: no tracking cookies, and the only personal data processed is what you send through a form, by email or via Calendly.",
+      "How walid.ghouili.com handles your data: no tracking cookies, and the only personal data processed is what you send via a form, by email or Calendly.",
     checklistTitle: "Technical due diligence checklist (free PDF)",
     checklistDescription:
       "Technical due diligence checklist: the 25 things investors check before a seed round, from architecture and security to GDPR, infra and tests. Free PDF.",

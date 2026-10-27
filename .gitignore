@@ -47,3 +47,5 @@ next-env.d.ts
 # generated at build (scripts/)
 /public/downloads/
 /.playwright-mcp/
+/public/llms.txt
+/public/llms-full.txt

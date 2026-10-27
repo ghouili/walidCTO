@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "predev": "npm run generate",
-    "generate": "tsx scripts/generate-checklist-pdf.ts",
+    "generate": "tsx scripts/generate-checklist-pdf.ts && tsx scripts/generate-llms.ts",
     "prebuild": "npm run generate",
     "build": "next build",
     "start": "next start",

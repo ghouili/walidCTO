@@ -61,7 +61,8 @@ async function sendEmail(message: {
     },
     body: JSON.stringify({
       from:
-        process.env.CONTACT_FROM ?? "Walid Ghouili site <onboarding@resend.dev>",
+        process.env.CONTACT_FROM ??
+        "Walid Ghouili site <onboarding@resend.dev>",
       to: [message.to],
       subject: message.subject,
       text: message.text,
@@ -98,7 +99,9 @@ export async function POST(req: NextRequest) {
     return json({ ok: true, download });
   }
 
+  // Behind Cloudflare's proxy x-real-ip is a Cloudflare edge address.
   const ip =
+    req.headers.get("cf-connecting-ip") ??
     req.headers.get("x-real-ip") ??
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     "unknown";
@@ -174,7 +177,9 @@ export async function POST(req: NextRequest) {
         ? "Votre checklist due diligence technique"
         : "Your technical due-diligence checklist",
       text: [
-        fr ? `Bonjour${name ? ` ${name}` : ""},` : `Hi${name ? ` ${name}` : ""},`,
+        fr
+          ? `Bonjour${name ? ` ${name}` : ""},`
+          : `Hi${name ? ` ${name}` : ""},`,
         "",
         fr
           ? "Voici le lien vers la checklist en 25 points :"

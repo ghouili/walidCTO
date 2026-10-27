@@ -12,13 +12,12 @@ import { site } from "@/lib/site";
 import type { WorkEntry } from "@/lib/work";
 import { localePath, locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
+import { serviceJsonLd } from "@/lib/jsonld";
 import { getCaseStudy, getServicePage, getServicePages } from "@/lib/localized";
 
 type Params = { params: Promise<{ locale: Locale; slug: string }> };
 
 export const dynamicParams = false;
-
-const AREA_SERVED = ["Tunisia", "European Union", "France", "MENA"];
 
 /** Service pages that carry a published price anchor (`#pricing`). */
 const PRICED: Record<string, PriceKind> = {
@@ -57,18 +56,14 @@ export default async function ServicePage({ params }: Params) {
     .map((cs) => getCaseStudy(locale, cs))
     .filter((cs): cs is WorkEntry => cs !== undefined);
 
-  const serviceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "@id": `${url}#service`,
+  const serviceLd = serviceJsonLd({
+    locale,
+    url,
     serviceType: s.serviceType,
     name: s.h1,
     description: s.metaDescription,
-    url,
-    provider: { "@id": `${site.url}/#person` },
-    areaServed: AREA_SERVED,
-    isPartOf: { "@id": `${site.url}/#service` },
-  };
+    priceKind: PRICED[s.slug],
+  });
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -224,7 +219,7 @@ export default async function ServicePage({ params }: Params) {
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }}
       />
       <script
         type="application/ld+json"

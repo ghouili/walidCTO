@@ -41,7 +41,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Technical audit for startups, 2 weeks, fixed price",
       description:
-        "A two-week, fixed-price technical audit of your codebase, infrastructure and team. You get a ranked risk register and the fixes in order.",
+        "A two-week, fixed-price technical audit of your codebase, infrastructure and team. You get a ranked risk register with the fixes in order, in writing.",
     },
     eyebrow: "Technical audit · 2 weeks · fixed price",
     headline:
@@ -135,7 +135,7 @@ export const landingPages: LandingPage[] = [
     meta: {
       title: "Audit technique de startup en 2 semaines, prix fixe",
       description:
-        "Un audit technique de votre code, de votre infrastructure et de votre équipe en deux semaines, à prix fixe. Un registre des risques priorisé, les corrections dans l'ordre.",
+        "Audit technique de votre code, de votre infra et de votre équipe en deux semaines, à prix fixe. Un registre des risques priorisé, corrections dans l'ordre.",
     },
     eyebrow: "Audit technique · 2 semaines · prix fixe",
     headline:

@@ -230,7 +230,9 @@ export function Hero({
         color: "#0a0a0a",
       }}
     >
-      {/* gradient blob backdrop (parallax outer / float inner) */}
+      {/* gradient blob backdrop (parallax outer / float inner). Offsets are in
+          svh, not %, so the hero growing when the web font swaps in (and the
+          headline re-wraps) never moves them. */}
       <div
         aria-hidden="true"
         style={{
@@ -269,7 +271,9 @@ export function Hero({
           className="hero-spotlight"
           style={{
             position: "absolute",
-            top: "40%",
+            // Viewport-relative so the hero growing (e.g. after the web font
+            // swaps in and the headline re-wraps) never moves it (CLS).
+            top: "40svh",
             left: "50%",
             width: "760px",
             height: "520px",
@@ -284,7 +288,7 @@ export function Hero({
           ref={blobA}
           style={{
             position: "absolute",
-            top: "-8%",
+            top: "-8svh",
             left: "6%",
             width: "520px",
             height: "520px",
@@ -309,7 +313,7 @@ export function Hero({
           ref={blobB}
           style={{
             position: "absolute",
-            top: "-4%",
+            top: "-4svh",
             right: "4%",
             width: "480px",
             height: "480px",
@@ -334,7 +338,8 @@ export function Hero({
           ref={blobC}
           style={{
             position: "absolute",
-            bottom: "-14%",
+            // = bottom: -14% of a 100svh hero, but independent of hero height.
+            top: "calc(114svh - 560px)",
             left: "38%",
             width: "560px",
             height: "560px",
@@ -444,7 +449,7 @@ export function Hero({
                       {wi > 0 && " "}
                       <span
                         className="hero-word"
-                        style={{ animationDelay: `${0.16 + i * 0.06}s` }}
+                        style={{ animationDelay: `${0.08 + i * 0.04}s` }}
                       >
                         {"g" in w && w.g ? (
                           <span className="hero-gx" style={gradText}>
@@ -470,7 +475,7 @@ export function Hero({
           aria-label={copy.selectorLabel}
           onKeyDown={onKey}
           style={{
-            animationDelay: ".5s",
+            animationDelay: ".3s",
             position: "relative",
             display: "flex",
             width: "100%",
@@ -507,7 +512,7 @@ export function Hero({
         </div>
 
         {/* morphing copy group */}
-        <div className="hero-fu" style={{ animationDelay: ".6s" }}>
+        <div className="hero-fu" style={{ animationDelay: ".34s" }}>
           <div style={fadeStyle}>
             <p
               style={{
@@ -571,7 +576,7 @@ export function Hero({
         <div
           className="hero-fu"
           style={{
-            animationDelay: ".72s",
+            animationDelay: ".42s",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
@@ -667,7 +672,7 @@ export function Hero({
         <div
           className="hero-fu"
           style={{
-            animationDelay: ".84s",
+            animationDelay: ".5s",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
@@ -702,7 +707,7 @@ export function Hero({
           className="hero-motif hero-fu"
           aria-hidden="true"
           style={{
-            animationDelay: ".94s",
+            animationDelay: ".58s",
             marginTop: "18px",
             display: "flex",
             alignItems: "center",

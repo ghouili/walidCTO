@@ -137,8 +137,7 @@ export const servicePages: ServicePage[] = [
     slug: "mvp-development",
     serviceType: "MVP Development",
     eyebrow: "MVP Build",
-    seoTitle:
-      "MVP Development — Idea to Production in ~4 Weeks | Walid Ghouili",
+    seoTitle: "MVP Development in About 4 Weeks | Walid Ghouili",
     metaDescription:
       "Idea to a shippable MVP in about four weeks of fixed-scope work — a production web app architected to scale, not rebuilt in a year. Nearshore from Tunis.",
     h1: "MVP development — idea to a shippable product",

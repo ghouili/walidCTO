@@ -2,6 +2,7 @@
  * Page metadata builder. Next merges `openGraph` / `twitter` shallowly, so a
  * page that sets any of them must set all of them: this keeps canonical,
  * hreflang, OG locale, site name and Twitter card consistent everywhere.
+ * Images come from the file-based opengraph-image routes (lib/og.tsx).
  */
 
 import type { Metadata } from "next";
@@ -46,9 +47,6 @@ export function pageMetadata({
       description,
       locale: ogLocale[locale],
       alternateLocale: [ogLocale[locale === "fr" ? "en" : "fr"]],
-      images: [
-        { url: site.portrait, width: 1024, height: 983, alt: site.portraitAlt },
-      ],
       ...(type === "article" && publishedTime
         ? { publishedTime, authors: [site.url] }
         : {}),
@@ -57,7 +55,6 @@ export function pageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [site.portrait],
     },
   };
 }
