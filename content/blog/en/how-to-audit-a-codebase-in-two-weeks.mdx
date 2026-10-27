@@ -1,0 +1,101 @@
+---
+title: "How to audit a codebase in two weeks: my exact process"
+seoTitle: "Codebase audit in two weeks: my exact process"
+description: "A codebase audit in two weeks: ten working days covering history, architecture, security, GDPR, infra, tests and team, ending in a ranked risk register."
+date: "2026-10-27"
+translationKey: "codebase-audit-process"
+tags: ["technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "guidup"
+tldr:
+  - "A two-week codebase audit fits in ten working days: history and architecture first, then running the product, then security, GDPR, infrastructure and test passes, then team interviews."
+  - "The deliverable is a risk register where every finding has an area, a business impact, an effort, a concrete fix and a priority, followed by a walkthrough call."
+  - "The tools are ordinary ones a working engineer already uses, such as git log, cloc, npm audit, gitleaks, Lighthouse, database EXPLAIN and the cloud billing console."
+---
+
+I audit a codebase in two weeks by splitting the work into ten working days, always in the same order: read the history, map the architecture, run the product, then do focused passes on security, GDPR, infrastructure and tests, talk to the team, and write it up. The output is not a verdict on whether the code is "good". It is a ranked list of findings, each with an impact, an effort and a fix, that you can hand to any team.
+
+Here is the exact process I follow for a [technical audit](/services/technical-audit), with the tools I actually use at each step.
+
+## How do you audit a codebase in two weeks?
+
+You don't read every line. Two weeks is enough to understand a product of a typical startup size if you sample in the right order. History tells you where to look. Architecture tells you what matters. Running the product tells you what the docs leave out. The targeted passes then go deep on the areas where mistakes cost money.
+
+| Day | Phase | What comes out |
+| --- | --- | --- |
+| 1 | Access and kickoff | Written scope, your main worries |
+| 1-2 | Reading the history | Hotspots, who wrote what |
+| 3 | Architecture mapping | One-page system diagram |
+| 4 | Running it locally and in staging | Setup time, performance baseline |
+| 5 | Security pass | Secrets, dependencies, auth |
+| 6 | GDPR and data pass | Personal data map |
+| 7 | Infra and deploy review | Deploy path, cost per environment |
+| 8 | Tests and team interviews | Coverage of key paths, team view |
+| 9 | Risk register | Ranked findings with fixes |
+| 10 | Walkthrough | Shared plan with your team |
+
+### Day 1: access and kickoff
+
+Before anything else, an NDA and read-only access: the repositories, staging, the cloud console with billing visible, the error tracker and the issue tracker. I don't need write access to production, and I don't ask for it.
+
+The kickoff is a one-hour call with the founder and the lead engineer. Two questions matter. What worries you? And what decision does this audit feed: a fundraise, a rewrite, a hire, an acquisition? The answer changes where I spend the time. A seed round means I weight the points investors check, the ones in my [technical due diligence checklist](/blog/technical-due-diligence-checklist). A rewrite decision means I focus on what is worth keeping.
+
+### Days 1-2: reading the history
+
+The git history is the most honest document in the company. I start with `git shortlog -sn` to see who wrote the code and whether those people are still around. Then `git log` over the last six to twelve months, looking at commit size, frequency and messages. I count which files change most often. Those hotspots are usually where the bugs and the fear live.
+
+Then I read the last few dozen merged pull requests. Are reviews real, or approved in thirty seconds? Are there tests in the diffs? Finally the issue tracker: recurring bugs, issues reopened three times, features stuck for months. `cloc` or `tokei` gives me the size of the codebase and the language mix, which sets expectations for the rest of the work.
+
+### Day 3: architecture mapping
+
+I draw the system from the code, not from the docs: entry points, services, databases, queues, third-party APIs, data flows. Then I compare my drawing with what the team told me on day 1. The gaps between the two are findings in their own right. I also read the data model and the migration history, because a schema that doesn't match the business shows up everywhere later.
+
+### Day 4: running it locally and in staging
+
+I follow the README literally and time it. If it takes a full day and three messages to the lead dev, that is a finding, because your next hire will hit the same wall. Then I click through the core flows in staging: signup, payment, the main workflow. Lighthouse on the key pages gives a front-end performance baseline. On the database side, I look at the slowest queries and run `EXPLAIN` on them. A missing index is one of the cheapest fixes in an audit.
+
+### Day 5: security pass
+
+`gitleaks` or `trufflehog` on the full git history, not just the current branch. `npm audit` or `pip-audit` for known vulnerabilities in dependencies. Then manual checks: I call admin routes with a normal user's token, look at how passwords are stored, check rate limits on login and password reset, read the security headers, and list who has access to production.
+
+To be clear, this is not a penetration test. I look for the mistakes I see most often in startup codebases. If the product needs a formal pentest, for a bank customer or a certification, the register says so.
+
+### Day 6: GDPR and data pass
+
+I map where personal data lives: tables, logs, analytics, backups, third-party tools. For each vendor that receives it, I check for a DPA and the hosting region. Then I ask the team to show me how they delete one user, and I ask when a backup was last restored. Those two answers are often the most revealing of the whole audit.
+
+### Day 7: infrastructure and deployment review
+
+How does code get from a merged pull request to production? Who can deploy, and how do you roll back? Could you rebuild the servers from scratch if the provider lost them? I check monitoring and alerting, then open the cloud billing console to see the monthly cost per environment and anything running that nobody uses.
+
+### Day 8: tests and team interviews
+
+I run the test suite. Is it green? How long does it take? Does it cover signup, payment and the core workflow, or mostly utility functions? Flaky tests that everyone reruns until green count as a finding.
+
+Interviews are spread over days 6 to 8 so calendars fit: 30 to 45 minutes with each engineer, one at a time. I ask what they would fix with a free week, what scares them before a deploy, and what only they know. Those conversations confirm what the code says and add what it can't.
+
+### Days 9-10: the risk register and the walkthrough
+
+Every finding goes into one table, ranked by impact against effort. Impact means impact on the business, not on code elegance. The first page is always the handful of things to fix first.
+
+**Example only.** The rows below are generic illustrations of the format, not findings from a client audit.
+
+| Finding | Area | Impact | Effort | Fix | Priority |
+| --- | --- | --- | --- | --- | --- |
+| DB password in git history | Security | High | Hours | Rotate, move to secret store | P1 |
+| Admin API checks role in front end only | Security | High | Days | Enforce on server, add tests | P1 |
+| Backups never restored | Data | High | Hours | Test restore, schedule quarterly | P1 |
+| Deploys by SSH, one person | Infra | Medium | Days | CI/CD pipeline with rollback | P2 |
+| No DPA with email vendor | GDPR | Medium | Hours | Sign DPA, update register | P2 |
+
+On day 10 we do the walkthrough call with you and your team. I go through the top findings, explain the reasoning, and answer questions. The document is yours. You can fix things in-house, hand it to another team, or roll it into a build or a [fractional CTO engagement](/services/fractional-cto).
+
+## What an audit and a takeover have in common
+
+The first question of an audit is the same as the first question of a takeover: what in the existing build is worth keeping? On [Guid'Up](/work/guidup), a travel guide app for northern Tunisia, my team replaced an abandoned previous build. We kept the animations the client loved from the previous version, rebuilt the app around the V2 design board, and set up the client's own store and infrastructure accounts so she owns every one of them. That habit of separating what works from what has to go is exactly what the two weeks are for.
+
+## What the audit costs
+
+It is a fixed fee for a fixed scope, agreed in writing before day 1, and the price does not move. You'll find the current figure in the [pricing box on the audit page](/services/technical-audit#pricing). If you are preparing a round, start with [the 25 things investors check before a seed round](/blog/technical-due-diligence-checklist) or the free [checklist PDF](/checklist) to see where you stand.
+
+If you want this process run on your codebase, [book a call](/#contact). I reply within 48 hours and work under NDA.

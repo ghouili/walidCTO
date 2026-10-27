@@ -1,0 +1,112 @@
+---
+title: "Développement nearshore en Tunisie vs offshore : fuseau horaire, RGPD, coûts, langue, la comparaison honnête"
+seoTitle: "Développement nearshore Tunisie vs offshore : comparatif"
+description: "Développement nearshore en Tunisie ou offshore : Tunis suit les horaires de Paris et parle français, mais coûte plus que l'Asie et le RGPD impose des CCT."
+date: "2026-10-27"
+translationKey: "nearshore-tunisia"
+tags: ["nearshore", "gdpr"]
+relatedService: "mvp-development"
+relatedCaseStudy: "facturra"
+tldr:
+  - "La Tunisie est à UTC+1 toute l'année, sans heure d'été : une équipe à Tunis a la même heure que Paris en hiver et une heure de moins en été."
+  - "La Tunisie ne bénéficie pas d'une décision d'adéquation de l'UE : un développeur à Tunis qui accède à des données personnelles constitue un transfert hors UE, encadré par des clauses contractuelles types et une analyse d'impact des transferts."
+  - "La Tunisie coûte généralement moins cher que la France mais plus que l'Asie du Sud, et son vrai atout est le recouvrement horaire, le français et un vol de deux heures, pas le TJM le plus bas."
+---
+
+Pour une startup européenne, le développement nearshore en Tunisie l'emporte en général sur l'offshore lointain dès que le travail demande des échanges quotidiens : une équipe à vos horaires, qui parle français et qui peut être dans vos locaux le jour même. L'offshore en Asie du Sud gagne sur le TJM brut, et le RGPD impose de la paperasse dans les deux cas. Le choix dépend donc surtout de la fréquence à laquelle votre produit change encore.
+
+Précision : je dirige InnoviaBurst depuis Tunis et je travaille pour des fondateurs en France, en Allemagne, aux Pays-Bas et en Espagne. J'ai donc un intérêt dans la question, ce qui ne m'empêchera pas de parler des défauts de la Tunisie.
+
+## Nearshore en Tunisie ou offshore : que choisir pour une startup européenne ?
+
+Pour la plupart des startups early stage, la Tunisie est le bon choix par défaut tant que le périmètre bouge : un MVP, un produit qui cherche encore son marché, un code que vous comptez internaliser plus tard. L'offshore a du sens quand le périmètre est stable, bien spécifié, et que le prix est la contrainte principale.
+
+Voici le comparatif que je donnerais à un fondateur parisien.
+
+| | Tunisie (nearshore) | Inde, Vietnam, Philippines | Amérique latine |
+|---|---|---|---|
+| Recouvrement horaire avec Paris | Journée entière en hiver, toute sauf 1 h en été | 2 à 5 heures | 1 à 5 heures |
+| Langue | Français, anglais, arabe | Anglais | Espagnol, portugais, anglais |
+| Transfert RGPD | CCT + analyse des transferts | CCT + analyse des transferts | Idem, sauf Argentine et Uruguay |
+| Coût d'un senior vs France | Environ 40 à 60 % | Environ 25 à 45 % | Environ 50 à 80 % |
+| Temps de trajet depuis Paris | Environ 2 h 15 en direct | 8 à 17 heures | 10 à 14 heures |
+| Proximité culturelle et business | Forte avec la France | Plus faible, plus de process | Moyenne, tournée vers les US |
+
+Le recouvrement est calculé sur une journée de 9 h à 18 h des deux côtés. La ligne coût reflète les tarifs que j'ai pu voir, pas une étude de marché : c'est une fourchette, qui varie beaucoup selon la séniorité et le prestataire.
+
+## Fuseau horaire : le recouvrement réel
+
+La Tunisie est à UTC+1 toute l'année et n'applique pas l'heure d'été. En hiver, Tunis a exactement la même heure que Paris, Berlin, Amsterdam et Madrid. En été, quand l'Europe passe à UTC+2, Tunis a une heure de moins. Un daily à 9 h 30 à Paris tombe à 9 h 30 à Tunis en janvier et à 8 h 30 en juillet. C'est tout l'ajustement.
+
+Côté offshore, l'Inde a 3 h 30 d'avance sur Paris en été et 4 h 30 en hiver, le Vietnam 5 à 6 heures, les Philippines 6 à 7. L'Amérique latine fonctionne dans l'autre sens : São Paulo a 4 à 5 heures de retard sur Paris, Mexico 7 à 8.
+
+Pourquoi c'est important : sur un MVP, le fondateur change d'avis un mardi après-midi. Avec un recouvrement complet, la question posée à 15 h a sa réponse à 15 h 05. Avec 5 heures de décalage, elle attend le lendemain, et le développeur devine ou s'arrête. Sur trois mois de tickets ambigus, vous perdez des semaines. L'asynchrone fonctionne bien quand la spec est écrite et stable, mal quand elle est dans la tête du fondateur.
+
+## Langue et culture de travail
+
+Le français est très présent dans l'écosystème tech tunisien. L'informatique est largement enseignée en français à l'université, et la plupart des ingénieurs avec qui je travaille mènent une réunion ou rédigent une spec en français sans difficulté. L'anglais reste la langue du code, et l'anglais parlé va de courant à fonctionnel selon les personnes. L'arabe est la langue maternelle, un plus si vous visez aussi la région MENA.
+
+La proximité business avec la France est réelle. Les notions juridiques et administratives françaises (SIRET, TVA, URSSAF, la façon dont un SaaS français facture) sont un terrain connu. Facturra en est un bon exemple : une plateforme de facturation électronique Factur-X pour l'obligation française de 2026, avec un onboarding via FranceConnect Pro et SIRET, construite depuis Tunis pour les freelances et les TPE françaises. Le détail est dans l'[étude de cas Facturra](/fr/work/facturra).
+
+Offshore, vous trouverez aussi d'excellents ingénieurs. Vous passerez simplement plus de temps sur les specs écrites et sur la définition commune de « terminé ».
+
+## RGPD : ce qui se passe quand un développeur à Tunis ouvre votre base
+
+La Tunisie ne bénéficie pas d'une décision d'adéquation de la Commission européenne. Les autorités européennes considèrent l'accès à distance à des données personnelles depuis un pays tiers comme un transfert, même quand la base est hébergée à Francfort ou à Paris. Si un développeur à Tunis peut interroger la table des utilisateurs en production, vous transférez des données personnelles hors UE, et le chapitre V du RGPD s'applique.
+
+Concrètement, il vous faut deux choses :
+
+1. **Un outil de transfert.** Pour une startup qui fait appel à un prestataire, ce sont les clauses contractuelles types (CCT) de la Commission européenne, version 2021, avec le module adapté à votre situation, le plus souvent responsable de traitement vers sous-traitant. Elles se signent avec votre accord de sous-traitance (DPA).
+2. **Une analyse d'impact des transferts** (AITD, souvent appelée TIA). C'est une analyse documentée du droit et des pratiques du pays de destination, et des mesures complémentaires que vous mettez en place. Gardez-la dans votre documentation RGPD : une due diligence technique ou la CNIL peut la demander.
+
+La Tunisie dispose de son propre cadre : la loi organique n° 2004-63 du 27 juillet 2004 portant sur la protection des données à caractère personnel, sous le contrôle d'une autorité nationale, l'INPDP. La Tunisie a aussi adhéré en 2017 à la Convention 108 du Conseil de l'Europe. C'est un élément utile pour votre analyse des transferts, mais cela ne remplace pas les CCT. Votre prestataire peut avoir ses propres obligations au regard du droit tunisien : posez-lui la question.
+
+Ce que ça change pour la comparaison : l'Inde, le Vietnam et les Philippines n'ont pas non plus de décision d'adéquation. Le RGPD n'est donc pas un argument pour l'Asie contre la Tunisie, ni l'inverse. C'est un coût administratif pour presque toute équipe hors EEE. En Amérique latine, l'Argentine et l'Uruguay font exception avec une décision d'adéquation. La liste évolue, vérifiez la version à jour de la Commission.
+
+### Le montage que je recommande
+
+Le plus propre consiste à garder les données dans l'UE et à en tenir les développeurs éloignés par défaut :
+
+- Hébergement dans l'UE. Facturra tourne chez OVHcloud, en France.
+- Les développeurs travaillent sur une préproduction avec des données anonymisées ou synthétiques, jamais une copie de la prod.
+- L'accès à la production suit le principe du moindre privilège : comptes nominatifs, journalisés, limités dans le temps, ouverts pour un incident puis révoqués.
+- Les secrets vivent dans la CI et chez l'hébergeur, pas sur les ordinateurs portables. Les déploiements passent par le pipeline.
+- CCT et DPA signés avant tout accès aux données, et le prestataire inscrit comme sous-traitant dans votre registre des traitements.
+
+Je suis ingénieur, pas avocat. Faites relire les contrats par votre DPO ou votre conseil. La partie architecture, je la mets en place dès le premier jour sur chaque [développement de MVP](/fr/services/mvp-development).
+
+## Coûts : des fourchettes honnêtes
+
+En France, les TJM des freelances seniors sur des plateformes comme Malt se situent en général autour de 450 à 750 €, selon la stack et la ville. Par rapport à cette base, d'après ce que j'observe :
+
+- **Tunisie :** un senior via un bon prestataire ou en freelance tourne souvent autour de 40 à 60 % du tarif français.
+- **Inde, Vietnam, Philippines :** souvent 25 à 45 %, avec des écarts très importants.
+- **Amérique latine :** souvent 50 à 80 %, car beaucoup d'équipes y alignent leurs prix sur le marché américain.
+
+Ce sont des fourchettes, pas des devis. Partout, l'offre la moins chère est souvent un junior vendu comme senior. Et le TJM n'est pas le coût : ajoutez votre temps de pilotage, les reprises dues aux specs mal comprises et les semaines perdues au décalage horaire, qui peuvent vite absorber l'écart de tarif.
+
+## Les inconvénients de la Tunisie que personne ne met dans la plaquette
+
+**Les seniors sont très demandés, et beaucoup partent.** De nombreux bons ingénieurs tunisiens s'installent en France, en Allemagne, au Canada ou dans le Golfe. Ceux qui restent sont souvent déjà pris, et les agences ont du turnover sur les profils junior et confirmé. Demandez précisément qui travaillera sur votre code, depuis combien de temps cette personne est là, et ce qui se passe si elle part.
+
+**Des frictions bancaires et de paiement.** La Tunisie ne fait pas partie de la zone SEPA : vous payez par virement international, avec des frais et quelques jours de délai. Le dinar n'est pas librement convertible, et la réglementation des changes ajoute des formalités pour qui reçoit des euros. Stripe n'est pas disponible pour les entreprises tunisiennes. Payer un freelance en direct peut devenir compliqué selon votre montage. Le plus simple reste une société qui facture en euros et qui exporte déjà ses services.
+
+**Ce n'est pas aussi bon marché que l'Asie du Sud.** Si votre seul critère est le TJM le plus bas, la Tunisie perd.
+
+**La qualité varie énormément d'un prestataire à l'autre.** Le marché va d'excellentes équipes produit à des sociétés de placement qui revendent des juniors comme des seniors. Le marché est petit, les références se vérifient facilement. Vérifiez-les.
+
+**Un autre calendrier.** Certains jours fériés diffèrent des vôtres, et les dates de l'Aïd changent chaque année avec le calendrier lunaire. Beaucoup d'entreprises réduisent leurs horaires pendant le ramadan. Rien de bloquant si vous planifiez vos mises en production en conséquence.
+
+## Quand l'offshore est le meilleur choix
+
+L'offshore est le bon choix quand la spec est stable et écrite, qu'il s'agit de maintenance au long cours ou d'un gros chantier bien défini, que vous avez besoin d'un support 24 h sur 24 en relais, ou que votre entreprise travaille déjà en anglais et en asynchrone. L'Amérique latine se justifie si vos clients ou vos associés sont aux États-Unis.
+
+Quel que soit le pays :
+
+- Rencontrez les ingénieurs qui écriront le code, pas seulement le commercial.
+- Faites une semaine d'essai payée sur un vrai ticket.
+- Gardez les dépôts, les comptes cloud et les noms de domaine à votre nom dès le premier jour.
+- Préparez les CCT et le DPA avant que quiconque touche à des données personnelles.
+- Appelez deux références, sans le prestataire au bout du fil.
+
+Si vous voulez un MVP développé depuis Tunis, hébergé dans l'UE, aux horaires de Paris et avec le montage RGPD décrit plus haut, voyez le [développement de MVP](/fr/services/mvp-development). Pour en parler sur votre projet, [réservez un appel](/fr#contact). Je réponds sous 48 heures.

@@ -1,0 +1,112 @@
+---
+title: "Technical due diligence: the 25 things investors check before a seed round"
+seoTitle: "Technical due diligence checklist: 25 seed-round checks"
+description: "Technical due diligence before a seed round covers 25 points: architecture, security, GDPR, infra, tests and IP. What reviewers check, what to fix first."
+date: "2026-10-27"
+translationKey: "technical-due-diligence"
+tags: ["due-diligence", "technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "facturra"
+tldr:
+  - "Seed-stage technical due diligence checks 25 points in six areas: architecture, security, GDPR and data, infrastructure, tests and code quality, and team and IP ownership."
+  - "At seed, the reviewer is usually a technical partner or advisor of the fund, or an outside CTO, who samples a few areas in a call and a short read of the repository."
+  - "Most red flags, like leaked secrets, untested backups or unsigned IP assignments, can be fixed in days if you start two to six weeks before the data room opens."
+---
+
+Before a seed round, investors check two things about your product: that it can grow for the next 18 months without a rewrite, and that the company really owns what it built. In practice that comes down to 25 points across six areas, and most of them can be fixed in a few weeks if you start before the data room opens.
+
+This is the list I use when a founder asks me to get their product ready for a technical review. You can get it as a free PDF, with a "good answer" and a "red flag" for each point: [download the 25-point technical due diligence checklist](/checklist). Print it and go through it with your lead engineer. Anything you can't answer in two minutes is a finding.
+
+## What do investors check in technical due diligence before a seed round?
+
+Nobody expects a perfect codebase at seed. Reviewers want to know three things. Is the product a liability that will eat the round? Does the team understand its own system? Does the company own its code, accounts and data? The 25 points below are how they find out.
+
+### Who actually does the technical DD at seed
+
+At Series A and later, funds often hire a specialist firm. At seed it is rarely that formal. In my experience the reviewer is one of these:
+
+- a partner or venture partner at the fund with an engineering background,
+- a technical advisor the fund calls in for a few days,
+- an outside CTO hired for a short review,
+- for business angels, often a CTO friend who agreed to "take a look".
+
+The format is usually a one to two hour call with your CTO or lead dev, a written questionnaire, and sometimes read-only access to the repository for a few days. They don't have time to read everything, so they sample. They pick two or three areas and dig. Vague answers make them dig further.
+
+### What the technical part of the data room needs
+
+- A one-page architecture diagram and the list of your stack
+- Every third-party service and key library, with licences
+- An access list: who can reach production, the database and the cloud console
+- Your GDPR record of processing, signed DPAs and hosting locations
+- Monthly infrastructure cost per environment
+- How you deploy, and incidents from the last 6 to 12 months
+- A prioritised list of known technical debt
+- Signed IP assignments from every employee and contractor
+- Proof the company owns the repositories, domains, cloud and app store accounts
+
+### How long to prepare
+
+If the product is in reasonable shape, plan two to three weeks of part-time work: one week to answer the checklist honestly, one to fix the quick wins, a few days to assemble documents. If more than five points are red, plan four to six weeks. Start before the first investor meetings, because the technical review often lands right after a term sheet, when there is no slack left.
+
+## The 25-point checklist
+
+### Architecture
+
+1. **An architecture you can draw on one page.** Reviewers ask your lead dev to sketch the system, then check the sketch against the code. If you don't have one, draw it this week and commit it to the repository.
+2. **Business logic separated from frameworks.** This tells them whether the product can change without breaking. You won't refactor it in a week, but you can name the tangled modules and add them to your debt list.
+3. **A data model that matches the business.** They look at the schema and the migration history. If someone edits production by hand, generate a baseline migration now and stop.
+4. **Third-party dependencies under control.** Licence and vendor problems are the ones that surface late and hurt. List every external service and write one line on what happens if it disappears. On [Facturra](/work/facturra), the platform connects to an approved e-invoicing platform without lock-in, so invoices keep flowing if that partner changes terms. That is the kind of answer reviewers like.
+5. **A credible path to 10x the load.** Nobody expects you to handle 10x today. They expect you to know today's numbers and the first bottleneck. Pull a week of traffic and database metrics and write a half-page plan.
+
+### Security
+
+6. **Secrets kept out of the code.** A reviewer can scan your git history for keys in minutes. Run `gitleaks` or `trufflehog` first, rotate anything it finds and move the rest to environment config. Rotation matters more than rewriting history.
+7. **Authentication and authorisation done properly.** The classic finding is an admin endpoint that only checks the role in the front end. Call every admin route with a normal user's token. Server-side fixes usually take days, not weeks.
+8. **Dependencies scanned for known vulnerabilities.** Turn on Dependabot or run `npm audit` or `pip-audit`, fix the criticals and note why the rest can wait. A short list with decisions beats hundreds of ignored alerts.
+9. **Least-privilege access and working offboarding.** Expect the question "who could delete production right now?". Remove former freelancers, turn on MFA everywhere and put the access list in the data room. It is an afternoon of work.
+10. **Web security basics in place.** HTTPS, security headers, server-side validation, rate limits on login and password reset. Most of this is configuration and fits in a few days.
+
+### GDPR and data
+
+11. **A map of personal data.** For a European investor this is not optional. At seed a spreadsheet record of processing is enough: data category, where it is stored, which vendor, why.
+12. **Lawful processors and transfers.** Analytics, email and AI vendors are where the gaps hide. Most vendors offer a standard DPA you can sign online, so sign them and note where each one hosts data.
+13. **Data subject rights you can actually execute.** Reviewers ask how you delete one user. If the answer is hand-written SQL, turn it into a script, test it once, and know what stays in the backups.
+14. **Backups that have been restored.** A backup nobody has restored is a hope. Restore one into staging, write down how long it took, and you can tick this box in a day.
+
+### Infrastructure and operations
+
+15. **Reproducible infrastructure.** One hand-configured server that only a former freelancer understands is a key-person risk. At seed, a Dockerfile and a step-by-step setup document are acceptable.
+16. **Automated, repeatable deployments.** A GitHub Actions pipeline from merge to production with a rollback is usually one or two days of work. On the products I build, it is in place from the first week.
+17. **Monitoring and alerting.** Error tracking and an uptime check take an hour to set up. If customers report outages before your tools do, reviewers will find out.
+18. **Cloud costs understood.** Open the billing console and know your monthly cost per environment. Reviewers compare it with revenue and user numbers.
+
+### Tests and code quality
+
+19. **Tests on the paths that make money.** Nobody expects full coverage at seed. They expect signup, payment and the core workflow to be tested on every pull request. A handful of end-to-end tests on those paths is about a week.
+20. **Code review that actually happens.** Reviewers open your merged pull requests. Protect the main branch today and require one approval.
+21. **Readable, consistent code.** Add a linter and formatter, run them once, commit the result. It won't fix the architecture, but it removes the first bad impression.
+22. **Technical debt known and written down.** A team that lists its own shortcuts is trusted more than one that claims it has none. Write down the top ten with a rough cost each.
+
+### Team and ownership
+
+23. **No single point of failure.** If one person holds everything, investors see key-person risk. Have a second engineer do a deploy and a production fix before the review.
+24. **Documentation that onboards someone.** Test your README on someone new: they should run the project locally within a day. Add short decision records for the three or four biggest choices.
+25. **Clean IP and account ownership.** This is the point that stops deals. The company must own the GitHub organisation, domains, cloud and store accounts, and every contractor must have signed an IP assignment. I set up client accounts in the client's name from day one, as on [Guid'Up](/work/guidup).
+
+## How to read your score
+
+| Red points | What it means | What to do |
+| --- | --- | --- |
+| 0 to 2 | Ready for review | Assemble the data room |
+| 3 to 5 | Normal for seed | Fix them in two to three weeks |
+| More than 5 | Real risk | Fix before the data room opens |
+
+Red points in ownership, secrets and backups matter more than the rest. A reviewer will forgive thin tests at seed. They won't forgive a contractor who still owns your code.
+
+## When to get an outside audit
+
+Going through the list yourself is free and catches most of it. The limit is that a team rarely sees its own blind spots, and a reviewer will. A [two-week technical audit](/services/technical-audit) turns these 25 points into a ranked risk register, each finding with an impact, an effort and a fix, plus a walkthrough call with your team. It is a fixed fee for a fixed scope, shown in the [pricing box](/services/technical-audit#pricing). I describe the full process day by day in [how I audit a codebase in two weeks](/blog/how-to-audit-a-codebase-in-two-weeks).
+
+If you only do one thing today, [download the free checklist PDF](/checklist) and send it to your lead engineer.
+
+If your round is coming up and you want a second pair of eyes on your product, [book a call](/#contact). I reply within 48 hours and work under NDA.

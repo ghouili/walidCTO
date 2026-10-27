@@ -8,6 +8,8 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { checklists } from "@/lib/checklist";
+import { getArticles } from "@/lib/blog";
+import { faqHub } from "@/lib/faq-hub";
 import { localePath } from "@/lib/i18n";
 import {
   getCaseStudies,
@@ -72,6 +74,15 @@ function short(): string {
     "",
     "## Resources",
     `- [Technical due diligence checklist](${abs("/checklist")}): the 25 things investors check before a seed round (free PDF).`,
+    `- [FAQ](${abs("/faq")}): 25 answers on fractional CTOs, pricing, audits, nearshore development in Tunisia and MVPs.`,
+    ...getArticles("en").map(
+      (a) => `- [${a.title}](${abs(a.path)}): ${a.description}`,
+    ),
+    "",
+    "## French articles",
+    ...getArticles("fr").map(
+      (a) => `- [${a.title}](${abs(a.path)}): ${a.description}`,
+    ),
     "",
     "## Contact",
     `- [Contact form](${abs("/#contact")})`,
@@ -144,6 +155,11 @@ function full(): string {
   }
 
   out.push("## Frequently asked questions", "");
+  for (const group of faqHub.en) {
+    out.push(`### ${group.title}`, "");
+    for (const f of group.items) out.push(`Q: ${f.q}`, `A: ${f.a}`, "");
+  }
+  out.push("### More questions", "");
   for (const f of getFaqs("en")) out.push(`Q: ${f.q}`, `A: ${f.a}`, "");
 
   const c = checklists.en;
@@ -167,6 +183,20 @@ function full(): string {
     out.push("");
   }
   out.push(c.outro, "");
+
+  out.push("## Articles", "");
+  for (const a of getArticles("en")) {
+    out.push(
+      `### ${a.title}`,
+      "",
+      `URL: ${abs(a.path)}`,
+      `Published: ${a.date}`,
+      "",
+      "TL;DR:",
+      ...a.tldr.map((x) => `- ${x}`),
+      "",
+    );
+  }
 
   out.push(
     "## Contact",

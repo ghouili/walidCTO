@@ -22,6 +22,7 @@ export const en = {
     work: "Work",
     faq: "FAQ",
     about: "About",
+    blog: "Blog",
     cta: "Book a call →",
     /** Label of the link to the other language. */
     switchTo: "FR",
@@ -30,6 +31,9 @@ export const en = {
   footer: {
     privacy: "Privacy",
     country: "Tunisia",
+    blog: "Blog",
+    faq: "FAQ",
+    checklist: "Due-diligence checklist",
   },
   hero: {
     pill: "Available Q4 2026 · 2 spots open",
@@ -160,6 +164,45 @@ export const en = {
   faq: {
     eyebrow: "FAQ",
     title: "Questions you're probably asking.",
+    allQuestions: "All 25 questions, answered in full →",
+  },
+  faqPage: {
+    eyebrow: "FAQ",
+    title: "Fractional CTO, audits, nearshore and MVPs: 25 straight answers.",
+    sub: "The questions founders ask me most, answered in a paragraph each. If yours isn't here, ask it on the intro call.",
+    metaTitle: "Fractional CTO & Technical Audit FAQ | Walid Ghouili",
+    metaDescription:
+      "Fractional CTO FAQ: 25 answers on cost, technical audits, due diligence, nearshore development in Tunisia, GDPR and MVPs in 4 weeks, from a working CTO.",
+    ctaTitle: "Still have a question?",
+    ctaBody: "Ask it directly. I reply within 48 hours.",
+    cta: "Ask me →",
+  },
+  blog: {
+    eyebrow: "Blog",
+    title: "Notes from a working CTO.",
+    sub: "Costs, audits, due diligence, nearshore and MVPs, written for founders who have to make the call.",
+    metaTitle: "Blog: fractional CTO, audits and MVPs | Walid Ghouili",
+    metaDescription:
+      "Articles for startup founders on fractional CTO costs, technical audits, due diligence, nearshore development in Tunisia and shipping an MVP in 4 weeks.",
+    readMore: "Read the article",
+    minRead: "{n} min read",
+    tldr: "TL;DR",
+    published: "Published",
+    updated: "Updated",
+    allArticles: "All articles",
+    tagTitle: "Articles on {tag}",
+    tagDescription: "Articles on {tag} for startup founders, by Walid Ghouili.",
+    relatedCaseStudy: "Related case study",
+    readCaseStudy: "Read the case study →",
+    bookTitle: "Want to talk it through?",
+    bookBody:
+      "A 30-minute call to look at your situation. If I'm not the right fit, I'll tell you who is.",
+    bookCta: "Book a 30-min call",
+    contactCta: "Or send a message →",
+    authorRole: "Fractional CTO, Tunis",
+    authorBio:
+      "I'm a fractional CTO and technical auditor working with startups in France, Europe and Tunisia. I write production code every week and teach computer science at IMSET.",
+    rss: "RSS feed",
   },
   cta: {
     titleA: "Let's see if I'm the",

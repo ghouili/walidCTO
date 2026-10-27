@@ -1,0 +1,120 @@
+---
+title: "How I ship an MVP in 4 weeks with an AI-assisted workflow (and what still needs a senior)"
+seoTitle: "MVP in 4 Weeks with AI: a Senior's Week-by-Week Plan"
+description: "An MVP in 4 weeks with AI works when a senior owns scope, data model, auth and security. My week-by-week plan, and where AI coding agents really help."
+date: "2026-10-27"
+translationKey: "mvp-4-weeks-ai"
+tags: ["mvp", "ai"]
+relatedService: "mvp-development"
+relatedCaseStudy: "sabboura"
+tldr:
+  - "A focused MVP in 4 weeks is realistic when scope and the data model are frozen in week 1 and the product is built as vertical slices on a CI/CD pipeline that exists from day one."
+  - "AI coding agents genuinely speed up scaffolding, CRUD, tests, migrations, boilerplate UI and running independent milestones in parallel."
+  - "A senior must still own the data model, auth and permissions, security review, architecture boundaries, scope decisions, every AI diff, production incidents and GDPR."
+---
+
+I ship a focused MVP in about four weeks by freezing scope and the data model in week one, building the product as vertical slices on a CI/CD pipeline that exists from the first day, and letting AI coding agents write the repetitive code while I own every decision that is expensive to reverse. AI makes the typing faster. It does not make the judgement optional, and the judgement is what decides whether your MVP survives its first real users.
+
+This is the workflow I use on [MVP builds](/services/mvp-development), written for a founder who wants to know what is actually happening behind the weekly demo.
+
+## How do you ship an MVP in 4 weeks with AI?
+
+You don't get four weeks by typing faster. You get it by cutting the number of decisions to the ones that matter, making them in week one, and then using agents to execute in parallel inside boundaries a senior has set. The bottleneck in a small build was never keystrokes. It was rework: a data model that has to change in week three, an auth system bolted on at the end, a deploy pipeline that nobody tried until launch day.
+
+Two honest caveats before the plan.
+
+First, "four weeks" means a focused MVP with a fixed scope agreed in writing. One type of user, one core job, three to five flows. Larger builds run longer, and I say so before we start.
+
+Second, the workflow scales up, not just down. [Sabboura](/work/sabboura), a voice-first AI tutor with a web platform and a Flutter app, was a bigger build than a four-week MVP. It went from first commit to production in under two months by running milestones in parallel with agentic coding, with CI/CD on push to production. The same method applied to a tighter scope is what makes four weeks realistic.
+
+## The week-by-week plan
+
+### Week 1: freeze the scope, design the data model, wire the pipeline
+
+Week one produces almost no visible features, and that is on purpose.
+
+- **Scope freeze.** One written page: who the user is, the one job the product does, the flows in v1, and an explicit "not in v1" list. The second list matters more than the first.
+- **Data model.** Entities, relationships, who owns each row, what gets soft-deleted, what needs an audit trail. I write this myself and review it with the founder in plain language.
+- **Auth decision.** Hosted provider or our own, which roles exist, what each role can see.
+- **CI/CD from day one.** GitHub Actions runs lint, type checks and tests on every push, and every merge to main deploys to staging. If deployment is a week-four task, week four slips.
+- **Staging exists by Friday.** Even if it only shows a login screen, it runs on the same setup as production.
+
+### Week 2: the first vertical slice, end to end
+
+A vertical slice is one complete flow: UI, API, database, tests, deployed to staging. Not "all the backend first, then all the frontend". By the end of week two the founder clicks through the core flow on staging with real data. That click is worth more than any status report, because it surfaces wrong assumptions while they are still cheap.
+
+### Week 3: the remaining slices, in parallel
+
+This is where AI agents pay off most. With the data model fixed and conventions set by the first slice, the remaining slices (onboarding, billing, notifications, an admin back office) are independent. Each one gets its own branch and a narrow written brief, and agents work on several at once. My job that week is to brief, review and merge. Payments and transactional email land here, because both need staging time before launch.
+
+### Week 4: harden, review, launch
+
+- Security review of every endpoint, with tests that one user cannot read another user's data.
+- Error monitoring that alerts a human, not a dashboard nobody opens.
+- Backups that have been restored at least once.
+- GDPR basics: EU hosting where it matters, a list of processors, a working deletion path.
+- Founder acceptance on staging, then launch early in the week with a tested rollback.
+
+## Where AI coding agents genuinely speed things up
+
+I use agents every day, and on the right tasks they are a real multiplier. In my experience the gains are biggest where the work is well specified and easy to verify.
+
+- **Scaffolding.** Project setup, config files, folder structure, the first deploy script.
+- **CRUD.** Given a reviewed schema, agents write handlers, validation and forms quickly and consistently.
+- **Tests.** Give an agent the spec and a list of edge cases and it writes the tests faster than I would. I still decide which cases exist.
+- **Migrations.** Drafting migration scripts from a schema change, which I then read line by line.
+- **Boilerplate UI.** Tables, forms, empty states and settings pages built on an existing component library.
+- **Parallel milestones.** The largest gain is not speed on one task. It is running three independent slices at once while I review, which a solo developer could not do before.
+
+## Where a senior is still non-negotiable
+
+Agents produce plausible code. Plausible is not the same as correct, and the gap shows up in exactly the places that are hardest to fix later.
+
+- **The data model.** Every feature sits on it. An agent will draft a schema that works for the demo and breaks at the first multi-tenant customer.
+- **Auth and permissions.** The classic agent bug is an endpoint that checks the user is logged in but not that they own the record. That one line is a data breach.
+- **Security review.** Secrets handling, injection, rate limits, dependency choices. Someone has to think like an attacker before launch.
+- **Architecture boundaries.** What is a module, what talks to what, where the business rules live. Without boundaries, agents spread logic everywhere.
+- **Saying no to scope.** An agent will build anything you ask for. Protecting the four weeks means refusing good ideas until v2.
+- **Reviewing every AI diff.** I read every diff before it merges. No exceptions, including the "trivial" ones.
+- **Production incidents.** An agent can search logs and draft a fix. A human decides to roll back, talks to the founder and writes the postmortem.
+- **GDPR.** Where data lives, which processors touch it, how long it is kept, how it gets deleted. These are legal decisions with technical consequences.
+
+## Task by task: who does what
+
+| Task | AI does it | Senior must own it |
+| --- | --- | --- |
+| Scaffolding | Setup, config, folders | Stack and conventions |
+| Data model | Drafts from the spec | Entities, ownership, constraints |
+| CRUD | Handlers, validation, forms | Who can write which field |
+| Auth | Provider wiring, login UI | Roles, ownership checks |
+| Tests | Cases, fixtures | What must never break |
+| Migrations | Scripts from a diff | Data safety, rollback |
+| UI | Tables, forms, empty states | The core flow |
+| Security | Lint fixes, dependency bumps | Threat model, final review |
+| Incidents | Log search, draft fix | Rollback call, postmortem |
+| GDPR | Draft data inventory | Hosting, processors, retention |
+
+## Launch checklist
+
+Before I call an MVP launched, every line below is true.
+
+- [ ] Written scope with a "not in v1" list, agreed by the founder
+- [ ] Data model reviewed by a human who will still be around in six months
+- [ ] CI runs lint, type checks and tests on every push
+- [ ] Staging runs on the same setup as production
+- [ ] Every endpoint checks ownership, not just login
+- [ ] Every AI-generated diff was read before merge
+- [ ] No secrets in the repository
+- [ ] Backups restored at least once
+- [ ] Errors alert a person
+- [ ] Rollback tested on staging
+- [ ] GDPR basics in place: hosting, processors, deletion
+- [ ] Repos, infrastructure and docs in the founder's name
+
+## What to ask whoever builds your MVP
+
+If you are hiring someone to build your MVP with AI, ask one question: who reviews what the AI writes? If the answer is "the AI", or a vague "we test it", walk away. Speed without review gives you a demo that has to be rewritten the week you get traction.
+
+Ask who owns the repos and the infrastructure too. On my builds the founder owns code, infra and docs from day one, so there is no lock-in. After launch you can take it in-house, hand it to your own team, or keep a senior on a [fractional CTO](/services/fractional-cto) retainer while the product grows.
+
+If you have a scope in mind and want to know whether it fits in four weeks, [book a call](/#contact). I reply within 48 hours, and I will tell you honestly if it doesn't fit.

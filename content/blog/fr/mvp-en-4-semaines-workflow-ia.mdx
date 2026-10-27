@@ -1,0 +1,120 @@
+---
+title: "Comment je livre un MVP en 4 semaines avec un workflow assisté par l'IA (et ce qui demande encore un senior)"
+seoTitle: "MVP en 4 semaines avec l'IA : le plan semaine par semaine"
+description: "Un MVP en 4 semaines avec l'IA, c'est possible si un senior tient le périmètre, le modèle de données et la sécurité. Mon plan, et où l'IA aide vraiment."
+date: "2026-10-27"
+translationKey: "mvp-4-weeks-ai"
+tags: ["mvp", "ai"]
+relatedService: "mvp-development"
+relatedCaseStudy: "sabboura"
+tldr:
+  - "Un MVP ciblé en 4 semaines est réaliste quand le périmètre et le modèle de données sont figés dès la semaine 1, puis que le produit est construit en tranches verticales sur un pipeline CI/CD en place dès le premier jour."
+  - "Les agents de code IA font vraiment gagner du temps sur le scaffolding, le CRUD, les tests, les migrations, l'UI répétitive et les jalons menés en parallèle."
+  - "Un senior doit garder la main sur le modèle de données, l'authentification et les droits, la revue de sécurité, les frontières d'architecture, les arbitrages de périmètre, chaque diff produit par l'IA, les incidents de production et le RGPD."
+---
+
+Je livre un MVP ciblé en quatre semaines environ en figeant le périmètre et le modèle de données dès la première semaine, en construisant le produit par tranches verticales sur un pipeline CI/CD qui existe dès le premier jour, et en laissant les agents de code IA écrire le code répétitif pendant que je garde chaque décision coûteuse à défaire. L'IA accélère la frappe. Elle ne rend pas le jugement facultatif, et c'est ce jugement qui décide si votre MVP tient face à ses premiers vrais utilisateurs.
+
+Voici le workflow que j'applique sur mes [missions de développement de MVP](/fr/services/mvp-development), écrit pour un fondateur qui veut savoir ce qui se passe réellement derrière la démo du vendredi.
+
+## Comment livrer un MVP en 4 semaines avec l'IA ?
+
+On ne gagne pas quatre semaines en tapant plus vite. On les gagne en réduisant le nombre de décisions à celles qui comptent, en les prenant dès la première semaine, puis en faisant exécuter les agents en parallèle dans un cadre posé par un senior. Sur un petit projet, le goulot n'a jamais été le clavier. C'est la reprise : un modèle de données qu'il faut changer en semaine 3, une authentification greffée à la fin, un pipeline de déploiement que personne n'a testé avant le jour J.
+
+Deux précisions honnêtes avant le plan.
+
+D'abord, « quatre semaines » veut dire un MVP ciblé, avec un périmètre fixe validé par écrit. Un type d'utilisateur, un usage principal, trois à cinq parcours. Un projet plus large prend plus de temps, et je le dis avant de commencer.
+
+Ensuite, la méthode tient aussi sur des projets plus gros. [Sabboura](/fr/work/sabboura), un tuteur IA à la voix avec une plateforme web et une app Flutter, dépassait largement un MVP de quatre semaines. Le projet est passé du premier commit à la production en moins de deux mois, en menant les jalons en parallèle avec du code agentique et un CI/CD qui déploie en production à chaque push. Appliquée à un périmètre plus serré, la même méthode rend les quatre semaines réalistes.
+
+## Le plan semaine par semaine
+
+### Semaine 1 : figer le périmètre, concevoir le modèle de données, brancher le pipeline
+
+La première semaine ne produit presque aucune fonctionnalité visible. C'est voulu.
+
+- **Gel du périmètre.** Une page écrite : qui est l'utilisateur, le problème que le produit résout, les parcours de la v1, et une liste explicite « hors v1 ». La seconde liste compte plus que la première.
+- **Modèle de données.** Les entités, leurs relations, à qui appartient chaque ligne, ce qui est supprimé logiquement, ce qui doit être tracé. Je l'écris moi-même et je le relis avec le fondateur, sans jargon.
+- **Choix de l'authentification.** Fournisseur externe ou solution maison, quels rôles existent, ce que chaque rôle voit.
+- **CI/CD dès le premier jour.** GitHub Actions lance le lint, le typage et les tests à chaque push, et chaque merge sur main déploie en staging. Si le déploiement est une tâche de semaine 4, la semaine 4 dérape.
+- **Le staging existe dès le vendredi.** Même s'il n'affiche qu'un écran de connexion, il tourne sur la même configuration que la production.
+
+### Semaine 2 : la première tranche verticale, de bout en bout
+
+Une tranche verticale, c'est un parcours complet : interface, API, base de données, tests, déployé en staging. Pas « tout le back, puis tout le front ». À la fin de la semaine 2, le fondateur clique sur le parcours principal en staging, avec de vraies données. Ce clic vaut plus que n'importe quel reporting, parce qu'il fait remonter les hypothèses fausses tant qu'elles coûtent peu.
+
+### Semaine 3 : les autres tranches, en parallèle
+
+C'est là que les agents IA rapportent le plus. Le modèle de données est figé, la première tranche a fixé les conventions, donc les tranches suivantes (onboarding, facturation, notifications, back-office) sont indépendantes. Chacune a sa branche et un brief écrit et étroit, et les agents avancent sur plusieurs à la fois. Mon travail cette semaine-là : briefer, relire, merger. Le paiement et les e-mails transactionnels arrivent ici, parce qu'ils ont besoin de temps en staging avant le lancement.
+
+### Semaine 4 : durcir, relire, lancer
+
+- Revue de sécurité de chaque endpoint, avec des tests qui prouvent qu'un utilisateur ne peut pas lire les données d'un autre.
+- Un monitoring d'erreurs qui alerte une personne, pas un tableau de bord que personne n'ouvre.
+- Des sauvegardes restaurées au moins une fois.
+- Les bases du RGPD : hébergement dans l'UE quand ça compte, liste des sous-traitants, suppression des données qui fonctionne.
+- Recette du fondateur en staging, puis mise en production en début de semaine, avec un retour arrière testé.
+
+## Là où les agents de code IA font vraiment gagner du temps
+
+J'utilise des agents tous les jours, et sur les bonnes tâches ils multiplient réellement la production. D'expérience, le gain est maximal quand le travail est bien spécifié et facile à vérifier.
+
+- **Scaffolding.** Initialisation du projet, fichiers de configuration, arborescence, premier script de déploiement.
+- **CRUD.** À partir d'un schéma relu, les agents écrivent les handlers, la validation et les formulaires vite et de façon homogène.
+- **Tests.** Donnez à un agent la spec et la liste des cas limites, il écrit les tests plus vite que moi. C'est quand même moi qui décide quels cas existent.
+- **Migrations.** La rédaction des scripts de migration à partir d'un changement de schéma, que je relis ligne par ligne.
+- **UI répétitive.** Tableaux, formulaires, états vides et pages de paramètres, sur une bibliothèque de composants existante.
+- **Jalons en parallèle.** Le vrai gain n'est pas la vitesse sur une tâche. C'est de faire avancer trois tranches indépendantes pendant que je relis, ce qu'un développeur seul ne pouvait pas faire avant.
+
+## Là où un senior reste indispensable
+
+Les agents produisent du code plausible. Plausible ne veut pas dire correct, et l'écart apparaît précisément là où c'est le plus dur à corriger ensuite.
+
+- **Le modèle de données.** Toutes les fonctionnalités reposent dessus. Un agent propose un schéma qui marche pour la démo et casse au premier client multi-tenant.
+- **L'authentification et les droits.** Le bug type d'un agent : un endpoint qui vérifie que l'utilisateur est connecté, mais pas qu'il est propriétaire de la ressource. Cette ligne manquante, c'est une fuite de données.
+- **La revue de sécurité.** Gestion des secrets, injections, rate limiting, choix des dépendances. Quelqu'un doit penser comme un attaquant avant le lancement.
+- **Les frontières d'architecture.** Ce qui forme un module, qui parle à qui, où vivent les règles métier. Sans frontières, les agents dispersent la logique partout.
+- **Dire non au périmètre.** Un agent construit tout ce qu'on lui demande. Tenir les quatre semaines, c'est refuser de bonnes idées jusqu'à la v2.
+- **Relire chaque diff de l'IA.** Je lis chaque diff avant le merge. Sans exception, y compris les « triviaux ».
+- **Les incidents de production.** Un agent peut fouiller les logs et proposer un correctif. C'est un humain qui décide du retour arrière, qui parle au fondateur et qui écrit le post-mortem.
+- **Le RGPD.** Où vivent les données, quels sous-traitants y accèdent, combien de temps on les garde, comment on les supprime. Ce sont des décisions juridiques aux conséquences techniques.
+
+## Tâche par tâche : qui fait quoi
+
+| Tâche | L'IA le fait | Le senior en est responsable |
+| --- | --- | --- |
+| Scaffolding | Init, config, arborescence | Stack et conventions |
+| Modèle de données | Brouillon à partir de la spec | Entités, propriété, contraintes |
+| CRUD | Handlers, validation, formulaires | Qui peut modifier quel champ |
+| Authentification | Branchement du fournisseur, écran de login | Rôles, contrôles de propriété |
+| Tests | Cas, jeux de données | Ce qui ne doit jamais casser |
+| Migrations | Scripts à partir d'un diff | Sécurité des données, retour arrière |
+| UI | Tableaux, formulaires, états vides | Le parcours principal |
+| Sécurité | Corrections de lint, mises à jour | Modèle de menace, revue finale |
+| Incidents | Recherche dans les logs, correctif | Décision de rollback, post-mortem |
+| RGPD | Brouillon du registre | Hébergement, sous-traitants, durées |
+
+## La checklist avant le lancement
+
+Avant de considérer un MVP comme lancé, chaque ligne ci-dessous est vraie.
+
+- [ ] Périmètre écrit avec une liste « hors v1 », validé par le fondateur
+- [ ] Modèle de données relu par un humain qui sera encore là dans six mois
+- [ ] La CI lance lint, typage et tests à chaque push
+- [ ] Le staging tourne sur la même configuration que la production
+- [ ] Chaque endpoint vérifie la propriété, pas seulement la connexion
+- [ ] Chaque diff généré par l'IA a été lu avant le merge
+- [ ] Aucun secret dans le dépôt
+- [ ] Sauvegardes restaurées au moins une fois
+- [ ] Les erreurs alertent une personne
+- [ ] Retour arrière testé en staging
+- [ ] Bases du RGPD en place : hébergement, sous-traitants, suppression
+- [ ] Dépôts, infrastructure et documentation au nom du fondateur
+
+## La question à poser à celui qui construit votre MVP
+
+Si vous confiez votre MVP à quelqu'un qui travaille avec l'IA, posez une seule question : qui relit ce que l'IA écrit ? Si la réponse est « l'IA », ou un vague « on teste », passez votre chemin. La vitesse sans relecture vous donne une démo qu'il faudra réécrire la semaine où vous trouvez de la traction.
+
+Demandez aussi à qui appartiennent les dépôts et l'infrastructure. Sur mes projets, le fondateur possède le code, l'infra et la documentation dès le premier jour, donc aucune dépendance. Après le lancement, vous pouvez tout reprendre en interne, le confier à votre équipe, ou garder un senior en [CTO à temps partagé](/fr/services/fractional-cto) pendant que le produit grandit.
+
+Vous avez un périmètre en tête et vous voulez savoir s'il tient en quatre semaines ? [Réservez un appel](/fr#contact). Je réponds sous 48 heures, et je vous dirai franchement si ça ne rentre pas.

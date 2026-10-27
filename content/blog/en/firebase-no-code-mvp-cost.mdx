@@ -1,0 +1,107 @@
+---
+title: "Your Firebase / no-code MVP is about to cost you €40k. Here's how to tell."
+seoTitle: "Firebase or No-Code MVP Cost: When a Rewrite Hits €40k"
+description: "A Firebase or no-code MVP gets expensive when it hits its ceiling and you rewrite late, under pressure. Ten scored signals, the €40k maths, a cheaper fix."
+date: "2026-10-27"
+translationKey: "no-code-mvp-cost"
+tags: ["mvp", "technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "guidup"
+tldr:
+  - "Firebase, Bubble, Webflow, Airtable and Glide are good tools for validating an idea, and the expensive mistake is staying on them past their ceiling, then rewriting everything in a hurry."
+  - "A late, big-bang rewrite of a typical MVP by a senior freelancer in France lands around €40,000 once migration, automations, testing and contingency are counted, before the cost of a frozen roadmap."
+  - "The cheaper path is to migrate the two or three parts that hurt first, keep what works, and avoid a big-bang rewrite."
+---
+
+Probably not yet, but it can get there fast. A Firebase or no-code MVP turns into a five-figure problem when it hits several ceilings at once and you wait until a fundraise, an outage or a big customer forces a full rewrite under pressure. The ten signals below tell you in ten minutes which side you are on.
+
+## Is your Firebase or no-code MVP about to cost you €40k?
+
+Only if most of the signals below are true and you keep postponing the decision. If two or three are true, you have a few targeted fixes ahead, not a rewrite. If none are, keep shipping.
+
+First, to be fair to the tools. Firebase, Bubble, Webflow, Airtable, Glide, Zapier and Make are excellent for validating an idea. They let a founder reach paying customers with no engineering team, and that is usually the right call. In many products, the no-code version was the smartest thing the founder did. The problem is never the tool. It's staying on it after it stopped fitting, then paying for a rushed rebuild.
+
+## Self-diagnosis: ten signals, scored
+
+Score each signal 0 (not true), 1 (partly true) or 2 (clearly true). Be honest, nobody is watching.
+
+1. **The bill grows faster than your revenue.** Bubble workload units, Zapier tasks, Make operations, Airtable or Glide plan upgrades to get more records or rows.
+2. **Your data model fights you.** The same field is copied into four places, a change misses one, and reports need an export to a spreadsheet.
+3. **Nobody understands the security rules.** Firestore rules or Bubble privacy rules were written by someone who left, and nobody tests them.
+4. **There is no staging environment.** Changes go straight to production, and you test on real users.
+5. **Business logic lives in Zapier or Make.** Half the product is a chain of scenarios nobody can see in one place.
+6. **It's getting slow.** Pages take seconds, workflows time out, users notice.
+7. **You can't hire for it.** Engineers you interview don't want to touch it, and specialist freelancers are hard to find.
+8. **Investors or a big customer asked questions you couldn't answer.** Data location, access control, backups, vendor dependency.
+9. **You can't get your data out cleanly.** Or you can't answer a GDPR access or erasure request without a day of manual work.
+10. **You're afraid to change things.** Every new feature breaks an old one.
+
+Add up your score, out of 20. The table further down tells you what it means. If you want a broader version, the free [25-point technical due-diligence checklist](/checklist) covers what investors check beyond the no-code question.
+
+## What the ceiling looks like on Firebase
+
+Firestore bills per document read, and every document a query returns counts. A screen that lists 200 items, opened 50 times a day by 1,000 users, is 10 million reads a day. Real-time listeners add more each time data changes. Firebase is not expensive at MVP scale. It gets expensive when the data model was designed for the first demo, not for the hundredth customer.
+
+That data model is the second issue. Firestore has no joins, so data gets denormalised: the customer's name copied into every order, invoice and comment. Each copy has to be updated by hand or by a Cloud Function, and one of them always drifts. Reporting across collections becomes an export job. Full-text search usually means bolting on a third-party service.
+
+If your app talks to Firestore directly from the browser or the phone, the security rules are your entire authorisation layer. Long rules files with no tests are common. The Firebase emulator can run rule tests, but someone has to write them.
+
+Two more. Many Firebase MVPs run a single project for everything, so there is no staging. And the location of a Firestore database is set when you create it and can't be changed later. If it was created in a US region, moving the data to the EU is a migration, not a setting.
+
+## What the ceiling looks like on no-code
+
+On Bubble, pricing is based on workload units, so a heavier workflow or a busier month shows up on the invoice. Your data exports as CSV, but your logic does not: workflows, conditions and page logic stay inside Bubble. Leaving means rebuilding them.
+
+Airtable works well as a back office until it becomes the production database. The API allows about 5 requests per second per base, and record limits depend on your plan. Glide and Webflow have similar row and CMS item limits.
+
+Then there are the automations. Zapier and Make are perfect glue. They become a problem when the real product logic (pricing rules, onboarding, invoicing) lives in 40 scenarios with no version control and no tests. When one fails silently on a Saturday, you find out from a customer.
+
+GDPR comes on top. Every tool in the chain is a processor: you need its DPA, you need to know where it hosts your data, and you need to list it in your record of processing. A single erasure request means deleting in four tools and in the task history of your automations.
+
+## Keep it, extend it or migrate now
+
+| | Keep it | Extend it | Migrate now |
+|---|---|---|---|
+| Score | 0 to 6 | 7 to 12 | 13 or more |
+| Typical situation | Still validating | Paying customers, 2 or 3 pain points | Many signals, a raise or big deal ahead |
+| Tools bill | Flat | Rising | Rising faster than revenue |
+| What to do | Ship features, set up backups | Move the painful part to code | Plan a staged migration this quarter |
+| Engineering spend | None extra | A few weeks | A planned project |
+
+## Where the €40k comes from
+
+This is an illustration, not a quote. It's what a late, big-bang rewrite of a typical MVP (auth, a dozen screens, payments, an admin, a handful of automations) can cost when done under pressure by a senior freelancer in France. Senior freelance day rates in France on Malt typically run roughly €500 to €800. I use €650 as a midpoint.
+
+| Line | Days | At €650/day |
+|---|---|---|
+| Rebuild the core app | 30 | €19,500 |
+| Data and auth migration, cutover | 8 | €5,200 |
+| Rewrite the automations as code | 6 | €3,900 |
+| Testing and post-launch fixes | 6 | €3,900 |
+| Both stacks running for 2 to 3 months | | about €1,500 |
+| Contingency, 15% | | about €5,100 |
+| **Total** | **50** | **about €39,100** |
+
+The line that doesn't appear is the frozen roadmap. For two to three months, nothing new ships, the founder spends evenings testing the new version, and sales promises wait. For a startup that's raising or closing a key deal, that's often the most expensive line.
+
+Treat €40k as an order of magnitude. A small app might cost a third of that. A complex one with integrations and a mobile app can cost double. The point is the shape: the cost explodes when you wait for a crisis and then rebuild everything at once.
+
+## The cheaper path: migrate what hurts first
+
+You rarely need a big-bang rewrite. You need to move the two or three parts that cause most of the pain, and keep the rest until it starts hurting too.
+
+- **Expensive or tangled data:** move it to PostgreSQL behind a small API, and point the existing front end at it.
+- **Logic in Zapier or Make:** move the scenarios that carry revenue or customer data into versioned, tested code. Keep the harmless ones.
+- **Security rules nobody understands:** put the sensitive operations behind server code and lock the rules down.
+- **No staging:** create a second environment this week. It's the cheapest fix on the list.
+- **Keep the UI** if users like it. A Webflow marketing site can stay on Webflow for years.
+
+Each step ships on its own, the roadmap keeps moving, and the spend is spread over months instead of landing in one quarter. In my experience, that route usually costs a fraction of the big-bang rewrite.
+
+The two rebuilds in my case studies followed the same rule: keep what works. On [Simplify for Kids](/work/simplify-kids), the v2 kept the v1 prototype's UX and replaced the architecture. On Guid'Up, we replaced an abandoned previous build but kept the animations the client loved, and set her up to own every account. You can read how in the [Guid'Up case study](/work/guidup).
+
+## Before you decide
+
+Don't decide on a gut feeling, and don't let the person who'd be paid for the rewrite decide alone. Run the checklist above with your team. If the score is 7 or more, get an outside read of the code and the data before committing budget. My [technical audit](/services/technical-audit) does exactly that in two weeks, with a ranked list of what to keep, extend or migrate, and I explain the method in [how to audit a codebase in two weeks](/blog/how-to-audit-a-codebase-in-two-weeks).
+
+If your score worries you, [book a call](/#contact) and we'll look at which parts are worth moving first. I reply within 48 hours.

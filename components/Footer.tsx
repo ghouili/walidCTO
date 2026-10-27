@@ -35,6 +35,15 @@ export function Footer({
             >
               {t.nav.switchToFull}
             </a>
+            <Link href={localePath(locale, "/blog")} className={linkClass}>
+              {t.footer.blog}
+            </Link>
+            <Link href={localePath(locale, "/faq")} className={linkClass}>
+              {t.footer.faq}
+            </Link>
+            <Link href={localePath(locale, "/checklist")} className={linkClass}>
+              {t.footer.checklist}
+            </Link>
             <Link href={localePath(locale, "/privacy")} className={linkClass}>
               {t.footer.privacy}
             </Link>

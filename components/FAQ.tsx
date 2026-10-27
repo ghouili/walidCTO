@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import type { Locale } from "@/lib/i18n";
+import { localePath, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { getFaqs } from "@/lib/localized";
 
@@ -54,6 +54,12 @@ export function FAQ({ locale }: { locale: Locale }) {
             </details>
           ))}
         </div>
+        <Link
+          href={localePath(locale, "/faq")}
+          className="text-accent mt-8 inline-flex text-[15px] font-medium tracking-[-0.01em] no-underline"
+        >
+          {t.allQuestions}
+        </Link>
       </Container>
 
       <script

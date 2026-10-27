@@ -1,0 +1,130 @@
+---
+title: "Factur-X et la réforme de la facturation électronique 2026 : ce qu'un fondateur doit savoir techniquement"
+seoTitle: "Facture électronique 2026 et Factur-X : le guide technique"
+description: "Facture électronique 2026 et Factur-X pour fondateurs : calendrier, Plateformes Agréées, formats, profils, statuts et checklist pour un SaaS qui facture."
+date: "2026-10-27"
+translationKey: "factur-x-2026"
+tags: ["e-invoicing", "startups"]
+relatedService: "mvp-development"
+relatedCaseStudy: "facturra"
+tldr:
+  - "Depuis le 1er septembre 2026, toute entreprise assujettie à la TVA en France doit pouvoir recevoir des factures électroniques, les grandes entreprises et les ETI doivent les émettre, et les PME, TPE et micro-entreprises devront émettre à partir du 1er septembre 2027."
+  - "Les factures transitent par une Plateforme Agréée (le nouveau nom des PDP), tandis que le PPF public gère l'annuaire et concentre les données fiscales pour l'administration."
+  - "Pour la plupart des SaaS, la bonne approche technique consiste à générer du Factur-X au profil EN 16931, à le valider en CI et à se connecter à une Plateforme Agréée en tant que solution compatible, derrière une abstraction maison pour éviter la dépendance."
+---
+
+Depuis le 1er septembre 2026, toute entreprise assujettie à la TVA en France doit pouvoir recevoir des factures électroniques, et les grandes entreprises comme les ETI doivent déjà les émettre. Les PME, TPE et micro-entreprises devront émettre à partir du 1er septembre 2027 : si votre SaaS envoie des factures pour des clients français, il vous reste moins d'un an pour produire un format structuré comme Factur-X et le faire transiter par une Plateforme Agréée.
+
+Une précaution d'abord. Je suis ingénieur, pas fiscaliste. Ce qui suit reflète l'état de la réforme tel que je le comprends au 27 octobre 2026. Le calendrier a déjà bougé (la réforme devait démarrer en 2024), et les spécifications techniques sont versionnées et évoluent encore. Vérifiez sur impots.gouv.fr et dans les spécifications externes publiées par la DGFiP avant de figer votre conception.
+
+## Que doit savoir un fondateur, techniquement, sur Factur-X et la réforme 2026 ?
+
+Trois choses : le format dans lequel votre facture est écrite, le chemin qu'elle emprunte, et le cycle de vie qu'elle suit une fois sortie de votre système. Un PDF envoyé par e-mail ne couvre aucun des trois. Dès que l'obligation d'émission s'applique à vous, un simple PDF n'est plus une facture valable pour les ventes B2B domestiques concernées.
+
+## Le calendrier
+
+| Échéance | Qui | Obligation |
+| --- | --- | --- |
+| 1er sept. 2026 | Toutes les entreprises assujetties à la TVA en France | Recevoir les factures électroniques |
+| 1er sept. 2026 | Grandes entreprises (GE) et ETI | Émettre, e-reporting |
+| 1er sept. 2027 | PME, TPE, micro-entreprises | Émettre, e-reporting |
+
+Si vos clients sont des indépendants et des petites structures, l'obligation de réception s'applique déjà à eux aujourd'hui, et celle d'émission arrive en septembre 2027. C'est exactement l'espace que votre produit doit occuper.
+
+## Comment circulent les factures : PA, PPF et annuaire
+
+Le schéma initial prévoyait des plateformes privées, les PDP (plateformes de dématérialisation partenaires), et un portail public, le PPF, qui devait aussi permettre d'émettre gratuitement. Fin 2024, l'État a réduit le rôle du PPF. Telle que je comprends l'organisation actuelle :
+
+- **Les Plateformes Agréées (PA)** sont le nouveau nom des PDP. Ce sont des opérateurs privés immatriculés par l'administration fiscale, les seuls autorisés à échanger des factures entre eux et à transmettre les données à l'État.
+- **Le PPF** gère l'annuaire, qui indique sur quelle PA chaque entreprise reçoit ses factures, et joue le rôle de concentrateur qui transmet les données fiscales à l'administration.
+
+Le circuit : votre PA cherche le SIREN de l'acheteur dans l'annuaire, trouve sa PA, lui remet la facture, et envoie les données fiscales requises au PPF.
+
+### PA ou solution compatible
+
+Une « solution compatible » est un logiciel qui crée et gère des factures sans être immatriculé comme PA. Il doit se connecter à une PA pour émettre et recevoir. Devenir PA suppose une procédure d'immatriculation, des exigences de certification sécurité et des tests d'interopérabilité. C'est un projet d'entreprise, pas une fonctionnalité de MVP. Pour presque tous les SaaS de facturation, la bonne réponse est d'être une solution compatible connectée à une ou plusieurs PA.
+
+C'est ainsi que nous avons construit [Facturra](/fr/work/facturra) : une solution compatible connectée à une Plateforme Agréée, pour que les factures continuent de circuler même si une PA change ses conditions. Facturra génère nativement du Factur-X (PDF/A-3 avec XML conforme EN 16931 embarqué), suit tout le cycle de vie des factures, expose une API et des webhooks, et est hébergé en France chez OVHcloud.
+
+### Pourquoi la dépendance compte
+
+Si vos factures, vos statuts et vos archives n'existent que dans le portail d'une PA, en changer devient un chantier de migration, et les PA feront évoluer leurs prix et leurs conditions. Gardez votre propre base comme source de vérité. Placez la PA derrière une interface dans votre code, stockez ses identifiants comme références externes, et vérifiez dans le contrat l'export des données, le préavis et le prix par facture avant de signer.
+
+## Les formats : Factur-X, UBL et CII
+
+Trois formats socles sont acceptés : Factur-X, UBL et CII. Tous trois portent le même modèle sémantique, défini par la norme européenne EN 16931 : les données métier sont identiques, seule la syntaxe change. UBL et CII sont du XML pur. Factur-X est le format hybride, celui que la plupart des petites entreprises françaises verront.
+
+### Ce que veut dire PDF/A-3 avec XML embarqué
+
+Le PDF/A est le sous-ensemble ISO du PDF destiné à l'archivage : polices embarquées, aucun contenu externe, aucun script. La version 3 autorise l'ajout de fichiers à l'intérieur du PDF. Une facture Factur-X est une facture PDF/A-3 d'apparence classique qui contient un fichier XML au format CII nommé `factur-x.xml`, plus des métadonnées XMP qui déclarent le profil utilisé. Les humains lisent le PDF. Les plateformes traitent le XML. Les deux doivent dire la même chose. C'est le même format que ZUGFeRD 2.x en Allemagne.
+
+Pour en générer une, vous construisez le XML CII à partir de votre modèle de facture, vous produisez le PDF, vous le rendez conforme PDF/A-3 (polices embarquées, profil colorimétrique ICC), vous attachez le XML et vous écrivez les métadonnées. La librairie Python `factur-x` et Mustangproject en Java sont les points de départ open source habituels.
+
+### Les profils Factur-X : lequel choisir
+
+| Profil | Contenu | Pour la réforme |
+| --- | --- | --- |
+| MINIMUM | En-tête et totaux | Pas une facture complète |
+| BASIC WL | En-tête, totaux, sans lignes | Pas une facture complète |
+| BASIC | Lignes simples | Cas simples, à vérifier |
+| EN 16931 | Socle EN 16931 complet | Le choix sûr |
+| EXTENDED | EN 16931 et champs en plus | Factures complexes |
+
+MINIMUM et BASIC WL ne contiennent pas de lignes de facture : ils ne peuvent pas tenir lieu de facture. Mon choix par défaut pour un SaaS est le profil EN 16931 (parfois appelé COMFORT). Il couvre tous les champs exigés par la norme, et vous ne passez à EXTENDED que si vos factures ont besoin de données qu'il n'a pas. Les spécifications de la DGFiP ajoutent des règles françaises par-dessus, donc vérifiez quels profils la version en vigueur accepte.
+
+### La validation
+
+Validez sur trois niveaux, dans votre CI, contre un jeu de factures de référence :
+
+1. La conformité PDF/A-3, par exemple avec veraPDF.
+2. Le XML contre le schéma XSD officiel.
+3. Les règles métier avec le Schematron EN 16931, plus les règles françaises.
+
+Rejetez une facture invalide au moment de la générer, dans votre produit, pas quand la PA la renvoie devant votre client.
+
+## Les nouvelles mentions obligatoires
+
+La réforme ajoute des mentions sur les factures :
+
+- le numéro SIREN du client,
+- l'adresse de livraison si elle diffère de l'adresse de facturation,
+- la nature de l'opération : livraison de biens, prestation de services, ou les deux,
+- l'option pour le paiement de la TVA d'après les débits, si le fournisseur l'a choisie.
+
+Côté modèle de données, cela veut dire de nouveaux champs sur les clients et les factures, et la collecte du SIREN dès l'onboarding, idéalement vérifié auprès du répertoire officiel des entreprises plutôt que saisi à la main.
+
+## Les statuts du cycle de vie
+
+Une facture électronique a désormais un cycle de vie que les plateformes s'échangent. Certains statuts sont obligatoires : déposée, rejetée (par une plateforme, en général pour une raison technique), refusée (par l'acheteur) et encaissée, qui compte pour les prestations de services dont la TVA est exigible à l'encaissement. D'autres, comme approuvée, en litige ou suspendue, sont facultatifs. Modélisez les statuts comme une machine à états avec un historique complet, recevez les mises à jour par les webhooks de la PA, et rendez le traitement idempotent, car le même événement arrivera deux fois.
+
+## L'e-reporting en parallèle
+
+Les ventes B2C et les opérations internationales ne passent pas par la facture électronique, mais leurs données doivent être transmises à l'administration via votre PA. C'est l'e-reporting, sur le même calendrier que l'émission. Les données de paiement des prestations de services sont aussi transmises. Si votre produit vend à des particuliers ou à l'étranger, prévoyez un second circuit.
+
+## API, webhooks et archivage
+
+- **API.** Déposer les factures, récupérer les statuts, récupérer les factures reçues. Vérifiez l'authentification, les limites de débit et l'existence d'un bac à sable.
+- **Webhooks.** Vérifiez les signatures, gérez les relances proprement, conservez chaque événement brut.
+- **Réception.** Les factures entrantes de vos clients arrivent sur leur PA. Si vous promettez « recevez vos factures dans l'app », il vous faut aussi cette connexion.
+- **Archivage.** Conservez le fichier d'origine, pas un nouveau rendu, avec une empreinte qui prouve son intégrité. En règle générale, comptez 6 ans au titre du droit fiscal et 10 ans pour les pièces comptables. Hébergez dans l'UE, et en France si vos clients le demandent.
+
+## Checklist technique pour un SaaS qui émet des factures
+
+- [ ] Positionner le produit comme solution compatible connectée à une PA
+- [ ] Choisir une PA avec API, webhooks, bac à sable et clause de sortie claire
+- [ ] Placer la PA derrière votre propre interface
+- [ ] Faire correspondre votre modèle de facture aux champs EN 16931
+- [ ] Ajouter les nouvelles mentions, collecter et vérifier le SIREN client
+- [ ] Générer du Factur-X au profil EN 16931
+- [ ] Valider PDF/A-3, XSD et Schematron en CI
+- [ ] Construire une machine à états des statuts avec des webhooks idempotents
+- [ ] Prévoir le circuit de réception
+- [ ] Prévoir l'e-reporting si vous vendez en B2C ou à l'étranger
+- [ ] Archiver les originaux avec empreinte, hébergés dans l'UE
+- [ ] Revérifier la version des spécifications DGFiP avant le lancement
+
+## Si vous construisez ou corrigez un produit de facturation
+
+Si vous avez déjà un module de facturation et voulez savoir à quelle distance il se trouve de la conformité, un [audit technique](/fr/services/technical-audit) vous donne la liste des écarts, classés, avec un correctif pour chacun. Si vous partez de zéro, un [développement de MVP](/fr/services/mvp-development) peut mettre une première version conforme en production.
+
+Dans les deux cas, [réservez un appel](/fr#contact). Je réponds sous 48 heures, et nous verrons ensemble ce dont votre produit a besoin avant septembre 2027.

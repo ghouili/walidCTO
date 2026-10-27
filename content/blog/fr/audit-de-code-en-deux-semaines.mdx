@@ -1,0 +1,101 @@
+---
+title: "Comment auditer un code en deux semaines : ma méthode exacte"
+seoTitle: "Audit de code en deux semaines : ma méthode exacte"
+description: "Audit de code en deux semaines : dix jours sur l'historique, l'architecture, la sécurité, le RGPD, l'infra et les tests, jusqu'au registre des risques."
+date: "2026-10-27"
+translationKey: "codebase-audit-process"
+tags: ["technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "guidup"
+tldr:
+  - "Un audit de code de deux semaines tient en dix jours ouvrés : l'historique et l'architecture d'abord, puis le produit en fonctionnement, puis la sécurité, le RGPD, l'infrastructure et les tests, et enfin les entretiens avec l'équipe."
+  - "Le livrable est un registre des risques où chaque constat a un domaine, un impact business, un effort, une correction concrète et une priorité, suivi d'un appel de restitution."
+  - "Les outils sont ceux qu'un développeur utilise déjà au quotidien, comme git log, cloc, npm audit, gitleaks, Lighthouse, EXPLAIN sur la base de données et la console de facturation cloud."
+---
+
+J'audite un code en deux semaines en découpant le travail en dix jours ouvrés, toujours dans le même ordre : lire l'historique, cartographier l'architecture, faire tourner le produit, puis des passes ciblées sur la sécurité, le RGPD, l'infrastructure et les tests, parler à l'équipe, et tout mettre par écrit. Le résultat n'est pas un verdict sur la « qualité » du code. C'est une liste priorisée de constats, chacun avec un impact, un effort et une correction, que vous pouvez confier à n'importe quelle équipe.
+
+Voici la méthode exacte que je suis pour un [audit technique](/fr/services/technical-audit), avec les outils que j'utilise réellement à chaque étape.
+
+## Comment auditer un code en deux semaines ?
+
+On ne lit pas chaque ligne. Deux semaines suffisent pour comprendre un produit de taille startup classique, à condition d'échantillonner dans le bon ordre. L'historique dit où regarder. L'architecture dit ce qui compte. Faire tourner le produit révèle ce que la documentation oublie. Les passes ciblées vont ensuite en profondeur là où les erreurs coûtent de l'argent.
+
+| Jour | Étape | Ce qui en sort |
+| --- | --- | --- |
+| 1 | Accès et lancement | Périmètre écrit, vos inquiétudes |
+| 1-2 | Lecture de l'historique | Zones sensibles, qui a écrit quoi |
+| 3 | Cartographie de l'architecture | Schéma du système sur une page |
+| 4 | Le produit en local et en staging | Temps d'installation, performance |
+| 5 | Passe sécurité | Secrets, dépendances, authentification |
+| 6 | Passe RGPD et données | Cartographie des données personnelles |
+| 7 | Infra et déploiement | Déploiement, coût par environnement |
+| 8 | Tests et entretiens | Couverture des parcours clés, vision de l'équipe |
+| 9 | Registre des risques | Constats priorisés avec corrections |
+| 10 | Restitution | Plan partagé avec votre équipe |
+
+### Jour 1 : accès et lancement
+
+Avant tout, un NDA et des accès en lecture seule : les dépôts, le staging, la console cloud avec la facturation visible, l'outil de suivi des erreurs et le gestionnaire de tickets. Je n'ai pas besoin d'un accès en écriture à la production, et je ne le demande pas.
+
+Le lancement est un appel d'une heure avec le fondateur et le lead dev. Deux questions comptent. Qu'est-ce qui vous inquiète ? Et quelle décision cet audit doit-il éclairer : une levée, une réécriture, un recrutement, un rachat ? La réponse change la façon dont je répartis le temps. Pour une levée seed, je pondère les points que vérifient les investisseurs, ceux de ma [checklist de due diligence technique](/fr/blog/due-diligence-technique-checklist). Pour une décision de réécriture, je me concentre sur ce qui mérite d'être gardé.
+
+### Jours 1 et 2 : lire l'historique
+
+L'historique git est le document le plus honnête de l'entreprise. Je commence par `git shortlog -sn` pour voir qui a écrit le code et si ces personnes sont encore là. Puis `git log` sur les six à douze derniers mois : taille des commits, fréquence, qualité des messages. Je compte les fichiers qui changent le plus souvent. Ces zones sensibles concentrent en général les bugs et les appréhensions.
+
+Ensuite je lis quelques dizaines de pull requests fusionnées récemment. Les revues sont-elles réelles, ou validées en trente secondes ? Y a-t-il des tests dans les diffs ? Enfin, le gestionnaire de tickets : bugs récurrents, tickets rouverts trois fois, fonctionnalités bloquées depuis des mois. `cloc` ou `tokei` me donne la taille du code et la répartition des langages, ce qui cadre la suite.
+
+### Jour 3 : cartographier l'architecture
+
+Je dessine le système à partir du code, pas de la documentation : points d'entrée, services, bases de données, files d'attente, API tierces, flux de données. Puis je compare mon schéma à ce que l'équipe m'a décrit le premier jour. Les écarts entre les deux sont des constats à part entière. Je lis aussi le modèle de données et l'historique des migrations, parce qu'un schéma qui ne colle pas au métier finit par se voir partout.
+
+### Jour 4 : le produit en local et en staging
+
+Je suis le README à la lettre et je chronomètre. S'il faut une journée entière et trois messages au lead dev, c'est un constat, parce que votre prochaine recrue butera sur le même mur. Puis je parcours les parcours principaux en staging : inscription, paiement, flux métier principal. Lighthouse sur les pages clés donne une base de performance côté front. Côté base de données, je regarde les requêtes les plus lentes et je lance `EXPLAIN` dessus. Un index manquant fait partie des corrections les moins chères d'un audit.
+
+### Jour 5 : la passe sécurité
+
+`gitleaks` ou `trufflehog` sur tout l'historique git, pas seulement la branche actuelle. `npm audit` ou `pip-audit` pour les failles connues dans les dépendances. Puis des vérifications manuelles : j'appelle les routes admin avec le jeton d'un utilisateur normal, je regarde comment les mots de passe sont stockés, je vérifie la limitation de débit sur la connexion et la réinitialisation de mot de passe, je lis les en-têtes de sécurité et je liste qui accède à la production.
+
+Soyons clairs : ce n'est pas un test d'intrusion. Je cherche les erreurs que je rencontre le plus souvent dans les codes de startups. Si le produit a besoin d'un pentest formel, pour un client bancaire ou une certification, le registre le dit.
+
+### Jour 6 : la passe RGPD et données
+
+Je cartographie où vivent les données personnelles : tables, logs, analytics, sauvegardes, outils tiers. Pour chaque prestataire qui les reçoit, je vérifie le DPA et la région d'hébergement. Puis je demande à l'équipe de me montrer comment elle supprime un utilisateur, et quand une sauvegarde a été restaurée pour la dernière fois. Ces deux réponses sont souvent les plus parlantes de tout l'audit.
+
+### Jour 7 : infrastructure et déploiement
+
+Comment le code passe-t-il d'une pull request fusionnée à la production ? Qui peut déployer, et comment revient-on en arrière ? Pourriez-vous reconstruire les serveurs de zéro si l'hébergeur les perdait ? Je vérifie la supervision et les alertes, puis j'ouvre la console de facturation cloud pour voir le coût mensuel par environnement et les ressources qui tournent sans que personne ne s'en serve.
+
+### Jour 8 : tests et entretiens avec l'équipe
+
+Je lance la suite de tests. Est-elle verte ? Combien de temps prend-elle ? Couvre-t-elle l'inscription, le paiement et le parcours principal, ou surtout des fonctions utilitaires ? Des tests instables que tout le monde relance jusqu'à ce qu'ils passent, c'est un constat.
+
+Les entretiens sont étalés entre les jours 6 et 8 pour s'adapter aux agendas : 30 à 45 minutes avec chaque développeur, un par un. Je demande ce qu'ils corrigeraient avec une semaine libre, ce qui leur fait peur avant un déploiement, et ce qu'eux seuls savent. Ces échanges confirment ce que dit le code et ajoutent ce qu'il ne peut pas dire.
+
+### Jours 9 et 10 : le registre des risques et la restitution
+
+Chaque constat entre dans un seul tableau, classé par impact rapporté à l'effort. L'impact, c'est l'impact sur l'activité, pas sur l'élégance du code. La première page contient toujours la poignée de points à corriger en premier.
+
+**Exemple uniquement.** Les lignes ci-dessous illustrent le format de façon générique, elles ne viennent d'aucun audit client.
+
+| Constat | Domaine | Impact | Effort | Correction | Priorité |
+| --- | --- | --- | --- | --- | --- |
+| Mot de passe de la base dans git | Sécurité | Fort | Heures | Le changer, gestionnaire de secrets | P1 |
+| API admin vérifiant le rôle côté front | Sécurité | Fort | Jours | Contrôle côté serveur, tests | P1 |
+| Sauvegardes jamais restaurées | Données | Fort | Heures | Tester une restauration, planifier | P1 |
+| Déploiement en SSH par une seule personne | Infra | Moyen | Jours | Pipeline CI/CD avec retour arrière | P2 |
+| Aucun DPA avec l'outil d'emailing | RGPD | Moyen | Heures | Signer le DPA, tenir le registre | P2 |
+
+Le jour 10, nous faisons l'appel de restitution avec vous et votre équipe. Je passe en revue les principaux constats, j'explique le raisonnement et je réponds aux questions. Le document vous appartient. Vous pouvez corriger en interne, le confier à une autre équipe, ou enchaîner sur un développement ou une mission de [CTO à temps partagé](/fr/services/fractional-cto).
+
+## Ce qu'un audit et une reprise de projet ont en commun
+
+La première question d'un audit est la même que celle d'une reprise : qu'est-ce qui mérite d'être gardé dans l'existant ? Sur [Guid'Up](/fr/work/guidup), une application de guide de voyage pour le nord de la Tunisie, mon équipe a remplacé une précédente version abandonnée. Nous avons gardé les animations que la cliente appréciait dans l'ancienne version, reconstruit l'application autour de la maquette V2, et ouvert les comptes stores et infrastructure au nom de la cliente pour qu'elle les possède tous. Faire le tri entre ce qui fonctionne et ce qui doit partir, c'est précisément à cela que servent ces deux semaines.
+
+## Combien coûte l'audit
+
+C'est un forfait fixe pour un périmètre fixe, validé par écrit avant le premier jour, et le prix ne bouge pas. Vous trouverez le montant actuel dans l'[encadré tarifs de la page audit](/fr/services/technical-audit#pricing). Si vous préparez une levée, commencez par [les 25 points que les investisseurs vérifient avant une levée seed](/fr/blog/due-diligence-technique-checklist) ou par la [checklist PDF gratuite](/fr/checklist) pour savoir où vous en êtes.
+
+Si vous voulez appliquer cette méthode à votre code, [prenons rendez-vous](/fr#contact). Je réponds sous 48 heures et je travaille sous NDA.

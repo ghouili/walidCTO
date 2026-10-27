@@ -1,0 +1,130 @@
+---
+title: "Factur-X and the 2026 French e-invoicing mandate: what a founder needs to know technically"
+seoTitle: "Factur-X & the 2026 French E-Invoicing Mandate, Explained"
+description: "Factur-X and France's 2026 e-invoicing mandate for founders: deadlines, Plateformes Agréées, formats, profiles, statuses and a SaaS invoicing checklist."
+date: "2026-10-27"
+translationKey: "factur-x-2026"
+tags: ["e-invoicing", "startups"]
+relatedService: "mvp-development"
+relatedCaseStudy: "facturra"
+tldr:
+  - "Since 1 September 2026 every VAT-registered business in France must be able to receive electronic invoices, large companies and mid-caps must issue them, and SMEs and micro-businesses must issue from 1 September 2027."
+  - "Invoices travel through a Plateforme Agréée (the new name for the PDP), while the public PPF runs the directory and concentrates tax data for the administration."
+  - "For most SaaS products the right technical move is to generate Factur-X in the EN 16931 profile, validate it in CI, and connect to a Plateforme Agréée as a solution compatible behind your own abstraction to avoid lock-in."
+---
+
+Since 1 September 2026 every VAT-registered business in France must be able to receive electronic invoices, and large companies and mid-caps must already issue them. SMEs and micro-businesses must issue from 1 September 2027, so if your SaaS sends invoices for French customers, you have under a year to produce a structured format such as Factur-X and route it through a Plateforme Agréée.
+
+A caveat first. I'm an engineer, not a tax adviser. This is the state of the reform as I understand it on 27 October 2026. The calendar has moved before (the reform was originally meant to start in 2024), and the technical specifications are versioned and still evolving. Check impots.gouv.fr and the DGFiP's published external specifications before you lock a design.
+
+## What does a founder need to know technically about Factur-X and the 2026 e-invoicing mandate?
+
+Three things: the format your invoice is written in, the route it travels, and the lifecycle it goes through after it leaves your system. A PDF sent by email does not cover any of them. Once the issuing obligation applies to you, a plain PDF is no longer a valid invoice for in-scope domestic B2B sales.
+
+## The calendar
+
+| Deadline | Who | Obligation |
+| --- | --- | --- |
+| 1 Sept 2026 | All VAT-registered businesses in France | Receive e-invoices |
+| 1 Sept 2026 | Large companies (GE) and mid-caps (ETI) | Issue e-invoices, e-reporting |
+| 1 Sept 2027 | SMEs, very small firms, micro-entrepreneurs | Issue e-invoices, e-reporting |
+
+If your customers are freelancers and small firms, the receiving obligation already applies to them today, and the issuing obligation lands in September 2027. That is the window your product has to fill.
+
+## How invoices flow: PA, PPF and the directory
+
+The original design had private platforms called PDP (plateformes de dématérialisation partenaires) plus a public portal, the PPF, that would also let businesses issue invoices for free. In late 2024 the government narrowed the PPF's role. As I understand the current setup:
+
+- **Plateformes Agréées (PA)** are the new name for the PDP. They are private operators registered by the tax administration, and they are the only ones allowed to exchange invoices with each other and transmit data to the state.
+- **The PPF** runs the directory (annuaire), which records which PA each company receives its invoices on, and acts as the data concentrator that passes tax data to the administration.
+
+The flow: your PA looks up the buyer's SIREN in the directory, finds the buyer's PA, delivers the invoice there, and sends the required tax data to the PPF.
+
+### PA versus solution compatible
+
+A "solution compatible" is software that creates and manages invoices but is not registered as a PA. It must connect to a PA to send and receive. Becoming a PA means a registration process, security certification requirements and interoperability testing. That is a company-level project, not an MVP feature. For almost every invoicing SaaS, the right answer is to be a solution compatible connected to one or more PAs.
+
+That is how we built [Facturra](/work/facturra): a solution compatible connected to an approved Plateforme Agréée, so invoices keep flowing even if a PA changes terms. It generates Factur-X natively (PDF/A-3 with embedded EN 16931-compliant XML), tracks the full invoice lifecycle, exposes an API and webhooks, and is hosted in France on OVHcloud.
+
+### Why lock-in matters
+
+If your invoices, statuses and archive only exist inside a PA's portal, changing PA becomes a migration project, and PAs will change prices and terms. Keep your own database as the source of truth. Put the PA behind an interface in your code, store its identifiers as external references, and check the contract for data export, notice period and per-invoice pricing before you sign.
+
+## Formats: Factur-X, UBL and CII
+
+Three base formats are accepted: Factur-X, UBL and CII. All three carry the same semantic model defined by the European standard EN 16931, so the business data is the same and only the syntax differs. UBL and CII are pure XML. Factur-X is the hybrid one, and the one most small French businesses will see.
+
+### What PDF/A-3 with embedded XML means
+
+PDF/A is the archival ISO subset of PDF: fonts embedded, no external content, no scripts. Version 3 allows files to be attached inside the PDF. A Factur-X invoice is a normal-looking PDF/A-3 invoice with a CII XML file named `factur-x.xml` embedded in it, plus XMP metadata declaring which profile the XML follows. People read the PDF. Platforms process the XML. The two must say the same thing. It is the same format as ZUGFeRD 2.x in Germany.
+
+To generate one you build the CII XML from your invoice model, render the PDF, make it PDF/A-3 conformant (embedded fonts, an ICC colour profile), attach the XML and write the metadata. Python's `factur-x` library and Java's Mustangproject are the usual open-source starting points.
+
+### Factur-X profiles: which one you need
+
+| Profile | What it carries | For the reform |
+| --- | --- | --- |
+| MINIMUM | Header and totals only | Not a full invoice |
+| BASIC WL | Header, totals, no lines | Not a full invoice |
+| BASIC | Simple line items | Simple cases, check the specs |
+| EN 16931 | Full EN 16931 core | The safe default |
+| EXTENDED | EN 16931 plus extra fields | Complex invoices |
+
+MINIMUM and BASIC WL do not contain invoice lines, so they cannot serve as the invoice itself. My default for a SaaS is the EN 16931 profile (sometimes called COMFORT). It covers every field the standard requires, and you only move to EXTENDED if your invoices need data it lacks. The DGFiP specifications add French rules on top, so check which profiles the current version accepts.
+
+### Validation
+
+Validate in three layers, in your CI, against a set of fixture invoices:
+
+1. PDF/A-3 conformance, for example with veraPDF.
+2. The XML against the official XSD schema.
+3. Business rules with the EN 16931 Schematron, plus the French rules.
+
+Reject a bad invoice at generation time, in your product, not when the PA bounces it in front of your customer.
+
+## New mandatory mentions
+
+The reform adds mentions to French invoices:
+
+- the customer's SIREN number,
+- the delivery address when it differs from the billing address,
+- the nature of the operation: goods, services, or both,
+- whether the supplier opted to pay VAT on debits.
+
+For your data model that means new fields on customers and invoices, and collecting the SIREN at onboarding, ideally validated against the official company register rather than typed by hand.
+
+## Lifecycle statuses
+
+An e-invoice now has a lifecycle that platforms exchange. Some statuses are mandatory: submitted, rejected (by a platform, usually for technical reasons), refused (by the buyer) and paid, which matters for services where VAT falls due on payment. Others such as approved, disputed or suspended are optional. Model statuses as a state machine with a full history, receive updates through PA webhooks, and make the handler idempotent because the same event will arrive twice.
+
+## E-reporting runs alongside
+
+B2C sales and international transactions are not e-invoiced, but their data must be transmitted to the administration through your PA. This is e-reporting, on the same calendar as issuing. Payment data for services is reported too. If your product sells to consumers or abroad, plan a second pipeline.
+
+## APIs, webhooks and archiving
+
+- **API.** Submit invoices, fetch status, fetch received invoices. Check authentication, rate limits and whether there is a sandbox.
+- **Webhooks.** Verify signatures, retry safely, store every raw event.
+- **Receiving.** Your customers' inbound invoices arrive at their PA. If you promise "receive in our app", you need that PA connection too.
+- **Archiving.** Keep the original file, not a re-render, with a hash to prove integrity. French rules generally mean 6 years for tax purposes and 10 years for accounting documents. Host in the EU, and in France if your customers ask for it.
+
+## Technical checklist for a SaaS that sends invoices
+
+- [ ] Position the product as a solution compatible connected to a PA
+- [ ] Choose a PA with an API, webhooks, a sandbox and a clear exit clause
+- [ ] Put the PA behind your own interface
+- [ ] Map your invoice model to EN 16931 fields
+- [ ] Add the new mentions, collect and validate the customer SIREN
+- [ ] Generate Factur-X in the EN 16931 profile
+- [ ] Validate PDF/A-3, XSD and Schematron in CI
+- [ ] Build a status state machine with idempotent webhooks
+- [ ] Plan the receiving flow
+- [ ] Plan e-reporting if you sell B2C or abroad
+- [ ] Archive originals with hashes, hosted in the EU
+- [ ] Re-check the DGFiP specifications version before launch
+
+## If you are building or fixing an invoicing product
+
+If you already have an invoicing module and want to know how far it is from compliance, a [technical audit](/services/technical-audit) gives you a ranked list of gaps with a fix for each. If you are starting from zero, an [MVP build](/services/mvp-development) can get a compliant first version into production.
+
+Either way, [book a call](/#contact). I reply within 48 hours, and we can work out what your product needs before September 2027.

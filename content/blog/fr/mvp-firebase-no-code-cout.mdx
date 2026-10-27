@@ -1,0 +1,107 @@
+---
+title: "Votre MVP Firebase ou no-code va vous coûter 40 000 €. Voici comment le savoir."
+seoTitle: "MVP Firebase ou no-code : quand la refonte coûte 40 000 €"
+description: "Un MVP Firebase ou no-code coûte cher quand il atteint ses limites et qu'on le refait tard, dans l'urgence. Dix signaux notés, le calcul, l'alternative."
+date: "2026-10-27"
+translationKey: "no-code-mvp-cost"
+tags: ["mvp", "technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "guidup"
+tldr:
+  - "Firebase, Bubble, Webflow, Airtable et Glide sont de bons outils pour valider une idée, et l'erreur coûteuse est d'y rester après avoir atteint leurs limites, puis de tout refaire dans l'urgence."
+  - "Une refonte complète et tardive d'un MVP classique par un freelance senior en France tourne autour de 40 000 € une fois comptés la migration, les automatisations, les tests et une marge d'imprévus, sans compter le coût d'une roadmap gelée."
+  - "La voie la moins chère consiste à migrer d'abord les deux ou trois briques qui font mal, à garder ce qui fonctionne et à éviter la refonte big bang."
+---
+
+Probablement pas encore, mais ça peut arriver vite. Un MVP Firebase ou no-code devient un problème à cinq chiffres quand il touche plusieurs plafonds en même temps et que vous attendez qu'une levée, une panne ou un gros client impose une refonte totale dans l'urgence. Les dix signaux ci-dessous vous disent en dix minutes de quel côté vous êtes.
+
+## Votre MVP Firebase ou no-code va-t-il vous coûter 40 000 € ?
+
+Seulement si la plupart des signaux ci-dessous sont vrais et que vous repoussez la décision. Si deux ou trois le sont, vous avez quelques corrections ciblées devant vous, pas une refonte. Si aucun ne l'est, continuez à livrer.
+
+D'abord, soyons justes avec les outils. Firebase, Bubble, Webflow, Airtable, Glide, Zapier et Make sont excellents pour valider une idée. Ils permettent à un fondateur d'aller jusqu'aux premiers clients payants sans équipe technique, et c'est souvent le bon choix. Sur beaucoup de produits, la version no-code a été la décision la plus intelligente du fondateur. Le problème n'est jamais l'outil. C'est d'y rester une fois qu'il ne convient plus, puis de payer une reconstruction précipitée.
+
+## Autodiagnostic : dix signaux notés
+
+Notez chaque signal 0 (faux), 1 (en partie vrai) ou 2 (clairement vrai). Soyez honnête, personne ne regarde.
+
+1. **La facture des outils augmente plus vite que votre chiffre d'affaires.** Unités de charge Bubble, tâches Zapier, opérations Make, passage à l'offre supérieure sur Airtable ou Glide pour avoir plus d'enregistrements.
+2. **Votre modèle de données vous résiste.** Le même champ est copié à quatre endroits, une mise à jour en oublie un, et chaque reporting passe par un export dans un tableur.
+3. **Personne ne comprend les règles de sécurité.** Les règles Firestore ou les privacy rules Bubble ont été écrites par quelqu'un qui est parti, et personne ne les teste.
+4. **Il n'y a pas d'environnement de préproduction.** Les modifications partent directement en production, et vous testez sur de vrais utilisateurs.
+5. **La logique métier vit dans Zapier ou Make.** La moitié du produit est une chaîne de scénarios que personne ne voit en entier.
+6. **Ça devient lent.** Des pages qui mettent plusieurs secondes, des workflows qui expirent, des utilisateurs qui s'en plaignent.
+7. **Vous n'arrivez pas à recruter.** Les développeurs que vous rencontrez ne veulent pas y toucher, et les freelances spécialisés sont rares.
+8. **Un investisseur ou un gros client a posé des questions sans réponse.** Localisation des données, contrôle d'accès, sauvegardes, dépendance à un éditeur.
+9. **Vous ne pouvez pas récupérer vos données proprement.** Ou une demande d'accès ou d'effacement RGPD vous coûte une journée de travail manuel.
+10. **Vous avez peur de toucher au code.** Chaque nouvelle fonctionnalité en casse une ancienne.
+
+Faites le total, sur 20. Le tableau plus bas vous dit ce qu'il signifie. Pour aller plus loin que la question du no-code, la [checklist gratuite de due diligence technique en 25 points](/fr/checklist) couvre ce que vérifient les investisseurs.
+
+## À quoi ressemble le plafond sur Firebase
+
+Firestore facture chaque lecture de document, et chaque document renvoyé par une requête compte. Un écran qui liste 200 éléments, ouvert 50 fois par jour par 1 000 utilisateurs, représente 10 millions de lectures par jour. Les listeners temps réel en ajoutent à chaque modification. Firebase n'est pas cher à l'échelle d'un MVP. Il le devient quand le modèle de données a été pensé pour la première démo, pas pour le centième client.
+
+Ce modèle de données est le deuxième sujet. Firestore n'a pas de jointures, donc on dénormalise : le nom du client recopié dans chaque commande, facture et commentaire. Chaque copie doit être mise à jour à la main ou par une Cloud Function, et il y en a toujours une qui dérive. Le reporting entre collections devient un export. La recherche plein texte passe en général par un service tiers.
+
+Si votre application parle directement à Firestore depuis le navigateur ou le téléphone, les règles de sécurité sont toute votre couche d'autorisation. Les fichiers de règles interminables sans aucun test sont courants. L'émulateur Firebase permet de tester les règles, encore faut-il que quelqu'un écrive ces tests.
+
+Deux derniers points. Beaucoup de MVP Firebase tournent sur un seul projet, donc sans préproduction. Et la localisation d'une base Firestore se choisit à la création et ne peut plus être modifiée ensuite. Si elle a été créée dans une région américaine, rapatrier les données dans l'UE est une migration, pas un réglage.
+
+## À quoi ressemble le plafond en no-code
+
+Sur Bubble, la tarification repose sur des unités de charge (workload units) : un workflow plus lourd ou un mois plus chargé se voit sur la facture. Vos données s'exportent en CSV, mais pas votre logique : workflows, conditions et logique des pages restent dans Bubble. Partir, c'est les reconstruire.
+
+Airtable fonctionne très bien comme back-office, jusqu'au jour où il devient la base de production. L'API est limitée à environ 5 requêtes par seconde et par base, et le nombre d'enregistrements dépend de votre offre. Glide et Webflow ont des limites comparables en lignes et en éléments CMS.
+
+Restent les automatisations. Zapier et Make sont parfaits pour faire la colle entre les outils. Ils deviennent un problème quand la vraie logique du produit (règles de prix, onboarding, facturation) vit dans 40 scénarios sans gestion de versions ni tests. Quand l'un d'eux échoue en silence un samedi, c'est un client qui vous prévient.
+
+Le RGPD s'ajoute à tout ça. Chaque outil de la chaîne est un sous-traitant : il vous faut son DPA, savoir où il héberge vos données et l'inscrire dans votre registre des traitements. Une seule demande d'effacement implique de supprimer dans quatre outils et dans l'historique de vos automatisations.
+
+## Garder, étendre ou migrer maintenant
+
+| | Garder | Étendre | Migrer maintenant |
+|---|---|---|---|
+| Score | 0 à 6 | 7 à 12 | 13 ou plus |
+| Situation type | Encore en validation | Clients payants, 2 ou 3 irritants | Beaucoup de signaux, levée ou gros contrat en vue |
+| Facture des outils | Stable | En hausse | Plus rapide que le CA |
+| Que faire | Livrer, mettre en place des sauvegardes | Passer la brique douloureuse en code | Planifier une migration par étapes ce trimestre |
+| Budget technique | Rien de plus | Quelques semaines | Un projet planifié |
+
+## D'où viennent les 40 000 €
+
+C'est une illustration, pas un devis. C'est ce que peut coûter une refonte complète et tardive d'un MVP classique (authentification, une douzaine d'écrans, paiement, un back-office, quelques automatisations), menée dans l'urgence par un freelance senior en France. Sur Malt, les TJM des freelances seniors se situent en général autour de 500 à 800 €. Je prends 650 € comme point médian.
+
+| Poste | Jours | À 650 €/jour |
+|---|---|---|
+| Reconstruire l'application | 30 | 19 500 € |
+| Migration des données et des comptes, bascule | 8 | 5 200 € |
+| Réécrire les automatisations en code | 6 | 3 900 € |
+| Tests et corrections après mise en ligne | 6 | 3 900 € |
+| Deux stacks en parallèle pendant 2 à 3 mois | | environ 1 500 € |
+| Marge d'imprévus, 15 % | | environ 5 100 € |
+| **Total** | **50** | **environ 39 100 €** |
+
+La ligne absente, c'est la roadmap gelée. Pendant deux à trois mois, rien de nouveau ne sort, le fondateur passe ses soirées à tester la nouvelle version, et les promesses faites aux clients attendent. Pour une startup en pleine levée ou en train de signer un contrat clé, c'est souvent le poste le plus cher.
+
+Prenez ces 40 000 € comme un ordre de grandeur. Une petite application peut coûter le tiers. Une application complexe, avec des intégrations et une app mobile, peut coûter le double. Ce qui compte, c'est la mécanique : le coût explose quand on attend la crise pour tout reconstruire d'un coup.
+
+## La voie la moins chère : migrer d'abord ce qui fait mal
+
+Une refonte big bang est rarement nécessaire. Il faut déplacer les deux ou trois briques qui concentrent la douleur, et garder le reste jusqu'à ce qu'il pose problème à son tour.
+
+- **Données coûteuses ou enchevêtrées :** les passer sur PostgreSQL derrière une petite API, et brancher le front existant dessus.
+- **Logique dans Zapier ou Make :** passer en code versionné et testé les scénarios qui touchent au chiffre d'affaires ou aux données clients. Garder les autres.
+- **Règles de sécurité incomprises :** mettre les opérations sensibles derrière du code serveur et verrouiller les règles.
+- **Pas de préproduction :** créer un deuxième environnement cette semaine. C'est la correction la moins chère de la liste.
+- **Garder l'interface** si les utilisateurs l'aiment. Un site vitrine Webflow peut rester sur Webflow pendant des années.
+
+Chaque étape est livrée seule, la roadmap continue d'avancer, et la dépense s'étale sur plusieurs mois au lieu de tomber sur un seul trimestre. D'après mon expérience, cette approche coûte en général une fraction de la refonte big bang.
+
+Les deux reconstructions de mes études de cas ont suivi la même règle : garder ce qui marche. Sur [Simplify for Kids](/fr/work/simplify-kids), la v2 a conservé l'expérience utilisateur du prototype v1 et remplacé l'architecture. Sur Guid'Up, nous avons remplacé un développement précédent abandonné tout en gardant les animations que la cliente aimait, et elle est propriétaire de tous ses comptes. Le détail est dans l'[étude de cas Guid'Up](/fr/work/guidup).
+
+## Avant de décider
+
+Ne décidez pas au feeling, et ne laissez pas la personne qui serait payée pour la refonte décider seule. Faites l'autodiagnostic avec votre équipe. Si le score atteint 7 ou plus, faites relire le code et les données par un regard extérieur avant d'engager un budget. Mon [audit technique](/fr/services/technical-audit) fait exactement cela en deux semaines, avec une liste priorisée de ce qu'il faut garder, étendre ou migrer. J'explique la méthode dans [l'audit de code en deux semaines](/fr/blog/audit-de-code-en-deux-semaines).
+
+Si votre score vous inquiète, [réservez un appel](/fr#contact) et nous regarderons quelles briques méritent d'être migrées en premier. Je réponds sous 48 heures.

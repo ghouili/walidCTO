@@ -47,6 +47,12 @@ export function Nav({
             {t.faq}
           </Link>
           <Link
+            href={localePath(locale, "/blog")}
+            className={`${linkClass} max-[900px]:hidden`}
+          >
+            {t.blog}
+          </Link>
+          <Link
             href={home("#about")}
             className={`${linkClass} max-[900px]:hidden`}
           >

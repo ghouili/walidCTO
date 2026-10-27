@@ -47,6 +47,7 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   // Skip API routes, Next internals and anything with a file extension
-  // (robots.txt, sitemap.xml, feed.xml, llms.txt, images, PDFs).
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  // (robots.txt, sitemap.xml, llms.txt, images, PDFs), except the English
+  // RSS feed, which lives at app/[locale]/feed.xml like the French one.
+  matcher: ["/((?!api|_next|.*\\..*).*)", "/feed.xml"],
 };

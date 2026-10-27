@@ -1,0 +1,112 @@
+---
+title: "Due diligence technique : les 25 points que les investisseurs vérifient avant une levée seed"
+seoTitle: "Due diligence technique : 25 points avant une levée seed"
+description: "La due diligence technique d'une levée seed couvre 25 points : architecture, sécurité, RGPD, infra, tests, propriété. Ce qui est vérifié, quoi corriger."
+date: "2026-10-27"
+translationKey: "technical-due-diligence"
+tags: ["due-diligence", "technical-audit"]
+relatedService: "technical-audit"
+relatedCaseStudy: "facturra"
+tldr:
+  - "Une due diligence technique avant une levée seed porte sur 25 points répartis en six blocs : architecture, sécurité, RGPD et données, infrastructure, tests et qualité du code, équipe et propriété."
+  - "En seed, le relecteur est en général un associé ou un conseiller technique du fonds, ou un CTO externe, qui sonde quelques sujets lors d'un appel et d'une lecture rapide du dépôt."
+  - "La plupart des signaux d'alerte, comme des secrets dans le code, des sauvegardes jamais restaurées ou des cessions de droits non signées, se corrigent en quelques jours si vous vous y prenez deux à six semaines avant l'ouverture de la data room."
+---
+
+Avant une levée seed, les investisseurs vérifient deux choses sur votre produit : qu'il peut tenir 18 mois de croissance sans réécriture, et que la société possède vraiment ce qu'elle a construit. Concrètement, cela se résume à 25 points répartis en six blocs, et la plupart se corrigent en quelques semaines si vous commencez avant l'ouverture de la data room.
+
+C'est la liste que j'utilise quand un fondateur me demande de préparer son produit à une revue technique. Elle existe en PDF gratuit, avec pour chaque point une « bonne réponse » et un « signal d'alerte » : [téléchargez la checklist due diligence technique en 25 points](/fr/checklist). Imprimez-la et passez-la en revue avec votre lead dev. Tout ce à quoi vous ne pouvez pas répondre en deux minutes est un point d'audit.
+
+## Que vérifient les investisseurs lors d'une due diligence technique avant une levée seed ?
+
+En seed, personne n'attend un code parfait. Le relecteur cherche à savoir trois choses. Le produit est-il un passif qui va absorber la levée ? L'équipe comprend-elle son propre système ? La société possède-t-elle son code, ses comptes et ses données ? Les 25 points ci-dessous servent à le vérifier.
+
+### Qui fait réellement la due diligence technique en seed
+
+À partir de la série A, les fonds mandatent souvent un cabinet spécialisé. En seed, c'est rarement aussi formel. D'après mon expérience, le relecteur est l'un de ces profils :
+
+- un associé ou un venture partner du fonds avec un passé d'ingénieur,
+- un conseiller technique que le fonds sollicite pour quelques jours,
+- un CTO externe missionné pour une revue courte,
+- chez les business angels, souvent un ami CTO qui a accepté de « jeter un œil ».
+
+Le format habituel : un appel d'une à deux heures avec votre CTO ou votre lead dev, un questionnaire écrit, et parfois un accès en lecture au dépôt pendant quelques jours. Le relecteur n'a pas le temps de tout lire, alors il sonde. Il choisit deux ou trois sujets et creuse. Une réponse floue le fait creuser davantage.
+
+### Ce que doit contenir la partie technique de la data room
+
+- Un schéma d'architecture sur une page et la liste de votre stack
+- Chaque service tiers et chaque bibliothèque clé, avec leurs licences
+- La liste des accès : qui atteint la production, la base et la console cloud
+- Votre registre des traitements RGPD, les DPA signés et les lieux d'hébergement
+- Le coût mensuel de l'infrastructure par environnement
+- Votre processus de déploiement et les incidents des 6 à 12 derniers mois
+- Une liste priorisée de la dette technique connue
+- Les cessions de droits signées par chaque salarié et chaque prestataire
+- La preuve que la société possède les dépôts, les domaines, les comptes cloud et stores
+
+### Combien de temps pour se préparer
+
+Si le produit est en état correct, comptez deux à trois semaines à temps partiel : une semaine pour répondre honnêtement à la checklist, une pour corriger les points rapides, quelques jours pour rassembler les documents. Si plus de cinq points sont au rouge, prévoyez quatre à six semaines. Commencez avant les premiers rendez-vous investisseurs, car la revue technique arrive souvent juste après la term sheet, quand il ne reste plus aucune marge.
+
+## La checklist en 25 points
+
+### Architecture
+
+1. **Une architecture qui tient sur une page.** Le relecteur demande à votre lead dev de dessiner le système, puis compare le schéma au code. Si vous n'en avez pas, dessinez-le cette semaine et versionnez-le dans le dépôt.
+2. **La logique métier séparée des frameworks.** C'est ce qui dit si le produit peut évoluer sans casser. Vous ne referez pas tout en une semaine, mais vous pouvez nommer les modules emmêlés et les inscrire dans votre liste de dette.
+3. **Un modèle de données fidèle au métier.** Il regarde le schéma et l'historique des migrations. Si quelqu'un modifie la production à la main, générez une migration de référence maintenant et arrêtez.
+4. **Des dépendances tierces maîtrisées.** Les problèmes de licence et de fournisseur sortent tard et coûtent cher. Listez chaque service externe et écrivez une ligne sur ce qui se passe s'il disparaît. Sur [Facturra](/fr/work/facturra), la plateforme se connecte à une plateforme agréée de facturation électronique sans dépendance, pour que les factures continuent de circuler si ce partenaire change ses conditions. C'est le type de réponse qui rassure.
+5. **Un chemin crédible vers une charge x10.** Personne n'attend que vous teniez dix fois la charge aujourd'hui. On attend que vous connaissiez vos chiffres actuels et le premier goulot d'étranglement. Sortez une semaine de métriques de trafic et de base de données, et rédigez un plan d'une demi-page.
+
+### Sécurité
+
+6. **Aucun secret dans le code.** Un relecteur peut scanner votre historique git en quelques minutes. Passez `gitleaks` ou `trufflehog` avant lui, faites tourner chaque clé trouvée et déplacez le reste dans la configuration d'environnement. Changer les clés compte plus que réécrire l'historique.
+7. **Authentification et autorisations bien faites.** Le constat classique : un endpoint admin qui ne vérifie le rôle que côté front. Appelez chaque route admin avec le jeton d'un utilisateur normal. Les corrections côté serveur prennent en général des jours, pas des semaines.
+8. **Des dépendances scannées pour les failles connues.** Activez Dependabot ou lancez `npm audit` ou `pip-audit`, corrigez les failles critiques et notez pourquoi le reste peut attendre. Une liste courte avec des décisions vaut mieux que des centaines d'alertes ignorées.
+9. **Accès au strict nécessaire et départs bien gérés.** Attendez-vous à la question « qui pourrait supprimer la production maintenant ? ». Retirez les anciens freelances, activez la MFA partout et mettez la liste des accès dans la data room. C'est un après-midi de travail.
+10. **Les bases de la sécurité web en place.** HTTPS, en-têtes de sécurité, validation côté serveur, limitation de débit sur la connexion et la réinitialisation de mot de passe. C'est surtout de la configuration, quelques jours au plus.
+
+### RGPD et données
+
+11. **Une cartographie des données personnelles.** Pour un investisseur européen, ce n'est pas optionnel. En seed, un registre des traitements sous forme de tableur suffit : catégorie de données, lieu de stockage, prestataire, finalité.
+12. **Des sous-traitants et des transferts conformes.** Les outils d'analytics, d'emailing et d'IA sont là où se cachent les trous. La plupart proposent un DPA standard à signer en ligne. Signez-les et notez où chacun héberge les données.
+13. **Des droits des personnes réellement applicables.** Le relecteur demande comment vous supprimez un utilisateur. Si la réponse est du SQL écrit à la main, transformez-le en script, testez-le une fois, et sachez ce qui reste dans les sauvegardes.
+14. **Des sauvegardes déjà restaurées.** Une sauvegarde jamais restaurée n'est qu'un espoir. Restaurez-en une en staging, notez le temps que cela a pris, et le point est réglé en une journée.
+
+### Infrastructure et exploitation
+
+15. **Une infrastructure reproductible.** Un serveur configuré à la main que seul un ancien freelance comprend, c'est un risque de personne clé. En seed, un Dockerfile et une procédure d'installation étape par étape sont acceptables.
+16. **Des déploiements automatisés et reproductibles.** Un pipeline GitHub Actions du merge jusqu'à la production, avec retour arrière, représente en général un ou deux jours de travail. Sur les produits que je construis, il est en place dès la première semaine.
+17. **Supervision et alertes.** Un outil de suivi des erreurs et un test de disponibilité se mettent en place en une heure. Si vos clients signalent les pannes avant vos outils, le relecteur l'apprendra.
+18. **Des coûts cloud compris.** Ouvrez la console de facturation et connaissez votre coût mensuel par environnement. Le relecteur le compare au chiffre d'affaires et au nombre d'utilisateurs.
+
+### Tests et qualité du code
+
+19. **Des tests sur les parcours qui rapportent.** Personne n'attend une couverture complète en seed. On attend que l'inscription, le paiement et le parcours principal soient testés à chaque pull request. Quelques tests de bout en bout sur ces parcours, c'est environ une semaine.
+20. **Une revue de code qui existe vraiment.** Le relecteur ouvre vos pull requests fusionnées. Protégez la branche principale aujourd'hui et exigez une validation.
+21. **Un code lisible et cohérent.** Ajoutez un linter et un formateur, lancez-les une fois, commitez le résultat. Cela ne règle pas l'architecture, mais cela efface la première mauvaise impression.
+22. **Une dette technique connue et écrite.** Une équipe qui liste ses propres raccourcis inspire plus confiance qu'une équipe qui prétend ne pas en avoir. Écrivez les dix premiers avec un coût approximatif pour chacun.
+
+### Équipe et propriété
+
+23. **Aucun point de défaillance unique.** Si une seule personne a tout en tête, l'investisseur voit un risque de personne clé. Faites faire un déploiement et une correction en production par un deuxième développeur avant la revue.
+24. **Une documentation qui permet d'intégrer quelqu'un.** Testez votre README sur quelqu'un de nouveau : il doit lancer le projet en local en une journée. Ajoutez de courts comptes rendus de décision pour les trois ou quatre grands choix.
+25. **Propriété intellectuelle et comptes au nom de la société.** C'est le point qui fait capoter les deals. La société doit posséder l'organisation GitHub, les domaines, les comptes cloud et stores, et chaque prestataire doit avoir signé une cession de droits. J'ouvre les comptes au nom du client dès le premier jour, comme sur [Guid'Up](/fr/work/guidup).
+
+## Comment lire votre score
+
+| Points au rouge | Ce que cela signifie | Que faire |
+| --- | --- | --- |
+| 0 à 2 | Prêt pour la revue | Montez la data room |
+| 3 à 5 | Normal en seed | Corrigez en deux à trois semaines |
+| Plus de 5 | Risque réel | Corrigez avant la data room |
+
+Les points rouges sur la propriété, les secrets et les sauvegardes pèsent plus lourd que les autres. Un relecteur pardonnera des tests légers en seed. Il ne pardonnera pas un prestataire qui possède encore votre code.
+
+## Quand faire appel à un audit externe
+
+Passer la liste vous-même ne coûte rien et attrape l'essentiel. La limite : une équipe voit rarement ses propres angles morts, et le relecteur, lui, les verra. Un [audit technique de deux semaines](/fr/services/technical-audit) transforme ces 25 points en registre de risques priorisé, chaque constat avec son impact, son effort et sa correction, plus un appel de restitution avec votre équipe. C'est un forfait fixe pour un périmètre fixe, indiqué dans l'[encadré tarifs](/fr/services/technical-audit#pricing). Je décris toute la méthode, jour par jour, dans [comment auditer un code en deux semaines](/fr/blog/audit-de-code-en-deux-semaines).
+
+Si vous ne faites qu'une chose aujourd'hui, [téléchargez la checklist PDF gratuite](/fr/checklist) et envoyez-la à votre lead dev.
+
+Si votre levée approche et que vous voulez un regard extérieur sur votre produit, [prenons rendez-vous](/fr#contact). Je réponds sous 48 heures et je travaille sous NDA.

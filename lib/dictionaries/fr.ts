@@ -20,6 +20,7 @@ export const fr: Dictionary = {
     work: "Réalisations",
     faq: "FAQ",
     about: "À propos",
+    blog: "Blog",
     cta: "Réserver un appel →",
     switchTo: "EN",
     switchToFull: "English version",
@@ -27,6 +28,9 @@ export const fr: Dictionary = {
   footer: {
     privacy: "Confidentialité",
     country: "Tunisie",
+    blog: "Blog",
+    faq: "FAQ",
+    checklist: "Checklist due diligence",
   },
   hero: {
     pill: "Disponible T4 2026 · 2 places",
@@ -150,6 +154,47 @@ export const fr: Dictionary = {
   faq: {
     eyebrow: "FAQ",
     title: "Les questions que vous vous posez sans doute.",
+    allQuestions: "Les 25 questions, avec des réponses complètes →",
+  },
+  faqPage: {
+    eyebrow: "FAQ",
+    title:
+      "CTO à temps partagé, audit, nearshore et MVP : 25 réponses franches.",
+    sub: "Les questions que les fondateurs me posent le plus, avec une réponse d'un paragraphe chacune. Si la vôtre n'y est pas, posez-la lors du premier appel.",
+    metaTitle: "FAQ CTO à temps partagé et audit technique | Walid Ghouili",
+    metaDescription:
+      "FAQ CTO à temps partagé : 25 réponses sur les tarifs, l'audit technique, la due diligence, le nearshore en Tunisie, le RGPD et le MVP en 4 semaines.",
+    ctaTitle: "Une autre question ?",
+    ctaBody: "Posez-la directement. Je réponds sous 48 heures.",
+    cta: "Me poser la question →",
+  },
+  blog: {
+    eyebrow: "Blog",
+    title: "Notes d'un CTO en activité.",
+    sub: "Coûts, audits, due diligence, nearshore et MVP, écrits pour les fondateurs qui doivent trancher.",
+    metaTitle: "Blog : CTO à temps partagé, audits et MVP | Walid Ghouili",
+    metaDescription:
+      "Articles pour fondateurs de startup : coût d'un CTO à temps partagé, audit technique, due diligence, nearshore en Tunisie et MVP livré en 4 semaines.",
+    readMore: "Lire l'article",
+    minRead: "{n} min de lecture",
+    tldr: "En bref",
+    published: "Publié le",
+    updated: "Mis à jour le",
+    allArticles: "Tous les articles",
+    tagTitle: "Articles : {tag}",
+    tagDescription:
+      "Articles sur le thème {tag} pour les fondateurs de startup, par Walid Ghouili.",
+    relatedCaseStudy: "Étude de cas liée",
+    readCaseStudy: "Lire l'étude de cas →",
+    bookTitle: "Envie d'en parler ?",
+    bookBody:
+      "Un appel de 30 minutes pour regarder votre situation. Si je ne suis pas la bonne personne, je vous dirai qui l'est.",
+    bookCta: "Réserver un appel de 30 min",
+    contactCta: "Ou envoyer un message →",
+    authorRole: "CTO à temps partagé, Tunis",
+    authorBio:
+      "Je suis CTO à temps partagé et auditeur technique pour des startups en France, en Europe et en Tunisie. J'écris du code de production chaque semaine et j'enseigne l'informatique à l'IMSET.",
+    rss: "Flux RSS",
   },
   cta: {
     titleA: "Voyons si je suis",
