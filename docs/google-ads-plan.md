@@ -28,7 +28,7 @@ Rule of thumb: a daily budget of at least 5 to 10 times your expected CPC per ca
 
 ## Campaign: FR · Audit technique
 
-- Landing page: `https://walid.ghouili.com/lp/audit-technique`
+- Landing page: `https://walidghouili.com/lp/audit-technique`
 - Locations: France (presence: "People in or regularly in your targeted locations")
 - Language: Français
 - Daily budget: `DAILY_BUDGET_FR_AUDIT`
@@ -137,7 +137,7 @@ Pin headline 1 to position 1 in each RSA only if Ad Strength stays at least "Goo
 
 ## Campaign: FR · CTO à temps partagé
 
-- Landing page: `https://walid.ghouili.com/lp/cto-a-temps-partage`
+- Landing page: `https://walidghouili.com/lp/cto-a-temps-partage`
 - Locations: France (presence: "People in or regularly in your targeted locations")
 - Language: Français
 - Daily budget: `DAILY_BUDGET_FR_CTO`
@@ -246,7 +246,7 @@ Pin headline 1 to position 1 in each RSA only if Ad Strength stays at least "Goo
 
 ## Campaign: EN · Fractional CTO EU
 
-- Landing page: `https://walid.ghouili.com/lp/fractional-cto`
+- Landing page: `https://walidghouili.com/lp/fractional-cto`
 - Locations: Germany, Netherlands, Spain (add Belgium, Ireland, Nordics once it converts) (presence: "People in or regularly in your targeted locations")
 - Language: English
 - Daily budget: `DAILY_BUDGET_EN_CTO`

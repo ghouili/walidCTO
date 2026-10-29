@@ -4,7 +4,7 @@
  * (Nav, Footer, CTA, metadata, and JSON-LD).
  */
 
-const fallbackUrl = "https://walid.ghouili.com";
+const fallbackUrl = "https://walidghouili.com";
 
 export const site = {
   name: "Walid Ghouili",

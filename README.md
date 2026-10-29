@@ -1,4 +1,4 @@
-# walid.ghouili.com
+# walidghouili.com
 
 Personal site and lead engine for **Walid Ghouili**, fractional CTO, technical
 audits and MVP builds, in English (default) and French (`/fr`).
@@ -37,10 +37,10 @@ Before every commit: `npm run typecheck && npm run lint && npm run build`.
 
 | Variable               | Needed in prod | What it does                                                                                                                                                                                                                                 |
 | ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | Recommended    | Absolute URL, no trailing slash. Canonicals, hreflang, sitemap, OG, JSON-LD, llms.txt. Falls back to `https://walid.ghouili.com` ([`lib/site.ts`](lib/site.ts)).                                                                             |
+| `NEXT_PUBLIC_SITE_URL` | Recommended    | Absolute URL, no trailing slash. Canonicals, hreflang, sitemap, OG, JSON-LD, llms.txt. Falls back to `https://walidghouili.com` ([`lib/site.ts`](lib/site.ts)).                                                                             |
 | `RESEND_API_KEY`       | **Yes**        | Resend API key for the contact and checklist forms. Without it the API answers 503 in production (and logs the message instead of sending in dev).                                                                                           |
 | `CONTACT_TO`           | No             | Where leads are sent. Defaults to the email in `lib/site.ts`.                                                                                                                                                                                |
-| `CONTACT_FROM`         | Recommended    | Sender on a domain verified in Resend, e.g. `Walid Ghouili <site@ghouili.com>`. Without it Resend's test sender is used, which only delivers to the Resend account owner. When set, checklist requesters also receive the PDF link by email. |
+| `CONTACT_FROM`         | Recommended    | Sender on a domain verified in Resend, e.g. `Walid Ghouili <site@walidghouili.com>`. Without it Resend's test sender is used, which only delivers to the Resend account owner. When set, checklist requesters also receive the PDF link by email. |
 | `NEXT_PUBLIC_GTM_ID`   | For Ads        | `GTM-XXXXXXX`. Enables the consent banner and loads GTM after consent. Unset = no banner, no Google script. Baked in at build time: rebuild after changing it.                                                                               |
 
 In production these live in `.env.production` on the server, written by
@@ -157,7 +157,7 @@ Pushing to the `production` branch runs
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which SSHes to
 the VPS, syncs the repo and runs [`deploy.sh`](deploy.sh) (`npm ci`,
 `npm run build`, `pm2 reload`). nginx config:
-[`deploy/nginx/walid.ghouili.com.conf`](deploy/nginx/walid.ghouili.com.conf)
+[`deploy/nginx/walidghouili.com.conf`](deploy/nginx/walidghouili.com.conf)
 (security headers, caching, 301 from the old `walid.innoviaburst.com`). The
 same security headers are also set in [`next.config.ts`](next.config.ts).
 

@@ -1,6 +1,6 @@
 # Ads tracking: GTM, GA4 and Google Ads conversions
 
-How measurement works on walid.ghouili.com, and the exact steps to turn the
+How measurement works on walidghouili.com, and the exact steps to turn the
 site's events into Google Ads conversions. The campaigns themselves are in
 [`google-ads-plan.md`](google-ads-plan.md).
 
@@ -44,9 +44,9 @@ Source: `lib/analytics.ts`, `components/analytics/Analytics.tsx`,
 ## 1. Create the GTM container and GA4 property
 
 1. In Google Tag Manager, create a **Web** container for
-   `walid.ghouili.com`. Copy its ID (`GTM-XXXXXXX`).
+   `walidghouili.com`. Copy its ID (`GTM-XXXXXXX`).
 2. In Google Analytics, create a GA4 property and a web data stream for
-   `https://walid.ghouili.com`. Copy the measurement ID (`G-XXXXXXXXXX`).
+   `https://walidghouili.com`. Copy the measurement ID (`G-XXXXXXXXXX`).
    In the stream's enhanced measurement settings, keep "Page changes based
    on browser history events" on.
 3. Add `NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX` to the production env (see
@@ -107,7 +107,7 @@ to avoid double counting.
 
 ## 5. Test before spending
 
-1. Open `https://walid.ghouili.com/lp/technical-audit?utm_source=google&utm_medium=cpc&utm_campaign=test&gclid=test123`.
+1. Open `https://walidghouili.com/lp/technical-audit?utm_source=google&utm_medium=cpc&utm_campaign=test&gclid=test123`.
 2. The cookie banner shows. Before clicking it, DevTools → Network: no
    request to `googletagmanager.com`.
 3. Click **Accept**: `gtm.js?id=GTM-...` loads.

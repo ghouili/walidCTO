@@ -11,7 +11,7 @@ export const en = {
       "Fractional CTO & technical audits for European and Tunisian startups. Nearshore senior engineering from Tunis — MVP builds, codebase audits, GDPR-aware.",
     privacyTitle: "Privacy",
     privacyDescription:
-      "How walid.ghouili.com handles your data: analytics only with your consent, and otherwise only what you send through a form, by email or via Calendly.",
+      "How walidghouili.com handles your data: analytics only with your consent, and otherwise only what you send through a form, by email or via Calendly.",
     checklistTitle: "Technical due diligence checklist (free PDF)",
     checklistDescription:
       "Technical due diligence checklist: the 25 things investors check before a seed round, from architecture and security to GDPR, infra and tests. Free PDF.",

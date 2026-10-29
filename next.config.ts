@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 /**
  * Security headers are set here so they apply with or without nginx in
- * front. When nginx is present (deploy/nginx/walid.ghouili.com.conf) it hides
+ * front. When nginx is present (deploy/nginx/walidghouili.com.conf) it hides
  * these upstream copies and sends its own, so browsers never see duplicates.
  */
 const securityHeaders = [
